@@ -1,0 +1,120 @@
+from django.db import models
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.utils import timezone
+import re
+
+# Create your models here.
+
+class MyAccountManager(BaseUserManager):
+    def created_user(self, full_name, email,is_staff, is_superuser,  password=None):
+        if not email:
+            raise ValueError('User must have an email address or mobile')
+        now = timezone.now()
+        user = self.model(
+            
+            email = self.normalize_email(email),
+            is_staff=is_staff, 
+            is_superuser=is_superuser, 
+            full_name = full_name,
+            last_login=now,
+            date_joined=now, 
+            
+          
+        )
+
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+    
+    
+    def create_superuser(self, full_name, email,  password):
+        user = self.created_user(
+            email = self.normalize_email(email),
+            full_name= full_name,
+            password=password,
+            is_superuser = True,
+            is_staff = True,
+            
+        )
+
+        user.is_admin = True
+        user.is_active = True
+       
+        user.save(using=self._db)
+        return user
+    
+
+
+class User(AbstractBaseUser, PermissionsMixin):
+    email               = models.EmailField(unique=True)
+    full_name           = models.CharField(max_length=255)
+   
+    created_date      = models.DateTimeField(auto_now_add=True)
+    last_update       = models.DateTimeField(auto_now=True)
+   
+    mobile            = models.CharField(max_length=255, blank=True ,  default='+966 ', null=True)
+    
+    username          = None
+   
+
+
+    def image_upload(instance, filename):
+        userName = str(instance.email).replace(re.search("\@.*", str(instance.email)).group(), "")
+        return 'userApp/User_Profile_Photo/' + userName + '/'+filename 
+
+    profile_photo = models.ImageField(upload_to= image_upload, blank=True, max_length=500)
+
+
+   
+    LANGUAGE_CHOICES = (
+                        ('en-us', 'English'),
+                        ('ar', 'Arabic'),
+                        )
+
+    language = models.CharField(default='en-us', choices=LANGUAGE_CHOICES, max_length=5)
+
+    
+
+    date_joined   = models.DateTimeField(auto_now_add=True)
+    is_active     = models.BooleanField(default=True)
+    is_admin      = models.BooleanField(default=False)
+    is_staff      = models.BooleanField(default=False)
+    is_superuser  = models.BooleanField(default=False)
+
+    is_online             = models.BooleanField(default=False)
+   
+
+    objects = MyAccountManager()
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = [ 'full_name', ]
+
+    def __str__(self):
+        
+        return str(self.full_name) +' '+ str(self.ar_full_name) + ' '+ str(self.email)
+        
+    class Meta:
+        ordering = ['-id']
+    
+    
+
+    def has_perm(self, perm, obj=None):
+        "Does the user have a specific permission?"
+        # Simplest possible answer: Yes, always
+        return True
+
+    def has_module_perms(self, app_label):
+        "Does the user have permissions to view the app `app_label`?"
+        # Simplest possible answer: Yes, always
+        return True
+
+
+
+    def has_module_permission(self,request):
+        return True
+    
+    def check_has_permission(self, perm, permissions_to_check):
+        for index in range(len(permissions_to_check)):
+            if perm == permissions_to_check[index]['codename']:
+                return True
+
