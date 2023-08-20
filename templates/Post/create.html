@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+
+
+
+
+{% block main_content %}
+  <!--===========Main Content=================-->
+  <div class="main-content">
+    <form method="POST">
+    <div class="post-card">
+     
+       <table class="create-table">
+           <tr>
+               <td>
+                   عنوان الإعلان
+               </td>
+               <td>
+                   <input type="text" name="subject" class="text-subject">
+               </td>
+           </tr>
+
+           <tr>
+               <td>
+                  تصنيف الإعلان
+               </td>
+               <td>
+                   <select name="category" class="text-subject">
+                       <option>---</option>
+                       <option>الطيور</option>
+                       <option>الأغنام</option>
+                       <option>الجمال</option>
+                       <option>الخيول</option>
+                   </select>
+               </td>
+           </tr>
+
+           <tr>
+            <td>
+              التصنيف الفرعي
+            </td>
+            <td>
+                <select name="category" class="text-subject">
+                    <option>---</option>
+                    <option>الطيور</option>
+                    <option>الأغنام</option>
+                    <option>الجمال</option>
+                    <option>الخيول</option>
+                </select>
+            </td>
+        </tr>
+
+
+           <tr>
+               <td>
+                 مدينة الإعلان
+               </td>
+               <td>
+                   <select name="category" class="text-subject">
+                       <option>---</option>
+                       <option>الرياض</option>
+                       <option>الدمام</option>
+                       <option>الأحساء</option>
+                       <option>القصيم</option>
+                   </select>
+               </td>
+           </tr>
+
+               <tr>
+               <td>
+                   صور الإعلان
+               </td>
+               <td>
+               <input type="file" name="photos" multiple class="choese-files">
+           </td>
+           </tr>
+       </table>
+
+      
+
+       <div class="comment">
+           <textarea placeholder="نص الإعلان" name="comment"></textarea>    
+       </div>
+
+       <hr>
+     <h4>  إتفاقية العمولة</h4>
+
+       بسم الله الرحمن الرحيم
+قال الله تعالى: <h4>" وَأَوْفُواْ بِعَهْدِ اللهِ إِذَا عَاهَدتُّمْ وَلاَ تَنقُضُواْ الأَيْمَانَ بَعْدَ تَوْكِيدِهَا وَقَدْ جَعَلْتُمُ اللهَ عَلَيْكُمْ كَفِيلاً </h4>"صدق الله العظيم
+
+<br/>
+<br/>
+<p>
+<input type="checkbox" required>
+* اتعهد واقسم بالله أنا المعلن أن أدفع عمولة الموقع وهي 1% من قيمة البيع سواء تم البيع عن طريق الموقع أو بسببه.
+
+</p>
+
+<br/>
+<br/>
+<p>
+   * كما أتعهد بدفع العمولة خلال 10 أيام من استلام كامل مبلغ المبايعة.
+</p>
+
+<br/>
+<br/>
+<p>
+   ملاحظة: عمولة الموقع هي على المعلن ولاتبرأ ذمة المعلن من العمولة إلا في حال دفعها.
+</p>
+       <hr>
+
+           <a href="" class="send-btn">
+               نشر
+               <i class="fa-regular fa-paper-plane"></i>
+           </a>
+     
+   </div>
+</form>
+   </div>
+   <!--===========/Main Content=================-->
+{% endblock main_content %}

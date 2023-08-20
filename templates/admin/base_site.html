@@ -1,0 +1,10 @@
+{% extends "admin/base.html" %}
+{% load static %}
+{% block extrahead %}
+    {{ block.super }}
+    
+    <script src="{% static 'admin/js/vendor/jquery/jquery.min.js' %}"></script>
+  
+    <script src="{% static 'js/admin_filter_subcategories.js' %}"></script>
+  
+{% endblock %}

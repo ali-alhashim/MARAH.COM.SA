@@ -8,6 +8,8 @@ class Post_Category(models.Model):
     name         = models.CharField(max_length=250, blank=True, null=True)
     created_date = models.DateTimeField(auto_now_add=True)
     last_update  = models.DateTimeField(auto_now=True)
+    def __str__(self):
+        return self.name
 
 # every category has many sub category
 class Sub_Category(models.Model):
@@ -15,6 +17,8 @@ class Sub_Category(models.Model):
     name         = models.CharField(max_length=250, blank=True, null=True)
     created_date = models.DateTimeField(auto_now_add=True)
     last_update  = models.DateTimeField(auto_now=True)
+    def __str__(self):
+        return self.name
 
 class Post(models.Model):
     status       = models.CharField(max_length=150, default='published')
@@ -23,6 +27,7 @@ class Post(models.Model):
     location     = models.CharField(max_length=250, blank=True, null=True)
     text         = models.TextField(max_length=1000, blank=True, null=True)
     category     = models.ForeignKey(Post_Category, on_delete=models.DO_NOTHING, blank=True, null=True)
+    sub_category     = models.ForeignKey(Sub_Category, on_delete=models.DO_NOTHING, blank=True, null=True)
     created_date = models.DateTimeField(auto_now_add=True)
     last_update  = models.DateTimeField(auto_now=True)
 
