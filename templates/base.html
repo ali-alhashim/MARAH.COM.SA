@@ -1,0 +1,237 @@
+{%load static%}
+<!DOCTYPE html>
+
+<html lang="en" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
+    <link rel="stylesheet" href="{% static 'fontawesome_6/css/all.min.css' %}"/>
+    <title>موقع مراح</title>
+</head>
+<body >
+
+    <!--====Navbar============-->
+    <nav>
+        <img src="{% static 'img/selectedLogo.svg' %}" class="logo">
+
+        <div>
+            <ul>
+                <li onclick="login()">
+                    <i class="fa fa-sign-in" aria-hidden="true"></i>
+                     دخـــول
+                   
+                </li>
+                <li>
+                    <i class="fa fa-sort" aria-hidden="true"></i>
+                    EN
+                </li>
+                <li>
+                 <i class="fa fa-moon"></i>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--====/Navbar===========-->
+
+    <!--===Sub-Navbar====-->
+    <subnav>
+
+        
+
+        <div>
+            <select class="search-select">
+                <option>
+                    الكل
+                </option>
+    
+                <option>
+                    الطيور
+                </option>
+    
+                <option>
+                    الجمال
+                </option>
+    
+                <option>
+                    القطط
+                </option>
+    
+                <option>
+                    الماعز
+                </option>
+    
+                <option>
+                    الخيول
+                </option>
+    
+                <option>
+                    الأغنام
+                </option>
+            </select>
+        <input type="text" id="Search_input" placeholder="إبحث عن سلعة ..."/>
+        <button class="search-btn"><i class="fa fa-search"></i></button>
+      
+            <select class="search-select">
+               <option>
+                كل المناطق
+               </option>
+               <option>
+                الشرقية
+               </option>
+               <option>
+                الرياض
+               </option>
+            </select>
+
+            <a class="search-btn">
+                القريب
+                <i class="fa fa-map"></i>
+            </a>
+
+        </div>
+
+        <a class="search-btn" href="post_create.html">
+            أضف إعلانك
+            <i class="fa fa-add"></i>
+        </a>
+
+    </subnav>
+    <!--===/Sub-Navbar===-->
+    <!--========Categories=========-->
+    <div class="Categories-warp">
+    <div class="Categories">
+
+       <a href="#">
+       
+        مراح الطيور
+       </a> 
+
+       <a href="#">
+       
+        مراح الأبل
+       </a> 
+
+     
+
+       <a href="#">
+      
+        مراح الماعز
+       </a> 
+
+       <a href="#">
+        
+        مراح الخيول
+       </a> 
+
+       <a href="#">
+       
+        مراح الأغنام
+       </a> 
+
+    </div>
+    </div>
+    <!--=======/Categories=========-->
+
+
+    <!--===========Main Content=================-->
+    {% block main_content %}
+   
+  {% endblock main_content %}
+    <!--===========/Main Content=================-->
+
+   <div class="desart">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#f8f0df" fill-opacity="1" d="M0,288L80,266.7C160,245,320,203,480,202.7C640,203,800,245,960,256C1120,267,1280,245,1360,234.7L1440,224L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"></path></svg>
+    </div>
+    
+    <footer>
+        
+        <div class="mobile-apps">
+
+          <a href="#">  <img src="{% static 'img/apple.png' %}" width="150px"/></a>
+          <a href="#">  <img src="{% static 'img/google.png' %}" width="150px"/></a>
+        </div>
+        <hr>
+
+        <div class="footer-links">
+            <ul>
+                <li>
+                    <i class="fa fa-list"></i>
+                    <a href="#">قائمة السلع والإعلانات الممنوعة</a>
+                </li>
+                <li>
+                    <i class="fa fa-phone-alt"></i>
+                    <a href="#">  أتصل بنا </a>
+                </li>
+            </ul>
+
+            <ul>
+                <li>
+                    <i class="fa fa-signature"></i>
+                    <a href="#">اتفاقية الاستخدام</a>
+                </li>
+                <li>
+                    <i class="fa fa-question"></i>
+                    <a href="#">الأسئلة الشائعة</a>
+                </li>
+            
+            </ul>
+
+
+            <ul>
+                <li>
+                    <i class="fa fa-user"></i>
+                    <a href="#"> التسجيل  </a>
+                </li>
+                <li>
+                    <i class="fa fa-money-bill-transfer"></i>
+                    <a href="#">حساب و سداد عمولة الموقع</a>
+                </li>
+            </ul>
+        </div>
+
+        <hr>
+
+        <div class="the-company">
+            مؤسسة مراح للتسويق الإلكتروني
+        </div>
+
+        
+    </footer>
+
+
+    <!--login module-->
+    <div class="login-background" id="login_div_id">
+        <div class="toolbar-window">
+            <i class="fa-solid fa-rectangle-xmark exit-btn" onclick="login_close()"></i>
+        </div>
+        <div>
+        <form method="POST" class="login-form" id="login_form_id">
+        <input type="text"     name="username" placeholder="أدخل أسم المستخدم">
+        <input type="password" name="password" placeholder="أدخل كلمة المرور">
+        <input type="submit" value="دخول">
+        </form>
+        </div>
+
+    </div>
+    <!--/login module-->
+
+    <script>
+        function login()
+        {
+            document.getElementById('login_div_id').classList.add('active-login');
+           
+        }
+        function login_close()
+        {
+            document.getElementById('login_div_id').classList.remove('active-login');
+        }
+    </script>
+
+    {% block js %}
+    {% endblock js %}
+
+    
+</body>
+</html>
