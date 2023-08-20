@@ -18,11 +18,18 @@
 
         <div>
             <ul>
+                 {%if not request.user.id %}
                 <li onclick="login()">
                     <i class="fa fa-sign-in" aria-hidden="true"></i>
                      دخـــول
                    
                 </li>
+                {%else%}
+                <li>
+                    يالله حيهم : {{request.user.full_name}}
+                </li>
+                {%endif%}
+
                 <li>
                     <i class="fa fa-sort" aria-hidden="true"></i>
                     EN
@@ -207,7 +214,8 @@
             <i class="fa-solid fa-rectangle-xmark exit-btn" onclick="login_close()"></i>
         </div>
         <div>
-        <form method="POST" class="login-form" id="login_form_id">
+        <form method="POST" class="login-form" id="login_form_id" action="{%url 'login'%}">
+            {% csrf_token %}
         <input type="text"     name="username" placeholder="أدخل أسم المستخدم">
         <input type="password" name="password" placeholder="أدخل كلمة المرور">
         <input type="submit" value="دخول">

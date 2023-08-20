@@ -91,7 +91,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         
-        return str(self.full_name) +' '+ str(self.ar_full_name) + ' '+ str(self.email)
+        return str(self.full_name) +' '+str(self.email)
         
     class Meta:
         ordering = ['-id']
