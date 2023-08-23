@@ -1,10 +1,41 @@
 {% extends "admin/base.html" %}
 {% load static %}
+
+
 {% block extrahead %}
     {{ block.super }}
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const categorySelect = document.getElementById('id_category');
+        const subCategorySelect = document.getElementById('id_sub_category');
     
-    <script src="{% static 'admin/js/vendor/jquery/jquery.min.js' %}"></script>
-  
-    <script src="{% static 'js/admin_filter_subcategories.js' %}"></script>
-  
+        categorySelect.addEventListener('change', function() {
+            var selectedCategoryId = categorySelect.value;
+            subCategorySelect.innerHTML = '';
+    
+            if (selectedCategoryId) {
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                        var subcategories = JSON.parse(xhr.responseText);
+                         console.log(subcategories);
+
+                         for(let subCategory of subcategories)
+                         {
+                            var option = document.createElement('option');
+                            option.value = subCategory.id;
+                            option.textContent = subCategory.name;
+                            subCategorySelect.appendChild(option);
+                         }
+
+
+                    }
+                };
+    
+                xhr.open('GET', '{% url "get_subcategories"%}?category_id=' + selectedCategoryId, true);
+                xhr.send();
+            }
+        });
+    });
+</script>
 {% endblock %}
