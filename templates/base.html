@@ -49,33 +49,10 @@
 
         <div>
             <select class="search-select">
-                <option>
-                    الكل
-                </option>
-    
-                <option>
-                    الطيور
-                </option>
-    
-                <option>
-                    الجمال
-                </option>
-    
-                <option>
-                    القطط
-                </option>
-    
-                <option>
-                    الماعز
-                </option>
-    
-                <option>
-                    الخيول
-                </option>
-    
-                <option>
-                    الأغنام
-                </option>
+              <option value="all">الكل</option>  
+             {%for category in categories%}
+             <option value="{{category.id}}">{{category.name}}</option>
+             {%endfor%}
             </select>
         <input type="text" id="Search_input" placeholder="إبحث عن سلعة ..."/>
         <button class="search-btn"><i class="fa fa-search"></i></button>
@@ -110,32 +87,13 @@
     <div class="Categories-warp">
     <div class="Categories">
 
+        {%for category in categories%}
        <a href="#">
-       
-        مراح الطيور
+       {{category.name}}
        </a> 
+       {%endfor%}
 
-       <a href="#">
-       
-        مراح الأبل
-       </a> 
-
-     
-
-       <a href="#">
       
-        مراح الماعز
-       </a> 
-
-       <a href="#">
-        
-        مراح الخيول
-       </a> 
-
-       <a href="#">
-       
-        مراح الأغنام
-       </a> 
 
     </div>
     </div>
