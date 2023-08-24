@@ -1,16 +1,32 @@
 from django.shortcuts import render
-from django.http import JsonResponse
-from .models import Sub_Category, Post_Category
+from django.http import JsonResponse, HttpResponseRedirect
+from .models import Sub_Category, Post_Category, Post, Location
 from django.views.decorators.csrf import csrf_exempt
+from django.urls import reverse_lazy
 
 # Create your views here.
 
 def post_detail(request, pk):
-
-    return render(request, 'Post/detail.html', {})
+    thePost = Post.objects.get(pk=pk)
+    return render(request, 'Post/detail.html', {"thePost":thePost})
 
 
 def post_create(request):
+    if request.method == "POST":
+        category     = Post_Category.objects.get(pk=request.POST.get('category'))
+        sub_category = Sub_Category.objects.get(pk=request.POST.get('sub_category'))
+        location     = Location.objects.get(pk=request.POST.get('location'))
+        newPost = Post(
+                        created_by   = request.user,
+                        subject      = request.POST.get('subject'),
+                        text         = request.POST.get('text'),
+                        location     = location,
+                        category     = category,
+                        sub_category = sub_category,
+                      )
+        newPost.save()
+        return HttpResponseRedirect(reverse_lazy('post.detail',kwargs={'pk':newPost.id}))
+    
     return render(request,'Post/create.html',{})
 
 

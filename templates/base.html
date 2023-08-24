@@ -14,7 +14,7 @@
 
     <!--====Navbar============-->
     <nav>
-        <img src="{% static 'img/selectedLogo.svg' %}" class="logo">
+      <a href="{% url 'home'%}">  <img src="{% static 'img/selectedLogo.svg' %}" class="logo"></a>
 
         <div>
             <ul>
@@ -61,12 +61,9 @@
                <option>
                 كل المناطق
                </option>
-               <option>
-                الشرقية
-               </option>
-               <option>
-                الرياض
-               </option>
+               {%for city in location%}
+                       <option value="{{city.id}}">{{city.name}}</option>
+                       {%endfor%}
             </select>
 
             <a class="search-btn">

@@ -1,9 +1,10 @@
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
-
+from post_app.models import Post
 def home(request):
-    return render(request, 'Marah/home.html',{})
+    posts = Post.objects.all()
+    return render(request, 'Marah/home.html',{"posts":posts})
 
 
 

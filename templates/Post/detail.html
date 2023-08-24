@@ -1,1 +1,114 @@
 {% extends 'base.html' %}
+
+
+{% block main_content %}
+    <!--===========Main Content=================-->
+    <div class="main-content">
+       
+        <div class="post-card">
+   
+          <div class="post-subject">
+            <h2>
+              {{thePost.subject}}
+            </h2>
+          </div>
+          
+          <div class="post-subDetail">
+   
+             <div class="location">
+               <i class="fa fa-location"></i>
+               {{thePost.location}}
+             </div>
+   
+             <div class="user">
+               <i class="fa fa-user"></i>
+               {{thePost.nikname}}
+             </div>
+   
+             <div class="DateTime">
+               <i class="fa fa-clock"></i>
+               قبل 5 ساعات
+             </div>
+          </div>
+   
+          <div class="post-body">
+           <p>
+               نياق 2 عشاير كفووو  مشروطه  تحتهن قعدان 
+   كفووو
+           </p>
+   
+           <br/>
+           <hr>
+           <br/>
+   
+           <div class="post-photos">
+   
+               <img src="./img/webp.jpg"/>
+              
+               <img src="./img/webp.jpg"/>
+   
+               <img src="./img/webp.jpg"/>
+   
+           </div>
+   
+   
+          </div>
+   
+   
+   
+   
+        </div>
+   
+         <!--Posted comment-->
+         <div class="posted-comment">
+           <div class="posted-comment-sender">
+               <p>
+                   alhashim
+               </p>
+   
+               <p>
+                   قبل 9 شهور و 3 اسابيع
+               </p>
+           </div>
+   
+           <div class="posted-message">
+               كم السوم
+           </div>
+   
+         </div>
+         <!-- / Posted comment-->
+   
+          <!--Reply Posted comment-->
+          <div class="reply-posted-comment">
+           <div class="posted-comment-sender">
+               <p>
+                   المعلن
+               </p>
+   
+               <p>
+                   قبل 9 شهور و 3 اسابيع
+               </p>
+           </div>
+   
+           <div class="posted-message">
+              وصل السوم 50 ألف
+           </div>
+   
+         </div>
+         <!-- /Reply Posted comment-->
+          
+      
+        <!--comment-->
+           <div class="comment">
+           <textarea placeholder="أكتب رسالة للمعلن" name="comment"></textarea>
+           <a href="" class="send-btn">
+               إرسال
+               <i class="fa-regular fa-paper-plane"></i>
+           </a>
+           
+           </div>
+           <!-- / comment-->
+   
+       </div>
+       <!--===========/Main Content=================-->
+{% endblock main_content %}

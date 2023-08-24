@@ -48,7 +48,7 @@ class MyAccountManager(BaseUserManager):
 class User(AbstractBaseUser, PermissionsMixin):
     email               = models.EmailField(unique=True)
     full_name           = models.CharField(max_length=255)
-   
+    nikname           = models.CharField(max_length=100, blank=True, null=True)
     created_date      = models.DateTimeField(auto_now_add=True)
     last_update       = models.DateTimeField(auto_now=True)
    

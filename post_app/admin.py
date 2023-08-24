@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Post, Post_Category, Sub_Category, Post_Images
+from .models import Post, Post_Category, Sub_Category, Post_Images, Location
 
 class PostImagesInline(admin.StackedInline):
     model = Post_Images
@@ -20,6 +20,9 @@ class CategoryAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name', )}
 
 admin.site.register(Post_Category, CategoryAdmin)
+
+
+admin.site.register(Location)
 
 
 

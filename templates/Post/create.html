@@ -7,6 +7,7 @@
   <!--===========Main Content=================-->
   <div class="main-content">
     <form method="POST">
+        {% csrf_token %}
     <div class="post-card">
      
        <table class="create-table">
@@ -24,12 +25,12 @@
                   تصنيف الإعلان
                </td>
                <td>
-                   <select name="category" class="text-subject">
+                   <select name="category" class="text-subject" id="id_category">
                        <option>---</option>
-                       <option>الطيور</option>
-                       <option>الأغنام</option>
-                       <option>الجمال</option>
-                       <option>الخيول</option>
+                       {%for category in categories%}
+                       <option value="{{category.id}}">{{category.name}}</option>
+                       {%endfor%}
+                     
                    </select>
                </td>
            </tr>
@@ -39,12 +40,9 @@
               التصنيف الفرعي
             </td>
             <td>
-                <select name="category" class="text-subject">
+                <select name="sub_category" class="text-subject" id="id_sub_category">
                     <option>---</option>
-                    <option>الطيور</option>
-                    <option>الأغنام</option>
-                    <option>الجمال</option>
-                    <option>الخيول</option>
+                   
                 </select>
             </td>
         </tr>
@@ -55,12 +53,12 @@
                  مدينة الإعلان
                </td>
                <td>
-                   <select name="category" class="text-subject">
+                   <select name="location" class="text-subject">
                        <option>---</option>
-                       <option>الرياض</option>
-                       <option>الدمام</option>
-                       <option>الأحساء</option>
-                       <option>القصيم</option>
+                       {%for city in location%}
+                       <option value="{{city.id}}">{{city.name}}</option>
+                       {%endfor%}
+                    
                    </select>
                </td>
            </tr>
@@ -78,7 +76,7 @@
       
 
        <div class="comment">
-           <textarea placeholder="نص الإعلان" name="comment"></textarea>    
+           <textarea placeholder="نص الإعلان" name="text"></textarea>    
        </div>
 
        <hr>
@@ -108,13 +106,51 @@
 </p>
        <hr>
 
-           <a href="" class="send-btn">
+           <button href="#" class="send-btn">
                نشر
                <i class="fa-regular fa-paper-plane"></i>
-           </a>
+           </button>
      
    </div>
 </form>
    </div>
    <!--===========/Main Content=================-->
 {% endblock main_content %}
+
+{% block js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const categorySelect = document.getElementById('id_category');
+        const subCategorySelect = document.getElementById('id_sub_category');
+    
+        categorySelect.addEventListener('change', function() {
+            var selectedCategoryId = categorySelect.value;
+            subCategorySelect.innerHTML = '';
+    
+            if (selectedCategoryId) {
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                        var subcategories = JSON.parse(xhr.responseText);
+                         console.log(subcategories);
+
+                         for(let subCategory of subcategories)
+                         {
+                            var option = document.createElement('option');
+                            option.value = subCategory.id;
+                            option.textContent = subCategory.name;
+                            subCategorySelect.appendChild(option);
+                         }
+
+
+                    }
+                };
+    
+                xhr.open('GET', '{% url "get_subcategories"%}?category_id=' + selectedCategoryId, true);
+                xhr.send();
+            }
+        });
+    });
+</script>
+{% endblock js %}
+
