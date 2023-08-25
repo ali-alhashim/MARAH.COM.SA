@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import JsonResponse, HttpResponseRedirect
-from .models import Sub_Category, Post_Category, Post, Location, Post_Images
+from .models import Sub_Category, Post_Category, Post, Location, Post_Images, Post_Comment
 from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse_lazy
 
@@ -8,6 +8,14 @@ from django.urls import reverse_lazy
 
 def post_detail(request, pk):
     thePost = Post.objects.get(pk=pk)
+    if request.method=="POST":
+        comment = request.POST.get('comment')
+        newComment = Post_Comment(
+                                   post = thePost,
+                                   created_by = request.user,
+                                   comment    = comment
+                                 )
+        newComment.save()
     return render(request, 'Post/detail.html', {"thePost":thePost})
 
 

@@ -31,7 +31,6 @@ class MyAccountManager(BaseUserManager):
         user = self.created_user(
             email = self.normalize_email(email),
             full_name= full_name,
-            password=password,
             is_superuser = True,
             is_staff = True,
             
@@ -39,7 +38,7 @@ class MyAccountManager(BaseUserManager):
 
         user.is_admin = True
         user.is_active = True
-       
+        user.set_password(password)
         user.save(using=self._db)
         return user
     
@@ -54,7 +53,7 @@ class User(AbstractBaseUser, PermissionsMixin):
    
     mobile            = models.CharField(max_length=255, blank=True ,  default='+966 ', null=True)
     
-    username          = None
+    #username          = None
    
 
 
@@ -86,8 +85,8 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     objects = MyAccountManager()
 
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = [ 'full_name', ]
+    USERNAME_FIELD =  'email'
+    REQUIRED_FIELDS = [ 'full_name',]
 
     def __str__(self):
         

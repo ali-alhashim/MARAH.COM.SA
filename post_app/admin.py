@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Post, Post_Category, Sub_Category, Post_Images, Location
+from .models import Post, Post_Category, Sub_Category, Post_Images, Location, Post_Comment
 
 class PostImagesInline(admin.StackedInline):
     model = Post_Images
@@ -23,6 +23,8 @@ admin.site.register(Post_Category, CategoryAdmin)
 
 
 admin.site.register(Location)
+
+admin.site.register(Post_Comment)
 
 
 

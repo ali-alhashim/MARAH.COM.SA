@@ -57,54 +57,43 @@
    
         </div>
    
+        {%for comment in thePost.post_comments.all%}
          <!--Posted comment-->
-         <div class="posted-comment">
+         <div class="{%if comment.created_by == comment.post.created_by%}reply-posted-comment{%else%}posted-comment{%endif%}">
            <div class="posted-comment-sender">
                <p>
-                   alhashim
+                   {{comment.created_by.nikname}}
                </p>
    
                <p>
-                   قبل 9 شهور و 3 اسابيع
+                   {{comment.created_date}}
                </p>
            </div>
    
            <div class="posted-message">
-               كم السوم
+              {{comment.comment}}
            </div>
    
          </div>
          <!-- / Posted comment-->
+         {%endfor%}
    
-          <!--Reply Posted comment-->
-          <div class="reply-posted-comment">
-           <div class="posted-comment-sender">
-               <p>
-                   المعلن
-               </p>
-   
-               <p>
-                   قبل 9 شهور و 3 اسابيع
-               </p>
-           </div>
-   
-           <div class="posted-message">
-              وصل السوم 50 ألف
-           </div>
-   
-         </div>
-         <!-- /Reply Posted comment-->
+        
           
       
         <!--comment-->
+           
            <div class="comment">
+            <form method="POST">
+              {% csrf_token %}
            <textarea placeholder="أكتب رسالة للمعلن" name="comment"></textarea>
-           <a href="" class="send-btn">
+           <button  class="send-btn">
                إرسال
                <i class="fa-regular fa-paper-plane"></i>
-           </a>
-           
+           </button>
+          </form>
            </div>
+         
            <!-- / comment-->
    
        </div>
