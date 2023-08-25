@@ -5,7 +5,7 @@ class PostImagesInline(admin.StackedInline):
     model = Post_Images
 
 class PostAdmin(admin.ModelAdmin):
-    list_display = ['subject', 'category', 'sub_category', 'created_date', 'last_update']
+    list_display = ['subject', 'category', 'sub_category', 'created_date', 'last_update','created_by']
     inlines      = [PostImagesInline]
    
 

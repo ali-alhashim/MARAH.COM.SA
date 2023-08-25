@@ -7,7 +7,7 @@
        
 {%for post in posts%}
         <!--Card-->
-        <a class="card-content" href="post_detail.html">
+        <a class="card-content" href="{%url 'post.detail' pk=post.id%}">
             <div class="card-text">
                 <h2> 
                     {{post.subject}}
@@ -29,7 +29,9 @@
                
             </div>
             <div class="card-img">
-                <img src="./img/webp.jpg">
+                {%if post.post_images.first.image%}
+                <img src="{{post.post_images.first.image.url}}">
+                {%endif%}
             </div>
         </a>
         <!--/Card-->

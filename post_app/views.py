@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import JsonResponse, HttpResponseRedirect
-from .models import Sub_Category, Post_Category, Post, Location
+from .models import Sub_Category, Post_Category, Post, Location, Post_Images
 from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse_lazy
 
@@ -25,6 +25,16 @@ def post_create(request):
                         sub_category = sub_category,
                       )
         newPost.save()
+        ## upload post images
+        uploaded_images = request.FILES.getlist('photos')
+        for image in uploaded_images:
+            postImage = Post_Images(
+                                    post  = newPost,
+                                    image = image
+                                    )
+             # Save the image to a file
+            postImage.image.save(image.name, image)
+            postImage.save()
         return HttpResponseRedirect(reverse_lazy('post.detail',kwargs={'pk':newPost.id}))
     
     return render(request,'Post/create.html',{})

@@ -23,3 +23,8 @@ def login_view(request):
             return render(request, 'Marah/login.html', {'error_message': error_message})
     
     return render(request, 'Marah/login.html')
+
+
+
+def custom_error_403(request, exception):
+    return render(request, '',{})

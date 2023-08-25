@@ -22,19 +22,18 @@
    
              <div class="user">
                <i class="fa fa-user"></i>
-               {{thePost.nikname}}
+               {{thePost.created_by.nikname}}
              </div>
    
              <div class="DateTime">
                <i class="fa fa-clock"></i>
-               قبل 5 ساعات
+               {{thePost.created_date}}
              </div>
           </div>
    
           <div class="post-body">
            <p>
-               نياق 2 عشاير كفووو  مشروطه  تحتهن قعدان 
-   كفووو
+            {{thePost.text}}
            </p>
    
            <br/>
@@ -43,11 +42,10 @@
    
            <div class="post-photos">
    
-               <img src="./img/webp.jpg"/>
-              
-               <img src="./img/webp.jpg"/>
-   
-               <img src="./img/webp.jpg"/>
+            {%for image in thePost.post_images.all%}
+               <img src="{{image.image.url}}"/>
+            {%endfor%}  
+            
    
            </div>
    
