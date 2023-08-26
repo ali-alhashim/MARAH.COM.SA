@@ -12,7 +12,7 @@
                 <h2> 
                     {{post.subject}}
                 </h2>
-                <ul class="card-sub-text">
+                <ul class="card-sub-text {%if post.created_by == request.user%} bg-light-green {%endif%}">
 
                    <li>
                     <i class="fa fa-location"></i>

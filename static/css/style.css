@@ -6,7 +6,9 @@
 
 }
 
-
+.bg-light-green{
+    background: rgb(100, 187, 100) !important;
+}
 
 @font-face {
     font-family: 'Tajawal';
@@ -487,7 +489,7 @@ hr{
     max-width: 100%;
     min-height: 150px;
     border-radius: 1rem;
-    
+    border: solid #000 1px;
     box-shadow: var(--secondary) 1px 2px 5px 1px;
     padding: 15px;
     margin-left: 50px;
