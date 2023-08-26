@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+
+
+{% block main_content %}
+    <div class="main-content">
+       
+{%for post in posts%}
+        <!--Card-->
+        <a class="card-content" href="{%url 'post.detail' pk=post.id%}">
+            <div class="card-text">
+                <h2> 
+                    {{post.subject}}
+                </h2>
+                <ul class="card-sub-text {%if post.created_by == request.user%} bg-light-green {%endif%}">
+
+                   <li>
+                    <i class="fa fa-location"></i>
+                    {{post.location}}
+                   </li>
+
+                   <li>
+                    <i class="fa fa-clock"></i>
+                    {{post.created_date}}
+                   </li>
+                
+                   <li>
+                    <i class="fa fa-user"></i>
+                    {{post.created_by.nikname}}
+                   </li>
+                </ul>
+               
+            </div>
+            <div class="card-img">
+                {%if post.post_images.first.image%}
+                <img src="{{post.post_images.first.image.url}}">
+                {%endif%}
+            </div>
+        </a>
+        <!--/Card-->
+        {%endfor%}
+
+        
+
+        
+    <br/>
+
+    <a href="#" class="view-more-btn">
+        مشاهدة المزيد
+    </a>
+
+  </div>
+  {% endblock main_content %}

@@ -25,6 +25,11 @@ def post_detail(request, pk):
     return render(request, 'Post/detail.html', {"thePost":thePost})
 
 
+
+def search(request):
+    return render(request,'',{})
+
+
 def post_create(request):
     if request.method == "POST":
         category     = Post_Category.objects.get(pk=request.POST.get('category'))
