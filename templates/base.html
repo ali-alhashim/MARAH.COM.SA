@@ -46,6 +46,12 @@
                         </li>
                       </ul>
                 </li>
+
+                <script>
+                    document.getElementById('user-menu').addEventListener('click', function() {
+                        this.classList.toggle('active');
+                      });
+                </script>
                 {%endif%}
 
                 <li>
@@ -66,21 +72,26 @@
         
 
         <div>
-            <select class="search-select">
+            <form action="{%url 'post.search'%}" method="GET">
+                
+            <select class="search-select" name="category" id="category-select-id">
               <option value="all">الكل</option>  
              {%for category in categories%}
              <option value="{{category.id}}">{{category.name}}</option>
              {%endfor%}
             </select>
-        <input type="text" id="Search_input" placeholder="إبحث عن سلعة ..."/>
+        <input type="text" id="Search_input" placeholder="إبحث عن سلعة ..." name="searchKey"/>
         <button class="search-btn"><i class="fa fa-search"></i></button>
-      
-            <select class="search-select">
-               <option>
+             
+            
+            <select class="search-select" name="location" id="location-select-id">
+               
+              
+               <option  value="all">
                 كل المناطق
                </option>
                {%for city in location%}
-                       <option value="{{city.id}}">{{city.name}}</option>
+                       <option value="{{city.id}}"  {% if selectedLocation%}{%if selectedLocation.id == city.id%}  selected {%endif%}{%endif%}>{{city.name}}</option>
                        {%endfor%}
             </select>
 
@@ -88,7 +99,7 @@
                 القريب
                 <i class="fa fa-map"></i>
             </a>
-
+        </form>
         </div>
 
         <a class="search-btn" href="{%url 'post.create'%}">
@@ -211,9 +222,11 @@
 
 
 
-        document.getElementById('user-menu').addEventListener('click', function() {
-            this.classList.toggle('active');
-          });
+      
+
+        document.getElementById('location-select-id').addEventListener('change', function(){
+           this.form.submit();
+        });  
     </script>
 
     {% block js %}

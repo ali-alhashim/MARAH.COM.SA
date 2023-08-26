@@ -26,8 +26,7 @@ def post_detail(request, pk):
 
 
 
-def search(request):
-    return render(request,'',{})
+
 
 
 def post_create(request):

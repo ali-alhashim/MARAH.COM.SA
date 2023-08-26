@@ -23,6 +23,9 @@ urlpatterns = [
     path('login/', views.login_view, name='login'),
     path('logout/', views.LogoutInterfaceView.as_view(), name='logout'),
     path('', views.home, name='home'),
+
+    path('Filter/', views.search, name='post.search'),
+
     path('post/', include('post_app.urls')),
 ]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
 
