@@ -12,20 +12,23 @@
                 <h2> 
                     {{post.subject}}
                 </h2>
-                <div class="card-sub-text">
-                   <p>
+                <ul class="card-sub-text">
+
+                   <li>
                     <i class="fa fa-location"></i>
                     {{post.location}}
-                   </p>
-                   <p>
+                   </li>
+
+                   <li>
                     <i class="fa fa-clock"></i>
                     {{post.created_date}}
-                    <br/>
-                    <br/>
+                   </li>
+                
+                   <li>
                     <i class="fa fa-user"></i>
                     {{post.created_by.nikname}}
-                   </p>
-                </div>
+                   </li>
+                </ul>
                
             </div>
             <div class="card-img">

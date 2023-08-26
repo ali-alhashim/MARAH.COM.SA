@@ -7,9 +7,9 @@
 <h5>{{error_message}}</h5>
     <form method="POST" class="login-form" id="login_form_id" action="{%url 'login'%}">
         {% csrf_token %}
-    <input type="text"     name="username" placeholder="أدخل أسم المستخدم" size="50">
-    <input type="password" name="password" placeholder="أدخل كلمة المرور">
-    <input type="submit" value="دخول">
+    <input type="text"     name="username" placeholder="أدخل أسم المستخدم" size="50" class="login-user">
+    <input type="password" name="password" placeholder="أدخل كلمة المرور" class="login-user">
+    <input type="submit" value="دخول" class="login-btn">
     </form>
 </div>
 {% endblock main_content %}

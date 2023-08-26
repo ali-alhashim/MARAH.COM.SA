@@ -2,8 +2,10 @@ from django.shortcuts import render
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 from post_app.models import Post
+from django.contrib.auth import logout
+from django.contrib.auth.views import LoginView, LogoutView
 def home(request):
-    posts = Post.objects.all()
+    posts = Post.objects.all().order_by('-created_date')
     return render(request, 'Marah/home.html',{"posts":posts})
 
 
@@ -23,6 +25,21 @@ def login_view(request):
             return render(request, 'Marah/login.html', {'error_message': error_message})
     
     return render(request, 'Marah/login.html')
+
+
+
+
+
+### Logout
+class LogoutInterfaceView(LogoutView):
+    template_name = 'Marah/logout.html'
+    def get(self, request, *args, **kwargs):
+      
+        context = self.get_context_data(**kwargs)
+        logout(self.request)
+
+        return self.render_to_response(context)
+    
 
 
 

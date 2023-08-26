@@ -3,19 +3,25 @@ from django.http import JsonResponse, HttpResponseRedirect
 from .models import Sub_Category, Post_Category, Post, Location, Post_Images, Post_Comment
 from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse_lazy
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
 def post_detail(request, pk):
     thePost = Post.objects.get(pk=pk)
-    if request.method=="POST":
-        comment = request.POST.get('comment')
-        newComment = Post_Comment(
-                                   post = thePost,
-                                   created_by = request.user,
-                                   comment    = comment
-                                 )
-        newComment.save()
+    if request.method == "POST":
+        print('check befor you post comment if the user authenticated')
+        if request.user.is_authenticated:
+            comment = request.POST.get('comment')
+            newComment = Post_Comment(
+                                    post = thePost,
+                                    created_by = request.user,
+                                    comment    = comment
+                                    )
+            newComment.save()
+        else:
+            print('you must login before you post your comment')
+            return HttpResponseRedirect(reverse_lazy('login'))
     return render(request, 'Post/detail.html', {"thePost":thePost})
 
 

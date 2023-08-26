@@ -72,6 +72,21 @@
     max-width: 250px;
   }
 
+  .login-user{
+    font-size: 18px;
+    padding: 10px;
+    margin: 5px;
+    font-weight: 600;
+    text-align: left;
+  }
+
+  .login-btn
+  {
+    font-size: 18px;
+    padding: 10px;
+    margin: 5px;
+    font-weight: 600;
+  }
 
 *{
     padding: 0;
@@ -148,6 +163,14 @@ nav{
     display: flex;
     justify-content: space-between;
     align-items: center;
+    list-style: none;
+    gap: 1rem;
+    justify-content: space-between;
+    width: 100%;
+    background-color: #dbdada;
+    padding: 5px;
+    border-radius: 1rem;
+
 }
 
 .card-img img{
@@ -525,3 +548,30 @@ hr{
 .create-table  tr td:nth-child(n){
     padding: 14px;
 }
+
+
+#dropdown-menu {
+    display: none;
+    position: absolute;
+    background: #fff;
+    transition: all ease-in-out 0.3s;
+    padding: 5px;
+    border-radius: 1rem;
+    border: #707070 solid 1px;
+    
+  }
+
+  #dropdown-menu li {
+    margin: 5px;
+  }
+
+  #dropdown-menu li a
+  {
+   
+    text-decoration: none;
+  }
+  
+  #user-menu.active #dropdown-menu {
+    display: block;
+    transition: all ease-in-out 0.3s;
+  }

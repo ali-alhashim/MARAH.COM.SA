@@ -25,8 +25,26 @@
                    
                 </li>
                 {%else%}
-                <li>
-                    يالله حيهم : {{request.user.full_name}}
+                <li id="user-menu">
+                    يالله حيهم : {{request.user.full_name}} <i class="fa-solid fa-caret-down"></i>
+
+                    <ul id="dropdown-menu">
+                        <li>
+                            <a href="#">
+                                إعلاناتي
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                الرسائل الخاصه
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{%url 'logout'%}">
+                                 خروج
+                            </a>
+                        </li>
+                      </ul>
                 </li>
                 {%endif%}
 
@@ -190,6 +208,12 @@
         {
             document.getElementById('login_div_id').classList.remove('active-login');
         }
+
+
+
+        document.getElementById('user-menu').addEventListener('click', function() {
+            this.classList.toggle('active');
+          });
     </script>
 
     {% block js %}
