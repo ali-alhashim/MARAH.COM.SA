@@ -146,3 +146,14 @@ AUTH_USER_MODEL = 'user_app.User'
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 LOGIN_REDIRECT_URL  = 'login.html'
 LOGOUT_REDIRECT_URL = 'logout.html'
+
+
+
+#SMTP Configuration
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'alicode.io@gmail.com'
+EMAIL_HOST_PASSWORD = 'dasyeduaacqgbsnm'
+EMAIL_TIMEOUT = 100

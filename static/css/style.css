@@ -470,6 +470,66 @@ hr{
     font-weight: 600;
     border: #858585 1px solid;
 
+  
+
+}
+
+.errorlist{
+    list-style: none;
+    color: red;
+    font-weight: 600;
+    padding: 5px;
+}
+
+
+.center-div-m{
+width: 100%;
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+align-items: center;
+margin: 5px;
+}
+
+.text-password{
+    text-align: left;
+    text-anchor: start;
+    width: 100%;
+    padding: 3px;
+    font-size: large;
+    border-radius: 0.5rem;
+    border: var(--secondary ) solid 1px;
+    margin: auto;
+    direction: ltr;
+}
+.text-mobile{
+    text-align: left;
+    text-anchor: start;
+    width: 100%;
+    padding: 3px;
+    font-size: large;
+    border-radius: 0.5rem;
+    border: var(--secondary ) solid 1px;
+    margin: auto;
+    direction: ltr;
+}
+
+.text-email{
+    text-align: left;
+    text-anchor: start;
+    width: 100%;
+    padding: 3px;
+    font-size: large;
+    border-radius: 0.5rem;
+    border: var(--secondary ) solid 1px;
+    margin: auto;
+    direction: ltr;
+}
+
+.new-user-btn{
+    text-decoration: none;
+    font-weight: 600;
+    text-align: center;
 }
 
 .posted-comment{

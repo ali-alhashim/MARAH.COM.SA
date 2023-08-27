@@ -27,6 +27,7 @@ urlpatterns = [
     path('Filter/', views.search, name='post.search'),
 
     path('post/', include('post_app.urls')),
+    path('User/', include('user_app.urls')),
 ]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
 
 

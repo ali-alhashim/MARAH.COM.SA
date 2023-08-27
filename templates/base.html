@@ -8,9 +8,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
     <link rel="stylesheet" href="{% static 'fontawesome_6/css/all.min.css' %}"/>
+
+      <!--sweet Alert -->
+      <script src="{% static 'lib/sweetalert2/sweetalert2.all.min.js' %}"></script>
+      <link rel="stylesheet" href="{% static 'lib/sweetalert2/sweetalert2.min.css' %}">
+
     <title>موقع مراح</title>
 </head>
 <body >
+
+
+    <!--Alert-->
+    {% if messages %}
+
+    {% for message in messages %}
+   
+       
+        {%if message.tags == 'success'%}
+       <!--success-->
+        <script>
+            console.log('{{message.tags}}');
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: '{{ message }}',
+                showConfirmButton: false,
+                timer: 1500
+              })
+        </script>
+
+         <!--error-->
+        {%elif message.tags == 'error'%}
+        <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: '{{ message }}',
+           
+          })
+        </script>
+        {%endif%}
+   
+    {% endfor %}
+
+{% endif %}
+    <!-- / alert-->
 
     <!--====Navbar============-->
     <nav>
@@ -204,6 +246,13 @@
         <input type="password" name="password" placeholder="أدخل كلمة المرور">
         <input type="submit" value="دخول">
         </form>
+        <br/>
+       
+        <div class="login-form">
+        <a href="{%url 'register.new.user'%}" class="new-user-btn">
+            تسجيل عضو جديد
+        </a>
+    </div>
         </div>
 
     </div>

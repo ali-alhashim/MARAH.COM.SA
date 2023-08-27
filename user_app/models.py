@@ -47,11 +47,13 @@ class MyAccountManager(BaseUserManager):
 class User(AbstractBaseUser, PermissionsMixin):
     email               = models.EmailField(unique=True)
     full_name           = models.CharField(max_length=255)
-    nikname           = models.CharField(max_length=100, blank=True, null=True)
-    created_date      = models.DateTimeField(auto_now_add=True)
-    last_update       = models.DateTimeField(auto_now=True)
+    nikname             = models.CharField(max_length=100, blank=True, null=True)
+    email_verified      = models.BooleanField(default=False)
+    mobile_verified     = models.BooleanField(default=False)
+    created_date        = models.DateTimeField(auto_now_add=True)
+    last_update         = models.DateTimeField(auto_now=True)
    
-    mobile            = models.CharField(max_length=255, blank=True ,  default='+966 ', null=True)
+    mobile              = models.CharField(max_length=255, blank=True ,  default='+966 ', null=True)
     
     #username          = None
    

@@ -30,3 +30,25 @@ class CustomUserChangeForm(forms.ModelForm):
             user.save()
         return user
     
+
+
+class RegistrationForm(forms.ModelForm):
+        password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder':'password', 'class':'text-password'}))
+        confirm_password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder':'Confirm password', 'class':'text-password'}))
+        email            = forms.EmailField(widget=forms.EmailInput(attrs={'class':'text-email'}))
+        full_name             = forms.CharField(widget=forms.TextInput(attrs={'class':'text-subject'}))
+        mobile           = forms.CharField(widget=forms.TextInput(attrs={'class':'text-mobile'}))
+        nikname          = forms.CharField(widget=forms.TextInput(attrs={'class':'text-subject'}))
+        class Meta:
+            model = User
+            fields = ['full_name', 'mobile', 'email','nikname', 'password']
+
+        
+        def clean(self):
+            cleaned_data = super(RegistrationForm, self).clean()
+            password     = cleaned_data.get('password')
+            confirm_password = cleaned_data.get('confirm_password')
+
+            if password != confirm_password:
+                raise forms.ValidationError('password dose not match !!')
+        

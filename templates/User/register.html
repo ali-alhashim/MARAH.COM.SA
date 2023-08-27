@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+
+{% block main_content %}
+
+<div class="main-content">
+
+<form action="{%url 'register.new.user'%}" method="POST"> 
+    {% csrf_token %}
+
+   
+    <div class="center-div-m">
+    {{form.non_field_errors}}
+    
+      
+    <h3> تسجيل عضو جديد</h3>
+    </div>
+    
+    <div class="post-card">
+     
+        <table class="create-table">
+            <tr>
+                <td>
+                    <label>الأسم</label>
+                   
+                </td>
+                <td>
+                    {{form.full_name}}
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <label>رقم الجوال</label>
+                </td>
+                <td>
+                    {{form.mobile}}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>البريد الإلكتروني {{form.email.errors}}</label>
+                </td>
+                <td>
+                    {{form.email}}
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <label>اللقب / الأسم الرمزي</label>
+                </td>
+                <td>
+                    {{form.nikname}}
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <label>كلمة المرور</label>
+                </td>
+                <td>
+                    {{form.password}}
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <label>تأكد كلمة المرور</label>
+                </td>
+                <td>
+                    {{form.confirm_password}}
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="2">
+                    <input type="submit" value="تسجيل" class="send-btn">
+                </td>
+            </tr>
+
+        </table>
+
+   
+            
+              
+      
+      
+     
+        
+   
+    
+    
+       
+    
+ 
+           
+          
+    
+  
+
+
+
+
+    
+    </div>
+   
+</form>
+</div>
+
+{% endblock main_content %}
