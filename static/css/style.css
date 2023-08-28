@@ -51,13 +51,15 @@
 
   .login-form{
    
-    max-height: fit-content;
+    width: 600px;
     display: flex;
     flex-direction: column;
     border-radius: 0.5rem;
     background: var( --dark-primary );
     z-index: 55;
     padding: 10px;
+    align-items: center;
+    justify-content: space-between;
   }
 
   .active-login{

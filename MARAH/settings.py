@@ -9,7 +9,8 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-
+from firebase_admin import credentials
+import firebase_admin
 from pathlib import Path
 import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -157,3 +158,8 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'alicode.io@gmail.com'
 EMAIL_HOST_PASSWORD = 'dasyeduaacqgbsnm'
 EMAIL_TIMEOUT = 100
+
+
+root_path = BASE_DIR
+cred = credentials.Certificate(f"{root_path}/marahsmsgateway-firebase-adminsdk-uog7c-23a3eb734b.json")
+firebase_admin.initialize_app(cred)

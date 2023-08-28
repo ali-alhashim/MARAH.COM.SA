@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+
+{% block main_content %}
+
+<div class="main-content">
+<h5>{{error_message}}</h5>
+    <form method="POST" class="" id="login_form_id" action="{%url 'OTP.Enter'%}">
+        {% csrf_token %}
+    <input type="text"     name="otp" placeholder="أدخل رقم الكود المرسل على جوالك" size="50" class="text-subject">
+   
+    <input type="submit" value="دخول" class="login-btn">
+    </form>
+</div>
+{% endblock main_content %}

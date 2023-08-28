@@ -8,6 +8,15 @@ from django.template.loader import render_to_string
 from.models import User
 from .forms import RegistrationForm
 from django.contrib import messages
+import requests
+from firebase_admin import  auth, messaging
+
+import random
+
+
+
+   
+
 
 # Create your views here.
 
@@ -64,3 +73,17 @@ def activate(request, uidb64, token):
     else:
         messages.error(request, 'invlied activation link!') 
     return redirect('login')
+
+############################################## Auth by phone with Firebase api AIzaSyAHaM4itupXBqfaQQ-2wcRx581MMtwcvhY
+
+def loginWithMobileNumber(request):
+    # get user Entered mobile
+    mobile = request.POST.get('mobile')
+
+
+    return render(request,'User/OTP_verification_page.html',{})
+
+
+
+def verifyOTP(request):
+  return
