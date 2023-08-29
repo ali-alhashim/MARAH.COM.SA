@@ -160,6 +160,4 @@ EMAIL_HOST_PASSWORD = 'dasyeduaacqgbsnm'
 EMAIL_TIMEOUT = 100
 
 
-root_path = BASE_DIR
-cred = credentials.Certificate(f"{root_path}/marahsmsgateway-firebase-adminsdk-uog7c-23a3eb734b.json")
-firebase_admin.initialize_app(cred)
+

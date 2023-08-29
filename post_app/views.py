@@ -28,7 +28,7 @@ def post_detail(request, pk):
 
 
 
-
+@login_required(login_url='login')
 def post_create(request):
     if request.method == "POST":
         category     = Post_Category.objects.get(pk=request.POST.get('category'))

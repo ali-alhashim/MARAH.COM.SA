@@ -8,12 +8,10 @@ from django.template.loader import render_to_string
 from.models import User
 from .forms import RegistrationForm
 from django.contrib import messages
-import requests
-from firebase_admin import  auth, messaging
-
-import random
-
-
+import vonage
+from django.http import HttpResponseRedirect
+from django.urls import reverse_lazy
+from django.contrib.auth import authenticate, login
 
    
 
@@ -77,13 +75,56 @@ def activate(request, uidb64, token):
 ############################################## Auth by phone with Firebase api AIzaSyAHaM4itupXBqfaQQ-2wcRx581MMtwcvhY
 
 def loginWithMobileNumber(request):
+    # check if user already register if not let him first register for one time
+
     # get user Entered mobile
+    ## send otp
+    ## let user enter 
     mobile = request.POST.get('mobile')
+    user_exists = User.objects.filter(mobile=mobile).exists()
+    if user_exists:
+
+        client = vonage.Client(key="e48cf721", secret="0kzxY067YT5r33sn")
+        verify = vonage.Verify(client)
+        response = verify.start_verification(number=mobile, brand="Marah")
+
+        if response["status"] == "0":
+            print("Started verification request_id is %s" % (response["request_id"]))
+            request.session['request_id'] = response["request_id"]
+            request.session['mobile'] = mobile
+        else:
+            print("Error: %s" % response["error_text"])
 
 
-    return render(request,'User/OTP_verification_page.html',{})
+        return render(request,'User/OTP_verification_page.html',{})
+    else:
+        messages.error(request, 'أنت عضو جديد عليك التسجيل أولاً حتى تسجل الدخول برقم الجوال')
+        return HttpResponseRedirect(reverse_lazy('register.new.user'))
 
 
 
 def verifyOTP(request):
-  return
+  client = vonage.Client(key="e48cf721", secret="0kzxY067YT5r33sn")
+  verify = vonage.Verify(client)
+  CODE = request.POST.get('otp')
+  response = verify.check(request.session['request_id'], code=CODE)
+
+  if response["status"] == "0":
+        print("Verification successful, event_id is %s" % (response["event_id"]))
+        ## let user login
+        user = User.objects.filter(mobile=request.session['mobile']).first()
+        print('Welcome back', user.full_name)
+        login(request, user)
+       
+
+        del request.session['request_id']
+        del request.session['mobile']
+        return HttpResponseRedirect(reverse_lazy('home'))
+  else:
+        print("Error: %s" % response["error_text"])
+        del request.session['request_id']
+        return HttpResponseRedirect(reverse_lazy('login'))
+
+
+  
+  
