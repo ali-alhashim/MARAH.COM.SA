@@ -284,6 +284,40 @@ input{
     gap: 1rem;
 }
 
+.sub-Categories{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    margin-top: 25px;
+    background: #d3ccbd;
+    border-radius: 0.5rem;
+    gap: 1rem;
+}
+
+.sub-Categories a{
+    width: 150px;
+    height: 100%;
+    min-height: 100%;
+    background: #fff;
+    padding: 5px 14px;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    text-decoration: none;
+    text-align: center;
+    color: #000;
+    font-weight: 600;
+}
+
+.sub-Categories a:hover{
+    transition: all 0.3s ease-in-out;
+    transform: scale(1.1);
+    box-shadow: #888888 1px 1px 1px 1px;
+}
+
+
 
 
 .Categories a{

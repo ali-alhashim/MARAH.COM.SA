@@ -3,7 +3,28 @@
 
 
 {% block main_content %}
+
+{%if selectedcategory%}
+<!--========Categories=========-->
+<div class="Categories-warp">
+<div class="sub-Categories">
+
+   {%for category in selectedcategory.sub_categories.all%}
+  <a href="#">
+  {{category.name}}
+  </a> 
+  {%endfor%}
+
+ 
+
+</div>
+</div>
+<!--=======/Categories=========-->
+{%endif%}
+
     <div class="main-content">
+
+      
        
 {%for post in posts%}
         <!--Card-->

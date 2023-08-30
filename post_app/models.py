@@ -27,7 +27,7 @@ class Post_Category(models.Model):
 
 # every category has many sub category
 class Sub_Category(models.Model):
-    category     = models.ForeignKey(Post_Category, on_delete=models.DO_NOTHING, blank=True, null=True)
+    category     = models.ForeignKey(Post_Category, on_delete=models.DO_NOTHING, blank=True, null=True, related_name='sub_categories')
     name         = models.CharField(max_length=250, blank=True, null=True)
     created_date = models.DateTimeField(auto_now_add=True)
     last_update  = models.DateTimeField(auto_now=True)
