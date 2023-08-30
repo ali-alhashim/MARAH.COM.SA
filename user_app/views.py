@@ -11,8 +11,8 @@ from django.contrib import messages
 import vonage
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
-from django.contrib.auth import authenticate, login
-
+from django.contrib.auth import  login
+from django.contrib.auth.decorators import login_required
    
 
 
@@ -124,6 +124,15 @@ def verifyOTP(request):
         print("Error: %s" % response["error_text"])
         del request.session['request_id']
         return HttpResponseRedirect(reverse_lazy('login'))
+  
+
+
+
+  ######## MyAccount
+@login_required(login_url='login')
+def MyAccount_index(request):
+    
+    return render(request, 'User/MyAccount/index.html', {})
 
 
   

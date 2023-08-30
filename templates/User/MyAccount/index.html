@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block main_content %}
+
+
+<div class="main-content">
+
+    <div class="window-box">
+        <form method="POST">
+        <table class="window-table">
+            <tr>
+                <td>
+                    الأسم
+                </td>
+                <td>
+                    <input type="text" name="full_name" value="{{request.user.full_name}}" class="text-subject">
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    الأسم الرمزي / اللقب
+                </td>
+                <td>
+                    <input type="text" name="nikname" value="{{request.user.nikname}}" class="text-subject">
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    البريد الإلكتروني
+                </td>
+                <td>
+                    <input type="email" name="email" value="{{request.user.email}}" class="text-email">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                   الجوال
+                </td>
+                <td>
+                    <input type="text" name="mobile" value="{{request.user.mobile}}" class="text-mobile">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                  <input type="submit" value="  حفظ التعديلات" class="send-btn">
+                </td>
+                <td>
+                    <a class="send-btn" id="Password-change-id">تغيير كلمة المرور</a>
+                </td>
+            </tr>
+        </table>
+    </form>
+    </div>
+
+</div>
+
+
+{% endblock main_content %}

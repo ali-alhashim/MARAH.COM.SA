@@ -4,7 +4,7 @@ from .models import Sub_Category, Post_Category, Post, Location, Post_Images, Po
 from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
-
+from django.contrib import messages
 # Create your views here.
 
 def post_detail(request, pk):
@@ -28,8 +28,12 @@ def post_detail(request, pk):
 
 
 
-@login_required(login_url='login')
+
 def post_create(request):
+    
+    if not request.user.is_authenticated:
+        messages.error(request, 'يجب عليك تسجيل الدخول حتى تتمكن من إضافة إعلان')
+        return HttpResponseRedirect(reverse_lazy('login'))
     if request.method == "POST":
         category     = Post_Category.objects.get(pk=request.POST.get('category'))
         sub_category = Sub_Category.objects.get(pk=request.POST.get('sub_category'))
