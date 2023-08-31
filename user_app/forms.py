@@ -9,7 +9,7 @@ class CustomUserChangeForm(forms.ModelForm):
     class Meta:
 
         model = User
-        fields = ["email", "full_name", "nikname","mobile","profile_photo","language","is_active","is_admin","is_staff","is_superuser"]
+        fields = ["email", "full_name", "nikname","mobile","profile_photo","language","is_active","is_admin","is_staff","is_superuser","email_verified","mobile_verified"]
         labels = {
                     'email': 'Email Address',
                     'is_active': 'Active',

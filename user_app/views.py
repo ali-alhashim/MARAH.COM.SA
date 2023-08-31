@@ -113,6 +113,8 @@ def verifyOTP(request):
         print("Verification successful, event_id is %s" % (response["event_id"]))
         ## let user login
         user = User.objects.filter(mobile=request.session['mobile']).first()
+        user.mobile_verified = True
+        user.save()
         print('Welcome back', user.full_name)
         login(request, user)
        
@@ -133,6 +135,14 @@ def verifyOTP(request):
 def MyAccount_index(request):
     
     return render(request, 'User/MyAccount/index.html', {})
+
+
+#### ResetPassword
+@login_required(login_url='login')
+def ResetPassword(request):
+    if request.method =="POST":
+        current_password = request.POST.get('current_password')
+    return render(request, 'User/MyAccount/ResetPassword.html', {})
 
 
   
