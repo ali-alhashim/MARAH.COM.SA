@@ -33,7 +33,7 @@
    
           <div class="post-body">
            <p>
-            {{thePost.text}}
+            {{thePost.text | safe}}
            </p>
    
            <br/>
@@ -71,7 +71,7 @@
            </div>
    
            <div class="posted-message">
-              {{comment.comment}}
+              {{ comment.comment}}
            </div>
    
          </div>

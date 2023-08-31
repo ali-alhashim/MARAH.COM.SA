@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
+{%load static%}
 
+{% block extrahedar %}
+<script src="{%static 'lib/tinymce/js/tinymce/tinymce.min.js'%}" referrerpolicy="origin"></script>
+{% endblock extrahedar %}
 
 
 
@@ -76,7 +80,7 @@
       
 
        <div class="comment">
-           <textarea placeholder="نص الإعلان" name="text"></textarea>    
+           <textarea placeholder="نص الإعلان" name="text" id="id_post_text"></textarea>    
        </div>
 
        <hr>
@@ -151,6 +155,24 @@
             }
         });
     });
+
+
+
+
+   
+      
+    
+        tinymce.init({
+            selector: 'textarea#id_post_text',
+            promotion: false,
+            branding: false
+    
+          });
+    
+        
+    
+    
+
 </script>
 {% endblock js %}
 

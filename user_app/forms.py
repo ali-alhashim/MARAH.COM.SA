@@ -37,7 +37,7 @@ class RegistrationForm(forms.ModelForm):
         confirm_password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder':'Confirm password', 'class':'text-password'}))
         email            = forms.EmailField(widget=forms.EmailInput(attrs={'class':'text-email'}))
         full_name             = forms.CharField(widget=forms.TextInput(attrs={'class':'text-subject'}))
-        mobile           = forms.CharField(widget=forms.TextInput(attrs={'class':'text-mobile'}))
+        mobile           = forms.CharField(widget=forms.TextInput(attrs={'class':'text-mobile','value':'966'}))
         nikname          = forms.CharField(widget=forms.TextInput(attrs={'class':'text-subject'}))
         class Meta:
             model = User

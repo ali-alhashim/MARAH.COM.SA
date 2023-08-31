@@ -13,7 +13,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.contrib.auth import  login
 from django.contrib.auth.decorators import login_required
-   
+
 
 
 # Create your views here.
@@ -142,6 +142,23 @@ def MyAccount_index(request):
 def ResetPassword(request):
     if request.method =="POST":
         current_password = request.POST.get('current_password')
+        new_password     = request.POST.get('new_password')
+        confirm_password = request.POST.get('confirm_password')
+    
+        if new_password == confirm_password:
+            user = User.objects.get(pk=request.user.id)
+            if user.check_password(current_password):
+                user.set_password(new_password)
+                user.save()
+                messages.success(request,'تم تغيير كلمة المرور الرجاء أستخدام كلمة المرور الجديدة لــ تسجيل الدخول')
+                return HttpResponseRedirect(reverse_lazy('login'))
+            else:
+                messages.error(request, 'كلمة المرور الحاليه غير صحيحة')
+                return HttpResponseRedirect(reverse_lazy('MyAccount.ResetPassword'))
+        else:
+            messages.error(request, 'كلمة المرور الجديدة غير متطابقة')
+            return HttpResponseRedirect(reverse_lazy('MyAccount.ResetPassword'))
+
     return render(request, 'User/MyAccount/ResetPassword.html', {})
 
 

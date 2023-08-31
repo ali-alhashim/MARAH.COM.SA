@@ -47,7 +47,7 @@ class MyAccountManager(BaseUserManager):
 class User(AbstractBaseUser, PermissionsMixin):
     email               = models.EmailField(unique=True)
     full_name           = models.CharField(max_length=255)
-    nikname             = models.CharField(max_length=100, blank=True, null=True)
+    nikname             = models.CharField(max_length=100, blank=True, null=True, unique=True)
     email_verified      = models.BooleanField(default=False)
     mobile_verified     = models.BooleanField(default=False)
     created_date        = models.DateTimeField(auto_now_add=True)
