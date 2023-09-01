@@ -133,7 +133,33 @@ def verifyOTP(request):
   ######## MyAccount
 @login_required(login_url='login')
 def MyAccount_index(request):
-    
+    if request.method =="POST":
+        email     = request.POST.get('email')
+        full_name = request.POST.get('full_name')
+        nikname   = request.POST.get('nikname')
+        mobile    = request.POST.get('mobile')
+        user = User.objects.get(pk=request.user.id)
+
+        ## check if the user update his email or mobile or both
+        ## remove the veryfication of the old email and mobile
+        if mobile != user.mobile:
+            user.mobile_verified = False
+            print('user update his mobile')
+        if email != user.email:
+            user.email_verified  = False
+            print('user update his email')
+        try:
+            user.email     = email
+            user.full_name = full_name
+            user.nikname   = nikname
+            user.mobile    = mobile
+            user.save()
+            messages.success(request,'تم الحفظ')
+            return HttpResponseRedirect(reverse_lazy('MyAccount.index'))
+        except Exception as e:
+            print(e)
+            messages.error(request, 'حدث خطأ')
+
     return render(request, 'User/MyAccount/index.html', {})
 
 
