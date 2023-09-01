@@ -4,7 +4,7 @@ from django.utils import timezone
 import re
 
 # Create your models here.
-
+############################################## User
 class MyAccountManager(BaseUserManager):
     def created_user(self, full_name, email,is_staff, is_superuser,  password=None):
         if not email:
@@ -119,3 +119,15 @@ class User(AbstractBaseUser, PermissionsMixin):
             if perm == permissions_to_check[index]['codename']:
                 return True
 
+######################## \ user
+
+
+####### User Messages
+
+class UserMessage(models.Model):
+    from_user    = models.ForeignKey(User, on_delete=models.DO_NOTHING, blank=True, null=True, related_name='user_sent_messages')
+    to_user      = models.ForeignKey(User, on_delete=models.DO_NOTHING, blank=True, null=True, related_name='user_inbox_messages')
+    sent_date    = models.DateTimeField(auto_now_add=True)
+    read_date    = models.DateTimeField(blank=True, null=True)
+    subject      = models.CharField(max_length=255, blank=True, null=True)
+    message      = models.TextField(max_length=500, blank=True, null=True)

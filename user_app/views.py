@@ -5,7 +5,7 @@ from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
-from.models import User
+from.models import User, UserMessage
 from .forms import RegistrationForm
 from django.contrib import messages
 import vonage
@@ -13,7 +13,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.contrib.auth import  login
 from django.contrib.auth.decorators import login_required
-
+from django.db.models import Q
 
 
 # Create your views here.
@@ -188,5 +188,11 @@ def ResetPassword(request):
     return render(request, 'User/MyAccount/ResetPassword.html', {})
 
 
+#### UserMessage list
+
+def UserMessage_list(request):
+    user = User.objects.get(pk=request.user.id)
+    userInbox = UserMessage.objects.filter(Q(from_user = user) | Q(to_user = user))
+    return render(request,'User/MyMessages/list.html',{"userInbox":userInbox})
   
   

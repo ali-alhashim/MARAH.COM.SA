@@ -313,6 +313,44 @@ input{
     gap: 1rem;
 }
 
+.c-btn{
+    width: 150px;
+    height: 100%;
+    min-height: 100%;
+    background: #fff;
+    padding: 5px 14px;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    text-decoration: none;
+    text-align: center;
+    color: #000;
+    font-weight: 600;
+}
+
+.message-subject{
+    width: 100%;
+    max-width: fit-content;
+}
+
+.c-btn:hover{
+    transition: all 0.3s ease-in-out;
+    transform: scale(1.1);
+    box-shadow: #888888 1px 1px 1px 1px; 
+}
+
+.textarea-message{
+    width: 100%;
+    border-radius: 0.5rem;
+    padding: 10px;
+    font-size: 18px;
+    height: 200px;
+}
+
+.w-100{
+    width: 100% !important;
+}
+
 .sub-Categories a{
     width: 150px;
     height: 100%;
@@ -412,6 +450,21 @@ hr{
     margin-top: 15px;
     margin-bottom: 15px;
     box-shadow: #707070 1px 2px 5px 1px;
+}
+
+.message-table{
+    width: 100%;
+    background: var(--dark-primary);
+    border-spacing: 0;
+}
+
+.message-table thead{
+font-weight: 600;
+}
+
+.message-table td{
+    border-bottom: solid 1px #a1a1a1;
+    padding: 3px;
 }
 
 .row{
@@ -700,4 +753,18 @@ margin: 5px;
   #user-menu.active #dropdown-menu {
     display: block;
     transition: all ease-in-out 0.3s;
+  }
+
+  .post-options{
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    width: 100%;
+   
+    align-content: space-between;
+    justify-content: center; 
+    align-items: center;
+    background: var(--dark-primary);
+    padding: 5px;
+    border-radius: 1rem;
   }
