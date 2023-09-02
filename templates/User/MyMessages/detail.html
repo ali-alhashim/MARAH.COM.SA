@@ -59,7 +59,58 @@
                 لم يفتح الرسالة
                 {%endif%}
             </div>
+
+
         </div>
+
+
+       
+         {%if theMessage.message_replies.all%}
+         {%for reply in theMessage.message_replies.all%}
+         <div>
+         <div class="reply-from">
+         {{reply.reply_by.nikname}} |
+        <sub>
+         {{reply.sent_date}}
+        </sub>
+         </div>
+        <div class="message-body">
+            {{reply.message}}
+
+
+            <div class="read-status">
+                {%if reply.read_date%}
+                <img src="{%static 'img/CheckMark.png'%}">
+                {{reply.read_date}}
+                {%else%}
+                لم يفتح الرسالة
+                {%endif%}
+            </div>
+
+        </div>
+        </div>
+        {%endfor%}
+        {%endif%}
+   
+
+    </div>
+
+
+    <div class="message-container">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="hidden" name="message_id" value="{{theMessage.id}}">
+        <div class="message-body comment">
+            <textarea name="message_reply" class="">
+
+            </textarea>
+
+            <button href="#" class="send-btn">
+                إرسال رد
+                <i class="fa-regular fa-paper-plane"></i>
+            </button>
+        </div>
+    </form>
     </div>
       
 

@@ -28,6 +28,16 @@
   flex-direction: column;
 }
 
+.reply-from{
+    background: #FEFBF3;
+    width:fit-content;
+    margin-right: 3%;
+    padding: 10px;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+    font-weight: 600;
+}
+
 .read-status
 {
     font-size: small;

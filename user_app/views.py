@@ -5,7 +5,7 @@ from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
-from.models import User, UserMessage
+from.models import User, UserMessage, UserMessageReply
 from .forms import RegistrationForm
 from django.contrib import messages
 import vonage
@@ -226,4 +226,19 @@ def UserMessage_detail(request, message_id):
         theMessage.read_date = timezone.now()
         theMessage.save()
         theMessage = UserMessage.objects.get(pk=message_id)
+
+    messageReply = UserMessageReply.objects.filter(reply_for=theMessage)
+    for reply in messageReply:
+        if reply.reply_by != theUserOpen:
+           reply.read_date = timezone.now()
+           reply.save()
+    if request.method=="POST":
+        theMessage = UserMessage.objects.get(pk=request.POST.get('message_id'))
+        message_reply = request.POST.get('message_reply')
+        NewMessageReply = UserMessageReply(
+                                             reply_for = theMessage,
+                                             message   = message_reply,
+                                             reply_by  = request.user,
+                                          )
+        NewMessageReply.save()
     return render(request, 'User/MyMessages/detail.html',{"theMessage":theMessage})

@@ -52,7 +52,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     mobile_verified     = models.BooleanField(default=False)
     created_date        = models.DateTimeField(auto_now_add=True)
     last_update         = models.DateTimeField(auto_now=True)
-    fcm_token           = models.CharField(max_length=500, blank=True, null=True)
+    
     mobile              = models.CharField(max_length=255, blank=True ,  default='+966 ', null=True)
     
     #username          = None
@@ -141,4 +141,4 @@ class UserMessageReply(models.Model):
     reply_by    = models.ForeignKey(User, on_delete=models.DO_NOTHING, blank=True, null=True)
     read_date   = models.DateTimeField(blank=True, null=True)
     class Meta:
-        ordering = ['-sent_date']
+        ordering = ['sent_date']
