@@ -10,6 +10,18 @@
     background: rgb(100, 187, 100) !important;
 }
 
+.login-box{
+    width: 100%;
+    max-width: 700px;
+    padding: 5px;
+    background: var(--dark-primary);
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+    font-size: 18px;
+}
 .window-box{
     width: 100%;
     max-width: 700px;
@@ -66,6 +78,18 @@
     z-index: 50;
   }
 
+  .message-table tbody tr{
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    background: var(--dark-primary);
+  }
+  .message-table tbody tr:hover{
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    box-shadow: #888888 5px 5px 10px 5px;
+    transform: scaleX(1.02)
+  }
+
   .login-form{
    
     width: 600px;
@@ -77,6 +101,7 @@
     padding: 10px;
     align-items: center;
     justify-content: space-between;
+    gap: 1rem;
   }
 
   .active-login{
@@ -86,11 +111,11 @@
 
   .login-background input{
     padding: 5px;
-    margin: 10px;
+    
     font-size: large;
     border-radius: 0.5rem;
     border: #c2c2c2 solid 1px;
-    max-width: 250px;
+    
   }
 
   .login-user{

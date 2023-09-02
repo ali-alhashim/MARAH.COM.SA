@@ -14,15 +14,28 @@
                     <td>من</td>
                     <td>إلى</td>
                     <td>العنوان</td>
-                    <td>الحاله</td>
+                    <td>تاريخ قراءة الرسالة من المستقبل</td>
                 </tr>
             </thead>
             <tbody>
                 {%if userInbox%}
                 {%for item in userInbox%}
+                <a href="#">
                 <tr>
                     <td>{{forloop.counter}}</td>
+                    <td>{{item.sent_date}}</td>
+                    <td>{{item.from_user.nikname}}</td>
+                    <td>{{item.to_user.nikname}}</td>
+                    <td>{{item.subject}}</td>
+                    <td>
+                        {%if item.read_date%}
+                        {{item.read_date}}
+                        {%else%}
+                        حتى الأن لم يفتح الرسالة
+                        {%endif%}
+                    </td>
                 </tr>
+               </a>
                 {%endfor%}
                 {%endif%}
             </tbody>

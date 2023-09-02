@@ -194,5 +194,26 @@ def UserMessage_list(request):
     user = User.objects.get(pk=request.user.id)
     userInbox = UserMessage.objects.filter(Q(from_user = user) | Q(to_user = user))
     return render(request,'User/MyMessages/list.html',{"userInbox":userInbox})
+
+
+#### Create User Message
+
+def UserMessage_create(request):
+    if request.method =="POST":
+        send_to = request.POST.get('send_to')
+        message = request.POST.get('message')
+        subject = request.POST.get('subject')
+
+        from_user = User.objects.get(pk=request.user.id)
+        to_user   = User.objects.get(pk=send_to) 
+        newMessage = UserMessage(
+                                    from_user  =from_user,
+                                    to_user    =to_user,
+                                    subject    =subject,
+                                    message    =message, 
+                                )
+        newMessage.save()
+        messages.success(request, " تم إرسال الرسالة")
+        return HttpResponseRedirect(reverse_lazy('User.Message.list'))
   
   

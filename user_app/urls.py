@@ -9,5 +9,6 @@ urlpatterns = [
     path('MyAccount/index/', views.MyAccount_index, name='MyAccount.index'),
     path('MyAccount/index/ResetPassword', views.ResetPassword, name='MyAccount.ResetPassword'),
     path('MyMessages/list', views.UserMessage_list, name='User.Message.list'),
+    path('UserMessage/create', views.UserMessage_create, name='User.Message.create')
     
 ]

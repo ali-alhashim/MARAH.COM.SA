@@ -131,3 +131,5 @@ class UserMessage(models.Model):
     read_date    = models.DateTimeField(blank=True, null=True)
     subject      = models.CharField(max_length=255, blank=True, null=True)
     message      = models.TextField(max_length=500, blank=True, null=True)
+    class Meta:
+        ordering = ['-sent_date']
