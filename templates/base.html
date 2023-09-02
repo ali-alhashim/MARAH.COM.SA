@@ -167,7 +167,7 @@
     <div class="Categories">
 
         {%for category in categories%}
-       <a href="#">
+       <a href="{%url 'post.search'%}?category={{category.id}}&searchKey=&location=all">
        {{category.name}}
        </a> 
        {%endfor%}
