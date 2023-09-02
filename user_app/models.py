@@ -133,3 +133,10 @@ class UserMessage(models.Model):
     message      = models.TextField(max_length=500, blank=True, null=True)
     class Meta:
         ordering = ['-sent_date']
+
+class UserMessageReply(models.Model):
+    reply_for   = models.ForeignKey(UserMessage, on_delete=models.DO_NOTHING, blank=True, null=True)
+    sent_date   = models.DateTimeField(auto_now_add=True)
+    message     = models.TextField(max_length=500, blank=True, null=True)
+    reply_by    = models.ForeignKey(User, on_delete=models.DO_NOTHING, blank=True, null=True)
+    read_date   = models.DateTimeField(blank=True, null=True)
