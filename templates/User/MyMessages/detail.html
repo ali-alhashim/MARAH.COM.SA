@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block main_content %}
+
+<div class="main-content">
+
+
+    <div class="message-container">
+
+        <div class="message-header">
+            <table>
+                <tr>
+                    <td>
+                        العنوان
+                    </td>
+                    <td>
+                        {{theMessage.subject}}
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        من
+                    </td>
+                    <td>
+                        {{theMessage.from_user.nikname}}
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        إلى
+                    </td>
+                    <td>
+                        {{theMessage.to_user.nikname}}
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        تاريخ الإرسال
+                    </td>
+                    <td>
+                        {{theMessage.sent_date}}
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="message-body">
+            {{theMessage.message}}
+
+            <div class="read-status">
+                {%if theMessage.read_date%}
+                <img src="{%static 'img/CheckMark.png'%}">
+                {{theMessage.read_date}}
+                {%else%}
+                لم يفتح الرسالة
+                {%endif%}
+            </div>
+        </div>
+    </div>
+      
+
+</div>
+
+{% endblock main_content %}

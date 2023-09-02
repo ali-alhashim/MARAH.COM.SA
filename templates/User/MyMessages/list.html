@@ -20,8 +20,10 @@
             <tbody>
                 {%if userInbox%}
                 {%for item in userInbox%}
-                <a href="#">
-                <tr>
+
+              
+                <tr  class="clickable-row" data-href="{% url 'User.Message.detail' message_id=item.id %}">
+
                     <td>{{forloop.counter}}</td>
                     <td>{{item.sent_date}}</td>
                     <td>{{item.from_user.nikname}}</td>
@@ -35,7 +37,7 @@
                         {%endif%}
                     </td>
                 </tr>
-               </a>
+              
                 {%endfor%}
                 {%endif%}
             </tbody>
@@ -45,3 +47,13 @@
 </div>
 
 {% endblock main_content %}
+
+{% block js %}
+<script>
+    $(document).ready(function() {
+        $(".clickable-row").click(function() {
+            window.location = $(this).data("href");
+        });
+    });
+</script>
+{% endblock js %}

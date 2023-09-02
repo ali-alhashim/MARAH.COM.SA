@@ -8,7 +8,9 @@ urlpatterns = [
     path('login/With/MobileNumber/OTP',views.verifyOTP,name='OTP.Enter'),
     path('MyAccount/index/', views.MyAccount_index, name='MyAccount.index'),
     path('MyAccount/index/ResetPassword', views.ResetPassword, name='MyAccount.ResetPassword'),
+
     path('MyMessages/list', views.UserMessage_list, name='User.Message.list'),
-    path('UserMessage/create', views.UserMessage_create, name='User.Message.create')
+    path('UserMessage/create', views.UserMessage_create, name='User.Message.create'),
+    path('UserMessage/detail/<int:message_id>', views.UserMessage_detail, name='User.Message.detail'),
     
 ]

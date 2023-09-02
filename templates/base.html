@@ -13,6 +13,9 @@
       <script src="{% static 'lib/sweetalert2/sweetalert2.all.min.js' %}"></script>
       <link rel="stylesheet" href="{% static 'lib/sweetalert2/sweetalert2.min.css' %}">
 
+      <!--jQuery-->
+      <script src="{% static 'js/jquery-3-7-1.js' %}"></script>
+
       {% block extrahedar %}
       {% endblock extrahedar %}
 
@@ -266,8 +269,8 @@
                 
             </h3>
             {% csrf_token %}
-        <input type="text"     name="username" placeholder="أدخل أسم المستخدم">
-        <input type="password" name="password" placeholder="أدخل كلمة المرور">
+        <input type="text"     name="username" placeholder="أدخل أسم المستخدم" class="text-email">
+        <input type="password" name="password" placeholder="أدخل كلمة المرور" class="text-password">
         <input type="submit" value="دخول">
         </form>
         <br/>

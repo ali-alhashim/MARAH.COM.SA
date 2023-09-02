@@ -14,7 +14,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth import  login
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
-
+from django.utils import timezone
 
 # Create your views here.
 
@@ -216,4 +216,14 @@ def UserMessage_create(request):
         messages.success(request, " تم إرسال الرسالة")
         return HttpResponseRedirect(reverse_lazy('User.Message.list'))
   
-  
+
+#### Message Detail
+
+def UserMessage_detail(request, message_id):
+    theMessage = UserMessage.objects.get(pk=message_id)
+    theUserOpen = User.objects.get(pk=request.user.id)
+    if theUserOpen == theMessage.to_user:
+        theMessage.read_date = timezone.now()
+        theMessage.save()
+        theMessage = UserMessage.objects.get(pk=message_id)
+    return render(request, 'User/MyMessages/detail.html',{"theMessage":theMessage})
