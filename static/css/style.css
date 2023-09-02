@@ -31,12 +31,12 @@
 .read-status
 {
     font-size: small;
-    background: #818080;
+    background: var(--extra-dark-primary);
     text-align: left;
     max-width: fit-content;
     border-radius: 1rem;
     padding: 5px;
-    color: #fff;
+    color: #000;
     margin-right: auto;
     margin-top: 1rem;
 }
