@@ -5,6 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.db.models import Q
 # Create your views here.
 
 def post_detail(request, pk):
@@ -73,6 +74,38 @@ def get_subcategories(request):
         return JsonResponse(subcategories, safe=False)
 
     return JsonResponse({})
+
+
+
+
+
+def MyPosts(request):
+    print('Start Search View....')
+    category  = request.GET.get('category')
+    searchKey = request.GET.get('searchKey')
+    selectedLocation  = request.GET.get('location')
+
+    query = Q()
+    print('location:', selectedLocation)
+    if selectedLocation != 'all' and selectedLocation is not None:
+       
+        locationObj = Location.objects.get(pk=selectedLocation)
+        print('you select location ', locationObj.name)
+        query = Q(location = locationObj)
+        selectedLocation = locationObj
+    else:
+        selectedLocation ='all'
+
+    if category !='all' and category is not None:
+        categoryObj = Post_Category.objects.get(pk=category)
+        category = categoryObj
+        query &= Q(category = categoryObj)
+    else:
+        category ='all'
+
+    print('your query = ', query)
+    posts = Post.objects.filter(query & Q(created_by = request.user)).order_by('-created_date')
+    return render(request,'Post/MyPosts/list.html',{"posts":posts,"selectedLocation":selectedLocation,"selectedcategory":category})
 
 
 
