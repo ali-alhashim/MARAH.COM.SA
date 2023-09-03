@@ -232,6 +232,7 @@ def UserMessage_detail(request, message_id):
         if reply.reply_by != theUserOpen:
            reply.read_date = timezone.now()
            reply.save()
+
     if request.method=="POST":
         theMessage = UserMessage.objects.get(pk=request.POST.get('message_id'))
         message_reply = request.POST.get('message_reply')
@@ -241,4 +242,5 @@ def UserMessage_detail(request, message_id):
                                              reply_by  = request.user,
                                           )
         NewMessageReply.save()
+        return redirect('User.Message.detail', message_id=message_id)
     return render(request, 'User/MyMessages/detail.html',{"theMessage":theMessage})

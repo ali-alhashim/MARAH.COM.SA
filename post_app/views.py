@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import JsonResponse, HttpResponseRedirect
 from .models import Sub_Category, Post_Category, Post, Location, Post_Images, Post_Comment
 from django.views.decorators.csrf import csrf_exempt
@@ -20,6 +20,7 @@ def post_detail(request, pk):
                                     comment    = comment
                                     )
             newComment.save()
+            return redirect('post.detail', pk=pk)
         else:
             print('you must login before you post your comment')
             return HttpResponseRedirect(reverse_lazy('login'))
