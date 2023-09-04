@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse, HttpResponseRedirect
-from .models import Sub_Category, Post_Category, Post, Location, Post_Images, Post_Comment
+from .models import Sub_Category, Post_Category, Post, Location, Post_Images, Post_Comment, MyFavorite
 from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
@@ -10,6 +10,7 @@ from django.db.models import Q
 
 def post_detail(request, pk):
     thePost = Post.objects.get(pk=pk)
+    Userfavorite = MyFavorite.objects.filter(post=thePost, user=request.user).exists()
     if request.method == "POST":
         print('check befor you post comment if the user authenticated')
         if request.user.is_authenticated:
@@ -24,7 +25,7 @@ def post_detail(request, pk):
         else:
             print('you must login before you post your comment')
             return HttpResponseRedirect(reverse_lazy('login'))
-    return render(request, 'Post/detail.html', {"thePost":thePost})
+    return render(request, 'Post/detail.html', {"thePost":thePost,"Userfavorite":Userfavorite})
 
 
 
@@ -107,6 +108,35 @@ def MyPosts(request):
     print('your query = ', query)
     posts = Post.objects.filter(query & Q(created_by = request.user)).order_by('-created_date')
     return render(request,'Post/MyPosts/list.html',{"posts":posts,"selectedLocation":selectedLocation,"selectedcategory":category})
+
+
+
+def MyFavorite_List(request):
+    category  = request.GET.get('category')
+    searchKey = request.GET.get('searchKey')
+    selectedLocation  = request.GET.get('location')
+
+    query = Q()
+    print('location:', selectedLocation)
+    if selectedLocation != 'all' and selectedLocation is not None:
+       
+        locationObj = Location.objects.get(pk=selectedLocation)
+        print('you select location ', locationObj.name)
+        query = Q(location = locationObj)
+        selectedLocation = locationObj
+    else:
+        selectedLocation ='all'
+
+    if category !='all' and category is not None:
+        categoryObj = Post_Category.objects.get(pk=category)
+        category = categoryObj
+        query &= Q(category = categoryObj)
+    else:
+        category ='all'
+
+    favoriteList = MyFavorite.objects.filter(user=request.user)
+    
+    return render(request,'User/MyFavorite/list.html',{"favoriteList":favoriteList,"selectedLocation":selectedLocation,"selectedcategory":category})
 
 
 

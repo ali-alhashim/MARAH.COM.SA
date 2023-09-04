@@ -6,5 +6,6 @@ urlpatterns = [
     path('create', views.post_create, name='post.create'),
     path('get/subcategories', views.get_subcategories, name="get_subcategories"),
     path('MyPosts/list', views.MyPosts, name='My.Posts'),
+    path('MyFavorite/List', views.MyFavorite_List, name='MyFavorite.List'),
    
 ]

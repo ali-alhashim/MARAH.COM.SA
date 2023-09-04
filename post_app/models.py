@@ -66,3 +66,8 @@ class Post_Comment(models.Model):
     last_update  = models.DateTimeField(auto_now=True)
     status       = models.CharField(max_length=150, default='published')
     
+
+class MyFavorite(models.Model):
+    user = models.ForeignKey(User, on_delete=models.DO_NOTHING, blank=True, null=True, related_name='user_favorite_list')
+    post = models.ForeignKey(Post, on_delete=models.DO_NOTHING, blank=True, null=True)
+    created_date = models.DateTimeField(auto_now_add=True)

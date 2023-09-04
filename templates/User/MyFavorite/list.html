@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+
+
+{% block main_content %}
+
+{%if selectedcategory%}
+<!--========Categories=========-->
+<div class="Categories-warp">
+<div class="sub-Categories">
+
+   {%for category in selectedcategory.sub_categories.all%}
+  <a href="#">
+  {{category.name}}
+  </a> 
+  {%endfor%}
+
+ 
+
+</div>
+</div>
+<!--=======/Categories=========-->
+{%endif%}
+
+    <div class="main-content">
+
+      
+       
+{%for post in favoriteList%}
+        <!--Card-->
+        <a class="card-content" href="{%url 'post.detail' pk=post.post.id%}">
+            <div class="card-text">
+                <h2> 
+                    {{post.post.subject}}
+                </h2>
+                <ul class="card-sub-text {%if post.post.created_by == request.user%} bg-light-green {%endif%}">
+
+                   <li>
+                    <i class="fa fa-location"></i>
+                    {{post.post.location}}
+                   </li>
+
+                   <li>
+                    <i class="fa fa-clock"></i>
+                    {{post.post.created_date}}
+                   </li>
+                
+                   <li>
+                    <i class="fa fa-user"></i>
+                    {{post.post.created_by.nikname}}
+                   </li>
+                </ul>
+               
+            </div>
+            <div class="card-img">
+                {%if post.post.post_images.first.image%}
+                <img src="{{post.post.post_images.first.image.url}}">
+                {%endif%}
+            </div>
+        </a>
+        <!--/Card-->
+        {%endfor%}
+
+        
+
+        
+    <br/>
+
+    <a href="#" class="view-more-btn">
+        مشاهدة المزيد
+    </a>
+
+  </div>
+  {% endblock main_content %}

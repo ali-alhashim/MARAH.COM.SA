@@ -15,7 +15,7 @@ from django.contrib.auth import  login
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.utils import timezone
-
+from post_app.models import MyFavorite, Post
 # Create your views here.
 
 def register_new_user(request):
@@ -244,3 +244,23 @@ def UserMessage_detail(request, message_id):
         NewMessageReply.save()
         return redirect('User.Message.detail', message_id=message_id)
     return render(request, 'User/MyMessages/detail.html',{"theMessage":theMessage})
+
+
+
+
+def AddRemoveMyFavorite(request, pk):
+    
+    post = Post.objects.get(pk=pk)
+    theFavorite = MyFavorite.objects.filter(user = request.user, post = post).exists()
+    if theFavorite:
+        print('already favorite so remove')
+        theFavorite = MyFavorite.objects.filter(user = request.user, post = post).first()
+        theFavorite.delete()
+    else:
+        print('add to favorite')
+        newFavorite = MyFavorite(
+                                    user = request.user,
+                                    post = post,
+                                )
+        newFavorite.save()
+    return redirect('post.detail', pk=pk)

@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, Permis
 from django.utils import timezone
 import re
 
+
 # Create your models here.
 ############################################## User
 class MyAccountManager(BaseUserManager):
@@ -142,3 +143,6 @@ class UserMessageReply(models.Model):
     read_date   = models.DateTimeField(blank=True, null=True)
     class Meta:
         ordering = ['sent_date']
+
+
+

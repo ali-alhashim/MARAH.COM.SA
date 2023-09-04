@@ -12,5 +12,6 @@ urlpatterns = [
     path('MyMessages/list', views.UserMessage_list, name='User.Message.list'),
     path('UserMessage/create', views.UserMessage_create, name='User.Message.create'),
     path('UserMessage/detail/<int:message_id>', views.UserMessage_detail, name='User.Message.detail'),
+    path('AddRemoveMyFavorite/<int:pk>', views.AddRemoveMyFavorite, name='AddRemove.MyFavorite'),
     
 ]

@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{%load static%}
 
 {% block main_content %}
     <!--===========Main Content=================-->
@@ -91,8 +91,16 @@
             مراسلة  
           </a>
 
-          <a class="c-btn">
+          <a class="c-btn" href="{%url 'AddRemove.MyFavorite' pk=thePost.id%}">
+
+            {%if Userfavorite%}
+            <img src="{%static 'img/star.png'%}">
+            {%else%}
             <i class="fa-solid fa-star"></i>
+            {%endif%}
+
+          
+
             تفضيل  
            </a>
 
