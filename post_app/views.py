@@ -10,7 +10,10 @@ from django.db.models import Q
 
 def post_detail(request, pk):
     thePost = Post.objects.get(pk=pk)
-    Userfavorite = MyFavorite.objects.filter(post=thePost, user=request.user).exists()
+    if request.user.is_authenticated:
+        Userfavorite = MyFavorite.objects.filter(post=thePost, user=request.user).exists()
+    else:
+        Userfavorite = False
     if request.method == "POST":
         print('check befor you post comment if the user authenticated')
         if request.user.is_authenticated:

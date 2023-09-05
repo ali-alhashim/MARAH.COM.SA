@@ -104,7 +104,7 @@
             تفضيل  
            </a>
 
-           <a class="c-btn">
+           <a class="c-btn" id="share-btn">
             <i class="fa-solid fa-share-nodes"></i>
             مشاركة  
            </a>
@@ -185,6 +185,31 @@
   {
       document.getElementById('window-box-id').classList.remove('active-login');
   }
+
+
+
+  // Get a reference to the share button element
+const shareButton = document.getElementById('share-btn');
+
+// Add a click event listener to the share button
+shareButton.addEventListener('click', async () => {
+  // Check if the Share API is supported by the browser
+  if (navigator.share) {
+    try {
+      // Call the Share API
+      await navigator.share({
+        title: 'Marah', // Specify the title of the shared content
+        url: '{%url "post.detail" pk=thePost.id%}' // Specify the URL of the shared content
+      });
+      console.log('Data was shared successfully.');
+    } catch (error) {
+      console.error('Error sharing data:', error);
+    }
+  } else {
+    // Fallback for browsers that do not support the Share API
+    console.log('Share API is not supported by this browser.');
+  }
+});
 </script>
 
 {% endblock js %}
