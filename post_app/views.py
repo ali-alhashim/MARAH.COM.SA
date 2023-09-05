@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse, HttpResponseRedirect
-from .models import Sub_Category, Post_Category, Post, Location, Post_Images, Post_Comment, MyFavorite
+from .models import Sub_Category, Post_Category, Post, Location, Post_Images, Post_Comment, MyFavorite,Post_Complaints
 from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
@@ -140,6 +140,26 @@ def MyFavorite_List(request):
     favoriteList = MyFavorite.objects.filter(user=request.user)
     
     return render(request,'User/MyFavorite/list.html',{"favoriteList":favoriteList,"selectedLocation":selectedLocation,"selectedcategory":category})
+
+
+
+def Post_Complaints_Create(request):
+    if request.method=="POST":
+        subject = request.POST.get('subject')
+        post_id = request.POST.get('post_id')
+        message = request.POST.get('message')
+        thePost = Post.objects.get(pk=post_id)
+        newComplain = Post_Complaints(
+                                       user = request.user,
+                                       post = thePost,
+                                       subject = subject,
+                                       message = message
+                                     )
+        newComplain.save()
+        messages.success(request, 'تم إستلام البلاغ شكراً')
+        return redirect('post.detail', pk=post_id)
+
+
 
 
 

@@ -71,3 +71,11 @@ class MyFavorite(models.Model):
     user = models.ForeignKey(User, on_delete=models.DO_NOTHING, blank=True, null=True, related_name='user_favorite_list')
     post = models.ForeignKey(Post, on_delete=models.DO_NOTHING, blank=True, null=True)
     created_date = models.DateTimeField(auto_now_add=True)
+
+
+class Post_Complaints(models.Model):
+    post         = models.ForeignKey(Post, on_delete=models.DO_NOTHING, blank=True, null=True)
+    created_date = models.DateTimeField(auto_now_add=True)
+    user         = models.ForeignKey(User, on_delete=models.DO_NOTHING, blank=True, null=True, related_name='user_Complaints_list')
+    subject      = models.CharField(max_length=255, blank=True, null=True)
+    message      = models.TextField(max_length=500, blank=True, null=True)
