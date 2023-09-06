@@ -33,6 +33,8 @@
                 <h2> 
                     {{post.subject}}
                 </h2>
+                <sub> {{post.id}} / {{post.category}} / {{post.sub_category}} </sub>
+                
                 <ul class="card-sub-text {%if post.created_by == request.user%} bg-light-green {%endif%}">
 
                    <li>

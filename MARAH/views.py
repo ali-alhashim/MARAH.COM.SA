@@ -5,11 +5,23 @@ from post_app.models import Post
 from django.contrib.auth import logout
 from django.contrib.auth.views import LoginView, LogoutView
 from django.db.models import Q
-from post_app.models import Location, Post_Category, Sub_Category
+from post_app.models import Location, Post_Category, Sub_Category, Post_Comment, Post_Images
+from django.core.paginator import Paginator
+from django.http import JsonResponse
+from django.db.models import Subquery, OuterRef
+from django.db.models import Count
+
+
 
 def home(request):
+
+    page_number = request.GET.get('page', 1)
+    items_per_page = 10
     posts = Post.objects.all().order_by('-created_date')
-    return render(request, 'Marah/home.html',{"posts":posts})
+    paginator = Paginator(posts, items_per_page)
+    page = paginator.get_page(page_number)
+
+    return render(request, 'Marah/home.html',{"posts":page})
 
 
 def search(request):
@@ -86,3 +98,24 @@ class LogoutInterfaceView(LogoutView):
 
 def custom_error_403(request, exception):
     return render(request, '',{})
+
+
+
+
+
+
+
+def load_more_posts(request):
+    page_number = request.GET.get('page', 1)
+    items_per_page = 10
+
+    comment_count_subquery = Post_Comment.objects.filter(post=OuterRef('id')).values('post').annotate(comment_count=Count('id')).values('comment_count')
+
+    image_subquery = Post_Images.objects.filter(post=OuterRef('id')).order_by('id').values('image')[:1]
+
+    posts = Post.objects.all().order_by('-created_date').annotate(comment_count=Subquery(comment_count_subquery), first_image=Subquery(image_subquery)).values('id', 'subject', 'category__name', 'sub_category__name', 'location__name', 'created_date', 'created_by__nikname', 'comment_count', 'first_image')
+    paginator = Paginator(posts, items_per_page)
+    page = paginator.get_page(page_number)
+
+   
+    return JsonResponse(list(page), safe=False)

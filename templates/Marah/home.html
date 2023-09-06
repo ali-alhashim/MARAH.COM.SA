@@ -10,9 +10,9 @@
         <a class="card-content" href="{%url 'post.detail' pk=post.id%}">
             <div class="card-text">
                 <h2> 
-                    {{post.subject}} 
+                   {{post.subject}} 
                 </h2>
-                <sub> {{post.category}} / {{post.sub_category}} </sub>
+                <sub> {{post.id}} / {{post.category}} / {{post.sub_category}} </sub>
                 
                 <ul class="card-sub-text {%if post.created_by == request.user%} bg-light-green {%endif%}">
 
@@ -52,9 +52,87 @@
         
     <br/>
 
-    <a href="#" class="view-more-btn">
+
+    {% if posts.has_next %}
+    <button class="view-more-btn" id="load-more-btn" data-url="{% url 'post.load_more' %}?page=2">
         مشاهدة المزيد
-    </a>
+    </button>
+    {% endif %}
 
   </div>
   {% endblock main_content %}
+
+
+  {% block js %}
+  <script>
+    var loadMoreBtn = document.getElementById('load-more-btn');
+    if (loadMoreBtn) {
+        loadMoreBtn.addEventListener('click', function () {
+            var url = loadMoreBtn.dataset.url;
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var data = JSON.parse(xhr.responseText);
+                    
+                    console.log(data);
+                    const container = document.querySelector('.main-content');
+
+                    for (let key in data) {
+                        var newCard = document.createElement('a');
+                        newCard.className = 'card-content';
+                        newCard.href = '/post/detail/' + data[key].id;
+                    
+                        var cardText = document.createElement('div');
+                        cardText.className = 'card-text';
+                    
+                        var h2 = document.createElement('h2');
+                        h2.textContent = data[key].subject;
+                        cardText.appendChild(h2);
+                    
+                        var sub = document.createElement('sub');
+                        sub.textContent = data[key].id + " / " + data[key].category__name + " / " + data[key].sub_category__name;
+                        cardText.appendChild(sub);
+                    
+                        var ul = document.createElement('ul');
+                        ul.className = 'card-sub-text';
+                    
+                        var liLocation = document.createElement('li');
+                        liLocation.innerHTML = '<i class="fa fa-location"></i>' + data[key].location__name;
+                        ul.appendChild(liLocation);
+                    
+                        var liClock = document.createElement('li');
+                        liClock.innerHTML = '<i class="fa fa-clock"></i>' + data[key].created_date;
+                        ul.appendChild(liClock);
+                    
+                        var liUser = document.createElement('li');
+                        liUser.innerHTML = '<i class="fa fa-user"></i>' + data[key].created_by__nikname;
+                        ul.appendChild(liUser);
+                    
+                        var liComments = document.createElement('li');
+                        liComments.innerHTML = '<i class="fa-regular fa-comments"></i>' + data[key].comment_count;
+                        ul.appendChild(liComments);
+
+                        var cardImage = document.createElement('div');
+                        cardImage.classList.add('card-img');
+                        var postImage = document.createElement('img');
+                        postImage.src = 'media/'+data[key].first_image
+                        cardImage.appendChild(postImage);
+
+                        
+                    
+                        cardText.appendChild(ul);
+                        newCard.appendChild(cardText);
+                        newCard.appendChild(cardImage);
+                        container.appendChild(newCard);
+                    }
+                    if (!data.has_next) {
+                        loadMoreBtn.style.display = 'none';
+                    }
+                }
+            };
+            xhr.open('GET', url, true);
+            xhr.send();
+        });
+    }
+</script>
+  {% endblock js %}

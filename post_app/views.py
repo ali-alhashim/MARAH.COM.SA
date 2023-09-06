@@ -6,6 +6,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Q
+from django.http import JsonResponse
 # Create your views here.
 
 def post_detail(request, pk):
@@ -55,6 +56,7 @@ def post_create(request):
         newPost.save()
         ## upload post images
         uploaded_images = request.FILES.getlist('photos')
+        counter = 0
         for image in uploaded_images:
             postImage = Post_Images(
                                     post  = newPost,
@@ -63,6 +65,9 @@ def post_create(request):
              # Save the image to a file
             postImage.image.save(image.name, image)
             postImage.save()
+            counter = counter + 1
+            if counter == 10:
+                break
         return HttpResponseRedirect(reverse_lazy('post.detail',kwargs={'pk':newPost.id}))
     
     return render(request,'Post/create.html',{})
@@ -162,6 +167,8 @@ def Post_Complaints_Create(request):
         else:
             messages.error(request,'يجب عليك تسجيل الدخول أولاً')
             return redirect('login')
+        
+
 
 
 

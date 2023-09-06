@@ -65,6 +65,8 @@ class Post_Comment(models.Model):
     created_date = models.DateTimeField(auto_now_add=True)
     last_update  = models.DateTimeField(auto_now=True)
     status       = models.CharField(max_length=150, default='published')
+    def get_created_by_nickname(self):
+        return self.created_by.nikname if self.created_by else None
     
 
 class MyFavorite(models.Model):

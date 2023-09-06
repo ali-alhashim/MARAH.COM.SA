@@ -14,7 +14,7 @@
     align-items: center;
     background: var(--dark-primary);
     padding: 10px;
-    border-radius: 1rem;
+    border-radius: 0.5rem;
     margin: 0;
     border: #c2c2c2 solid 1px;
    min-width: fit-content;

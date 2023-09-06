@@ -25,9 +25,11 @@ urlpatterns = [
     path('', views.home, name='home'),
 
     path('Filter/', views.search, name='post.search'),
+    path('load_more_post/', views.load_more_posts, name='post.load_more'),
 
     path('post/', include('post_app.urls')),
     path('User/', include('user_app.urls')),
+    
 ]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
 
 
