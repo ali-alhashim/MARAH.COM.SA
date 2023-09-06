@@ -5,7 +5,7 @@ from post_app.models import Post
 from django.contrib.auth import logout
 from django.contrib.auth.views import LoginView, LogoutView
 from django.db.models import Q
-from post_app.models import Location, Post_Category
+from post_app.models import Location, Post_Category, Sub_Category
 
 def home(request):
     posts = Post.objects.all().order_by('-created_date')
@@ -15,11 +15,25 @@ def home(request):
 def search(request):
     print('Start Search View....')
     category  = request.GET.get('category')
+   
     searchKey = request.GET.get('searchKey')
     selectedLocation  = request.GET.get('location')
 
+    
+
     query = Q()
     print('location:', selectedLocation)
+
+
+    if  request.GET.get('SubCategory') =='all':
+        selectedSubCategory = 'all'
+    elif request.GET.get('SubCategory') is not None:
+         selectedSubCategory = request.GET.get('SubCategory')
+         sub_categoryObj = Sub_Category.objects.get(pk=selectedSubCategory)
+         query &= Q(sub_category = sub_categoryObj)
+    else:
+        selectedSubCategory = 'all'
+
     if selectedLocation != 'all':
        
         locationObj = Location.objects.get(pk=selectedLocation)
@@ -33,7 +47,7 @@ def search(request):
 
     print('your query = ', query)
     posts = Post.objects.filter(query).order_by('-created_date')
-    return render(request,'Marah/search.html',{"posts":posts,"selectedLocation":selectedLocation,"selectedcategory":category})
+    return render(request,'Marah/search.html',{"posts":posts,"selectedLocation":selectedLocation,"selectedcategory":category,"selectedSubCategory":selectedSubCategory})
 
 
 

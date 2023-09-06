@@ -10,8 +10,10 @@
         <a class="card-content" href="{%url 'post.detail' pk=post.id%}">
             <div class="card-text">
                 <h2> 
-                    {{post.subject}}
+                    {{post.subject}} 
                 </h2>
+                <sub> {{post.category}} / {{post.sub_category}} </sub>
+                
                 <ul class="card-sub-text {%if post.created_by == request.user%} bg-light-green {%endif%}">
 
                    <li>
@@ -27,6 +29,11 @@
                    <li>
                     <i class="fa fa-user"></i>
                     {{post.created_by.nikname}}
+                   </li>
+
+                   <li>
+                    <i class="fa-regular fa-comments"></i>
+                    {{post.post_comments.all.count}}
                    </li>
                 </ul>
                

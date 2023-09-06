@@ -10,7 +10,7 @@
 <div class="sub-Categories">
 
    {%for category in selectedcategory.sub_categories.all%}
-  <a href="#">
+  <a href="{%url 'post.search'%}?category={{selectedcategory.id}}&searchKey=&location={{selectedLocation}}&SubCategory={{category.id}}">
   {{category.name}}
   </a> 
   {%endfor%}
@@ -49,6 +49,12 @@
                     <i class="fa fa-user"></i>
                     {{post.created_by.nikname}}
                    </li>
+
+                   <li>
+                    <i class="fa-regular fa-comments"></i>
+                    {{post.post_comments.all.count}}
+                   </li>
+                   
                 </ul>
                
             </div>

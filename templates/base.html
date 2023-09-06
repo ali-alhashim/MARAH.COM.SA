@@ -131,7 +131,7 @@
 
         <div>
             <form action="{%url 'post.search'%}" method="GET">
-                
+             
             <select class="search-select" name="category" id="category-select-id">
               <option value="all">الكل</option>  
              {%for category in categories%}
@@ -157,6 +157,7 @@
                 القريب
                 <i class="fa fa-map"></i>
             </a>
+            <input type="hidden" value="all" name="Sub_Category">  
         </form>
         </div>
 
@@ -172,7 +173,7 @@
     <div class="Categories">
 
         {%for category in categories%}
-       <a href="{%url 'post.search'%}?category={{category.id}}&searchKey=&location=all">
+       <a href="{%url 'post.search'%}?category={{category.id}}&searchKey=&location=all&SubCategory=all">
        {{category.name}}
        </a> 
        {%endfor%}
@@ -231,7 +232,7 @@
             <ul>
                 <li>
                     <i class="fa fa-user"></i>
-                    <a href="#"> التسجيل  </a>
+                    <a href="{%url 'register.new.user'%}"> التسجيل  </a>
                 </li>
                 <li>
                     <i class="fa fa-money-bill-transfer"></i>

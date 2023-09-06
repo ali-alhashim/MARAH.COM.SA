@@ -18,6 +18,12 @@
     gap: 1rem;
 }
 
+.slim-line{
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+}
+
 .message-body{
   background: #FEFBF3;
   border-radius: 1rem;
@@ -526,17 +532,6 @@ footer
     gap: 1rem;
 }
 
-hr{
-    border: none;
-    height: 1px;
-    width: 50%;
-    background: #7e7e7e;
-    margin: auto;
-    align-self: center;
-    margin-top: 15px;
-    margin-bottom: 15px;
-    box-shadow: #707070 1px 2px 5px 1px;
-}
 
 .message-table{
     width: 100%;

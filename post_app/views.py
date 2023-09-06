@@ -149,15 +149,19 @@ def Post_Complaints_Create(request):
         post_id = request.POST.get('post_id')
         message = request.POST.get('message')
         thePost = Post.objects.get(pk=post_id)
-        newComplain = Post_Complaints(
-                                       user = request.user,
-                                       post = thePost,
-                                       subject = subject,
-                                       message = message
-                                     )
-        newComplain.save()
-        messages.success(request, 'تم إستلام البلاغ شكراً')
-        return redirect('post.detail', pk=post_id)
+        if request.user.is_authenticated:
+            newComplain = Post_Complaints(
+                                        user = request.user,
+                                        post = thePost,
+                                        subject = subject,
+                                        message = message
+                                        )
+            newComplain.save()
+            messages.success(request, 'تم إستلام البلاغ شكراً')
+            return redirect('post.detail', pk=post_id)
+        else:
+            messages.error(request,'يجب عليك تسجيل الدخول أولاً')
+            return redirect('login')
 
 
 
