@@ -7,6 +7,20 @@
 
 }
 
+.edit-delete-box{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--dark-primary);
+    padding: 10px;
+    border-radius: 1rem;
+    margin: 0;
+    border: #c2c2c2 solid 1px;
+   min-width: fit-content;
+}
+
+
 .message-container{
     border-radius: 1rem;
     display: flex;
@@ -498,11 +512,12 @@ input{
     padding: 4px 14px;
     text-decoration: none;
     color: #000000;
-    border-radius: 0.2rem;
+    border-radius: 0.5rem;
     margin: 10px;
     font-weight: 600;
     font-size: 18px;
     transition: all 0.3s ease-in-out;
+    width: fit-content;
 }
 
 .view-more-btn:hover{
