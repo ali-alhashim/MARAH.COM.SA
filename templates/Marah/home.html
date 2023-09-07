@@ -53,13 +53,19 @@
     <br/>
 
 
-    {% if posts.has_next %}
-    <button class="view-more-btn" id="load-more-btn" data-url="{% url 'post.load_more' %}?page=2">
-        مشاهدة المزيد
-    </button>
-    {% endif %}
+   
+   
+   
 
   </div>
+
+<hr class="slim-line">
+  <div class="show-more-container">
+  <button class="view-more-btn" id="load-more-btn" data-url="{% url 'post.load_more' %}?page_number={{page_number}}">
+    مشاهدة المزيد
+</button>
+</div>
+
   {% endblock main_content %}
 
 
@@ -115,8 +121,12 @@
                         var cardImage = document.createElement('div');
                         cardImage.classList.add('card-img');
                         var postImage = document.createElement('img');
-                        postImage.src = 'media/'+data[key].first_image
-                        cardImage.appendChild(postImage);
+                        if(data[key].first_image !=null)
+                        {
+                            postImage.src = 'media/'+data[key].first_image
+                            cardImage.appendChild(postImage);
+                        }
+                       
 
                         
                     
@@ -125,9 +135,9 @@
                         newCard.appendChild(cardImage);
                         container.appendChild(newCard);
                     }
-                    if (!data.has_next) {
-                        loadMoreBtn.style.display = 'none';
-                    }
+
+
+                   
                 }
             };
             xhr.open('GET', url, true);

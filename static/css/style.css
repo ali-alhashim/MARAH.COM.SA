@@ -6,7 +6,17 @@
  --secondary2    : #d6d4d4;
 
 }
-
+.show-more-container
+{
+   
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: center;
+    align-items: center;
+    align-self: center;
+    align-content: center;
+   
+}
 .edit-delete-box{
     display: flex;
     flex-direction: column;
