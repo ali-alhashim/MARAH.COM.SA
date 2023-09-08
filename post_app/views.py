@@ -193,6 +193,9 @@ def updatePost(request, postId):
             sub_category = Sub_Category.objects.get(pk=int(request.POST.get('sub_category')))
             subject      = request.POST.get('subject')
             text         = request.POST.get('text')
+            ## convert str to list and delete all img by ids
+            deleted_img  = request.POST.get('deleted_img')
+            ## check if user want's to add photo, check post total photo after delete and let him add not more than 10
 
             thePost.text         = text
             thePost.subject      = subject

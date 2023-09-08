@@ -70,10 +70,11 @@
                 <td colspan="2">
                     {%for img in post.post_images.all%}
                     <div class="img-delete">
-                    <img width="350px" src="{{img.image.url}}" class="img-border-m10">
-                    <a><img src="{%static 'img/Cancel.png'%}"></a>
+                    <img width="350px" src="{{img.image.url}}" class="img-border-m10" id="img-{{img.id}}">
+                    <a onclick="deleteImg('{{img.id}}', this)"><img src="{%static 'img/Cancel.png'%}"></a>
                     </div>
                     {%endfor%}
+                    <input type="hidden" name="deleted_img" id="deleted_img_id">
                 </td>
                </tr>
 
@@ -222,8 +223,17 @@
     
           });
     
-        
+          var deletedImageArray = [];
+
     
+          function deleteImg(ImgId, aTag){
+            const ImgElement = document.getElementById("img-"+ImgId);
+            ImgElement.remove();
+            aTag.remove();
+            deletedImageArray.push(ImgId)
+            console.log(deletedImageArray)
+            document.getElementById('deleted_img_id').value = deletedImageArray;
+          }
     
 
 </script>
