@@ -10,6 +10,8 @@ from django.core.paginator import Paginator
 from django.http import JsonResponse
 from django.db.models import Subquery, OuterRef
 from django.db.models import Count
+from django.db.models.functions import Coalesce
+
 import math
 
 
@@ -118,8 +120,8 @@ def load_more_posts(request):
     print('load more page #', page_number)
     items_per_page = 10
 
-    comment_count_subquery = Post_Comment.objects.filter(post=OuterRef('id')).values('post').annotate(comment_count=Count('id')).values('comment_count')
-
+    comment_count_subquery = Post_Comment.objects.filter(post=OuterRef('id')).values('post').annotate(comment_count=Coalesce(Count('id'), 0)).values('comment_count')
+    
     image_subquery = Post_Images.objects.filter(post=OuterRef('id')).order_by('id').values('image')[:1]
     
 
@@ -133,7 +135,16 @@ def load_more_posts(request):
    
     totalPages = math.ceil(Totalposts / 10)
     print(totalPages)
+
+
     if int(page_number) > totalPages:
         page = {"End"}
+    else:
+            # Convert QuerySet to list and replace 'null' with 0 for comment_count
+        page_list = list(page)
+        for item in page_list:
+            item['comment_count'] = item['comment_count'] or 0
+
+     
    
     return JsonResponse(list(page), safe=False)

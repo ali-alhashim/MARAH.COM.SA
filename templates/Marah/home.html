@@ -114,19 +114,19 @@
                         ul.className = 'card-sub-text';
                     
                         var liLocation = document.createElement('li');
-                        liLocation.innerHTML = '<i class="fa fa-location"></i>' + data[key].location__name;
+                        liLocation.innerHTML = '<i class="fa fa-location"></i> ' + data[key].location__name;
                         ul.appendChild(liLocation);
                     
                         var liClock = document.createElement('li');
-                        liClock.innerHTML = '<i class="fa fa-clock"></i>' + data[key].created_date;
+                        liClock.innerHTML = '<i class="fa fa-clock"></i> ' + data[key].created_date;
                         ul.appendChild(liClock);
                     
                         var liUser = document.createElement('li');
-                        liUser.innerHTML = '<i class="fa fa-user"></i>' + data[key].created_by__nikname;
+                        liUser.innerHTML = '<i class="fa fa-user"></i> ' + data[key].created_by__nikname;
                         ul.appendChild(liUser);
                     
                         var liComments = document.createElement('li');
-                        liComments.innerHTML = '<i class="fa-regular fa-comments"></i>' + data[key].comment_count;
+                        liComments.innerHTML = '<i class="fa-regular fa-comments"></i> ' + data[key].comment_count;
                         ul.appendChild(liComments);
 
                         var cardImage = document.createElement('div');

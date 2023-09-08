@@ -170,6 +170,46 @@ def Post_Complaints_Create(request):
         
 
 
+def deletePost(request,postId):
+    thePost = Post.objects.get(pk=postId)
+    if thePost.created_by == request.user:
+        thePost.delete()
+        messages.success(request,'تم حذف الإعلان')
+    else:
+        messages.error(request, ' لا تملك الصلاحية لحذف هذا الإعلان')
+    return redirect('My.Posts')
+
+
+
+
+def updatePost(request, postId):
+    thePost = Post.objects.get(pk=postId)
+    if thePost.created_by ==request.user:
+        if request.method=="POST":
+            print('get the update values')
+
+            location     = Location.objects.get(pk=int(request.POST.get('location')))
+            category     = Post_Category.objects.get(pk=int(request.POST.get('category')))
+            sub_category = Sub_Category.objects.get(pk=int(request.POST.get('sub_category')))
+            subject      = request.POST.get('subject')
+            text         = request.POST.get('text')
+
+            thePost.text         = text
+            thePost.subject      = subject
+            thePost.category     = category
+            thePost.location     = location
+            thePost.sub_category = sub_category
+            thePost.save()
+
+            messages.success(request,'تم تعديل الإعلان')
+            return redirect('My.Posts')
+        return render(request, 'Post/MyPosts/update.html',{"post":thePost})
+    else:
+        messages.error(request, ' لا تملك الصلاحية لــ تعديل هذا الإعلان')
+        return redirect('home')
+        
+
+
 
 
 
