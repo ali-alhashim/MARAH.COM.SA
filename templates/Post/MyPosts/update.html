@@ -65,11 +65,21 @@
                     
                    </select>
                </td>
+
+               <tr>
+                <td colspan="2">
+                    {%for img in post.post_images.all%}
+                    <img width="150" src="{{img.image.url}}">
+                    {%endfor%}
+                </td>
+               </tr>
+
+
            </tr>
 
                <tr>
                <td>
-                   صور الإعلان
+                   إضافة صور
                  
                </td>
                <td>
