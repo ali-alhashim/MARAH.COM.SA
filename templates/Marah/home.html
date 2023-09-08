@@ -58,16 +58,16 @@
    
 
   </div>
-
+<br/>
 <hr class="slim-line">
   <div class="show-more-container">
-
+  
     {%if posts.has_next%}
   <button class="view-more-btn" id="load-more-btn" data-url="{% url 'post.load_more' %}?page_number=2">
     مشاهدة المزيد
 </button>
     {%endif%}
-    
+
 </div>
 
   {% endblock main_content %}
@@ -81,13 +81,20 @@
             var url = loadMoreBtn.dataset.url;
             var xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4 && xhr.status === 200) {
+                if (xhr.readyState === 4 && xhr.status === 200) 
+                {
                     var data = JSON.parse(xhr.responseText);
                     
                     console.log(data);
                     const container = document.querySelector('.main-content');
 
                     for (let key in data) {
+
+                        if (data[0]=="End") 
+                        {
+                            break;
+                        }
+                        
                         var newCard = document.createElement('a');
                         newCard.className = 'card-content';
                         newCard.href = '/post/detail/' + data[key].id;
@@ -138,11 +145,26 @@
                         newCard.appendChild(cardText);
                         newCard.appendChild(cardImage);
                         container.appendChild(newCard);
+                    } // end for
+
+
+                        // Check if there are more pages
+                    if (data[0]=="End") 
+                    {
+                        loadMoreBtn.style.display = 'none';
+                    
+                    } else 
+                    {
+                        
+                        var nextPageNumber = parseInt(url.split('=')[1]) + 1;
+                        var newUrl = url.split('=')[0] + '=' + nextPageNumber;
+                        loadMoreBtn.setAttribute('data-url', newUrl);
                     }
 
 
                    
                 }
+              
             };
             xhr.open('GET', url, true);
             xhr.send();
@@ -151,21 +173,6 @@
 
 
 
-    document.getElementById('load-more-btn').addEventListener('click', function() {
-        // Get the current page number from the data-url attribute
-        var url = this.getAttribute('data-url');
-      
-        // Update the page number by adding 1
-        var pageNumber = parseInt(url.split('=')[1]) + 1;
-      
-        // Update the URL with the new page number
-        var newUrl = url.split('=')[0] + '=' + pageNumber;
-      
-        // Perform your AJAX request with the updated URL
-        // ...
-      
-        // Optionally, update the data-url attribute with the new URL
-        this.setAttribute('data-url', newUrl);
-    });
+   
 </script>
   {% endblock js %}

@@ -10,18 +10,19 @@ from django.core.paginator import Paginator
 from django.http import JsonResponse
 from django.db.models import Subquery, OuterRef
 from django.db.models import Count
-
+import math
 
 
 def home(request):
 
-    page_number = request.GET.get('page', 1)
+   
     items_per_page = 10
     posts = Post.objects.all().order_by('-created_date')
     paginator = Paginator(posts, items_per_page)
-    page = paginator.get_page(page_number)
-    print('home page_number =>', page_number)
-    return render(request, 'Marah/home.html',{"posts":page,"page_number":page_number})
+    page = paginator.get_page(1)
+    print('home page_number =>', 1)
+
+    return render(request, 'Marah/home.html',{"posts":page})
 
 
 def search(request):
@@ -106,7 +107,7 @@ def custom_error_403(request, exception):
 
 
 def load_more_posts(request):
-    page_number = request.GET.get('page_number', 1)
+    page_number = request.GET.get('page_number')
     print('load more page #', page_number)
     items_per_page = 10
 
@@ -117,7 +118,15 @@ def load_more_posts(request):
 
     posts = Post.objects.all().order_by('-created_date').annotate(comment_count=Subquery(comment_count_subquery), first_image=Subquery(image_subquery)).values('id', 'subject', 'category__name', 'sub_category__name', 'location__name', 'created_date', 'created_by__nikname', 'comment_count', 'first_image')
     paginator = Paginator(posts, items_per_page)
+
+    print("get page #", page_number)
     page = paginator.get_page(page_number)
 
+    Totalposts = Post.objects.all().count()
+   
+    totalPages = math.ceil(Totalposts / 10)
+    print(totalPages)
+    if int(page_number) > totalPages:
+        page = {"End"}
    
     return JsonResponse(list(page), safe=False)
