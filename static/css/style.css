@@ -8,13 +8,13 @@
 }
 .show-more-container
 {
-   
+    position: relative;
+    display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    text-align: center;
-    align-items: center;
-    align-self: center;
-    align-content: center;
+    width: 100%;
+  
+    justify-content: center;
+    gap: 1rem;
    
 }
 .edit-delete-box{
@@ -518,6 +518,7 @@ input{
 
 
 .view-more-btn{
+   
     background: var(--secondary);
     padding: 4px 14px;
     text-decoration: none;

@@ -25,13 +25,15 @@ def home(request):
     return render(request, 'Marah/home.html',{"posts":page})
 
 
+##---------------------------------- Search ---------------------------------------------------
+
 def search(request):
     print('Start Search View....')
     category  = request.GET.get('category')
    
     searchKey = request.GET.get('searchKey')
     selectedLocation  = request.GET.get('location')
-
+    page_number = request.GET.get('page_number',1)
     
 
     query = Q()
@@ -59,10 +61,15 @@ def search(request):
         query &= Q(category = categoryObj)
 
     print('your query = ', query)
-    posts = Post.objects.filter(query).order_by('-created_date')
-    return render(request,'Marah/search.html',{"posts":posts,"selectedLocation":selectedLocation,"selectedcategory":category,"selectedSubCategory":selectedSubCategory})
 
+    items_per_page = 10
 
+    posts     = Post.objects.filter(query).order_by('-created_date')
+    paginator = Paginator(posts, items_per_page)
+    page      = paginator.get_page(page_number)
+    return render(request,'Marah/search.html',{"posts":page,"selectedLocation":selectedLocation,"selectedcategory":category,"selectedSubCategory":selectedSubCategory,"page_number":page_number})
+
+## ---------------------------------------------------- search --------------------------------------------------------------------------
 
 
 def login_view(request):

@@ -74,9 +74,32 @@
         
     <br/>
 
-    <a href="#" class="view-more-btn">
-        مشاهدة المزيد
-    </a>
 
   </div>
+
+  <hr class="slim-line">
+<br/>
+
+
+
+    <div class="show-more-container">
+
+    {%if posts.has_next%}    
+    <a href="?page_number={{posts.next_page_number}}&category={{selectedcategory.id}}&searchKey=&location={{selectedLocation}}&SubCategory={{selectedSubCategory}}" class="view-more-btn">
+        <i class="fa-solid fa-square-caret-right"></i>
+        التالي
+    </a>
+    {%endif%}
+
+    <h3>صفحة رقم : [ {{page_number}} ] </h3>
+
+    {%if posts.has_previous%}
+    <a href="?page_number={{posts.previous_page_number}}&category={{selectedcategory.id}}&searchKey=&location={{selectedLocation}}&SubCategory={{selectedSubCategory}}" class="view-more-btn">
+        السابق
+        <i class="fa-solid fa-square-caret-left"></i>
+    </a>
+    {%endif%}
+</div>
+
+
   {% endblock main_content %}
