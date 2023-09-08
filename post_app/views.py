@@ -193,9 +193,32 @@ def updatePost(request, postId):
             sub_category = Sub_Category.objects.get(pk=int(request.POST.get('sub_category')))
             subject      = request.POST.get('subject')
             text         = request.POST.get('text')
+
             ## convert str to list and delete all img by ids
-            deleted_img  = request.POST.get('deleted_img')
+            if 'deleted_img' in request.POST and request.POST.get('deleted_img'):
+                deleted_img  = request.POST.get('deleted_img')
+                imgId_list = deleted_img.split(",")
+                for imgId in imgId_list:
+                    theImage = Post_Images.objects.get(pk=int(imgId))
+                    theImage.delete()
             ## check if user want's to add photo, check post total photo after delete and let him add not more than 10
+            ## count the exist photo for this post
+            existImgs = thePost.post_images.all().count()
+            if existImgs < 10:
+                 ## upload post images
+                uploaded_images = request.FILES.getlist('photos')
+                counter = existImgs
+                for image in uploaded_images:
+                    postImage = Post_Images(
+                                            post  = thePost,
+                                            image = image
+                                            )
+                    # Save the image to a file
+                    postImage.image.save(image.name, image)
+                    postImage.save()
+                    counter = counter + 1
+                    if counter == 10:
+                        break
 
             thePost.text         = text
             thePost.subject      = subject
