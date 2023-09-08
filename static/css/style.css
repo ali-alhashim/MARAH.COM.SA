@@ -6,6 +6,31 @@
  --secondary2    : #d6d4d4;
 
 }
+
+.img-delete{
+   display: flex;
+   justify-content: center;
+   align-content: center;
+   
+}
+
+.img-border-m10{
+    margin: 10px;
+    border: #353535 1px solid;
+}
+
+.img-delete a{
+    position: absolute;
+    opacity: 0.5;
+    
+}
+
+.img-delete a:hover{
+    cursor: pointer;
+    opacity: 1;
+}
+
+
 .show-more-container
 {
     position: relative;

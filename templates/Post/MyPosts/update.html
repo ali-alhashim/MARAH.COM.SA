@@ -69,7 +69,10 @@
                <tr>
                 <td colspan="2">
                     {%for img in post.post_images.all%}
-                    <img width="150" src="{{img.image.url}}">
+                    <div class="img-delete">
+                    <img width="350px" src="{{img.image.url}}" class="img-border-m10">
+                    <a><img src="{%static 'img/Cancel.png'%}"></a>
+                    </div>
                     {%endfor%}
                 </td>
                </tr>
