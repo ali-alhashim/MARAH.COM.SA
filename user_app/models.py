@@ -126,8 +126,8 @@ class User(AbstractBaseUser, PermissionsMixin):
 ####### User Messages
 
 class UserMessage(models.Model):
-    from_user    = models.ForeignKey(User, on_delete=models.DO_NOTHING, blank=True, null=True, related_name='user_sent_messages')
-    to_user      = models.ForeignKey(User, on_delete=models.DO_NOTHING, blank=True, null=True, related_name='user_inbox_messages')
+    from_user    = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, related_name='user_sent_messages')
+    to_user      = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, related_name='user_inbox_messages')
     sent_date    = models.DateTimeField(auto_now_add=True)
     read_date    = models.DateTimeField(blank=True, null=True)
     subject      = models.CharField(max_length=255, blank=True, null=True)
@@ -136,10 +136,10 @@ class UserMessage(models.Model):
         ordering = ['-sent_date']
 
 class UserMessageReply(models.Model):
-    reply_for   = models.ForeignKey(UserMessage, on_delete=models.DO_NOTHING, blank=True, null=True, related_name='message_replies')
+    reply_for   = models.ForeignKey(UserMessage, on_delete=models.CASCADE, blank=True, null=True, related_name='message_replies')
     sent_date   = models.DateTimeField(auto_now_add=True)
     message     = models.TextField(max_length=500, blank=True, null=True)
-    reply_by    = models.ForeignKey(User, on_delete=models.DO_NOTHING, blank=True, null=True)
+    reply_by    = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     read_date   = models.DateTimeField(blank=True, null=True)
     class Meta:
         ordering = ['sent_date']
