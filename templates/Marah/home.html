@@ -61,9 +61,13 @@
 
 <hr class="slim-line">
   <div class="show-more-container">
-  <button class="view-more-btn" id="load-more-btn" data-url="{% url 'post.load_more' %}?page_number={{page_number}}">
+
+    {%if posts.has_next%}
+  <button class="view-more-btn" id="load-more-btn" data-url="{% url 'post.load_more' %}?page_number=2">
     مشاهدة المزيد
 </button>
+    {%endif%}
+    
 </div>
 
   {% endblock main_content %}
@@ -144,5 +148,24 @@
             xhr.send();
         });
     }
+
+
+
+    document.getElementById('load-more-btn').addEventListener('click', function() {
+        // Get the current page number from the data-url attribute
+        var url = this.getAttribute('data-url');
+      
+        // Update the page number by adding 1
+        var pageNumber = parseInt(url.split('=')[1]) + 1;
+      
+        // Update the URL with the new page number
+        var newUrl = url.split('=')[0] + '=' + pageNumber;
+      
+        // Perform your AJAX request with the updated URL
+        // ...
+      
+        // Optionally, update the data-url attribute with the new URL
+        this.setAttribute('data-url', newUrl);
+    });
 </script>
   {% endblock js %}
