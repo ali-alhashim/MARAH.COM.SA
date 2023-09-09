@@ -7,6 +7,25 @@
 
 }
 
+@media only screen and (max-width: 600px){
+    subnav{
+        padding: 0 !important;
+    }
+    .login-form{
+        width: 100vw !important;
+        padding: 5px;
+        border-radius: 0 !important;
+    }
+    .post-card{
+        width: 100%;
+        border-radius: 0 !important;
+    }
+    .main-content{
+        margin: 0 !important;
+        padding: 5px !important;
+    }
+}
+
 .img-delete{
    display: flex;
    justify-content: center;
@@ -345,8 +364,9 @@ nav{
 
 subnav{
     
-    width: 100%;
+    width: 100vw;
     display: flex;
+    
     align-items: center;
     justify-content: space-between;
     padding-left: 10%;
@@ -369,6 +389,7 @@ nav ul li{
     color: #000000;
     transition: all 0.3s ease-in-out;
     background: var(--secondary);
+   
 }
 
 input[type="checkbox"]{
