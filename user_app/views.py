@@ -52,7 +52,7 @@ def register_new_user(request):
            return redirect('login')
     else:
         form = RegistrationForm()
-    return render(request, 'user/register.html',{"form":form})
+    return render(request, 'User/register.html',{"form":form})
 
 
 
