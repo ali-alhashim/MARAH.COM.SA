@@ -14,30 +14,12 @@
                     الأسم
                 </td>
                 <td>
-                    <input type="text" name="full_name" value="{{request.user.full_name}}" class="text-subject">
+                    <input type="text" name="name" value="{{request.user.name}}" class="text-mobile">
                 </td>
             </tr>
 
-            <tr>
-                <td>
-                    الأسم الرمزي / اللقب
-                </td>
-                <td>
-                    <input type="text" name="nikname" value="{{request.user.nikname}}" class="text-subject">
-                </td>
-            </tr>
-
-            <tr>
-                <td>
-                    البريد الإلكتروني
-                </td>
-                <td>
-                    <div class="row">
-                    <input type="email" name="email" value="{{request.user.email}}" class="text-email">
-                    {%if request.user.email_verified%}<img src="{%static 'img/verified.png'%}">{%endif%}
-                    </div>
-                </td>
-            </tr>
+           
+          
             <tr>
                 <td>
                    الجوال

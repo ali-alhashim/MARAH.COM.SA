@@ -11,7 +11,7 @@ from django.http import JsonResponse
 from django.db.models import Subquery, OuterRef
 from django.db.models import Count
 from django.db.models.functions import Coalesce
-
+from user_app.models import User
 import math
 
 
@@ -76,17 +76,30 @@ def search(request):
 
 def login_view(request):
     if request.method == 'POST':
-        username = request.POST['username']
+        username = str(request.POST['username']).lower().replace(" ", "")
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
+        print(f'the first result of authenticate {user}')
+
+        if user is None:
+            # Try to authenticate using name instead of mobile
+            try:
+                
+                user = User.objects.get(name=username)
+                print(f'the user name {user.name} wnat to login with name instead of mobile'  )
+                user = authenticate(request, name=user.mobile, password=password)
+            except User.DoesNotExist:
+                print('the user DoesNotExist')
+                user = None
+            
         if user is not None:
             login(request, user)
-            return redirect('home')  # Replace 'home' with your desired URL
+            return redirect('home')  
         else:
             # Authentication failed
             error_message = 'Invalid username or password'
             return render(request, 'Marah/login.html', {'error_message': error_message})
-    
+
     return render(request, 'Marah/login.html')
 
 

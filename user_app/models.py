@@ -7,16 +7,16 @@ import re
 # Create your models here.
 ############################################## User
 class MyAccountManager(BaseUserManager):
-    def created_user(self, full_name, email,is_staff, is_superuser,  password=None):
-        if not email:
-            raise ValueError('User must have an email address or mobile')
+    def created_user(self, name, mobile,is_staff, is_superuser,  password=None):
+        if not mobile:
+            raise ValueError('User must have an mobile address or mobile')
         now = timezone.now()
         user = self.model(
             
-            email = self.normalize_email(email),
+            mobile = (mobile.lower()).replace(" ", ""),
             is_staff=is_staff, 
             is_superuser=is_superuser, 
-            full_name = full_name,
+            name = (name.lower()).replace(" ", ""),
             last_login=now,
             date_joined=now, 
             
@@ -28,10 +28,10 @@ class MyAccountManager(BaseUserManager):
         return user
     
     
-    def create_superuser(self, full_name, email,  password):
+    def create_superuser(self, name, mobile,  password):
         user = self.created_user(
-            email = self.normalize_email(email),
-            full_name= full_name,
+            mobile = mobile,
+            name= name,
             is_superuser = True,
             is_staff = True,
             
@@ -46,23 +46,23 @@ class MyAccountManager(BaseUserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    email               = models.EmailField(unique=True)
-    full_name           = models.CharField(max_length=255)
-    nikname             = models.CharField(max_length=100, blank=True, null=True, unique=True)
-    email_verified      = models.BooleanField(default=False)
+    mobile              = models.CharField(max_length=255, unique=True)
+    name                = models.CharField(max_length=100, blank=True, null=True, unique=True)
+   
+    
     mobile_verified     = models.BooleanField(default=False)
     created_date        = models.DateTimeField(auto_now_add=True)
     last_update         = models.DateTimeField(auto_now=True)
     
-    mobile              = models.CharField(max_length=255, blank=True ,  default='+966 ', null=True)
+    
     
     #username          = None
    
 
 
     def image_upload(instance, filename):
-        userName = str(instance.email).replace(re.search("\@.*", str(instance.email)).group(), "")
-        return 'userApp/User_Profile_Photo/' + userName + '/'+filename 
+       
+        return 'userApp/User_Profile_Photo/' + instance.name + '/'+filename 
 
     profile_photo = models.ImageField(upload_to= image_upload, blank=True, max_length=500)
 
@@ -88,12 +88,12 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     objects = MyAccountManager()
 
-    USERNAME_FIELD =  'email'
-    REQUIRED_FIELDS = [ 'full_name',]
+    USERNAME_FIELD =  'mobile'
+    REQUIRED_FIELDS = [ 'name',]
 
     def __str__(self):
         
-        return str(self.full_name) +' '+str(self.email)
+        return self.name
         
     class Meta:
         ordering = ['-id']

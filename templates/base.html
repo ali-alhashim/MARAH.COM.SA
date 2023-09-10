@@ -74,7 +74,7 @@
                 </li>
                 {%else%}
                 <li id="user-menu">
-                    يالله حيهم : {{request.user.full_name}} <i class="fa-solid fa-caret-down"></i>
+                    يالله حيهم : {{request.user.name}} <i class="fa-solid fa-caret-down"></i>
 
                     <ul id="dropdown-menu">
                         <li>
@@ -268,23 +268,18 @@
         <div>
         <form method="POST" class="login-form" id="login_form_id" action="{%url 'login'%}">
             <h3>   
-                الدخول بــ البريد الإلكتروني و كلمة المرور
+                تسجيل الدخول
                 
             </h3>
             {% csrf_token %}
-        <input type="text"     name="username" placeholder="أدخل أسم المستخدم" class="text-email">
+        <input type="text"     name="username" placeholder="   أدخل اسم المستخدم أو رقم الجوال" class="text-email">
         <input type="password" name="password" placeholder="أدخل كلمة المرور" class="text-password">
         <input type="submit" value="دخول">
         </form>
         <br/>
 
 
-        <form method="POST" class="login-form" action="{%url 'login.With.Mobile.Number'%}">
-            {% csrf_token %}
-            <h3>الدخول بــ رقم الجوال</h3>
-            <input type="text" name="mobile" placeholder="+966 5# ### ## ##" class="text-mobile">
-            <input type="submit" value="دخول">
-        </form>
+        
 
         <br/>
        

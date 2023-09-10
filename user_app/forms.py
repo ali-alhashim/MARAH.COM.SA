@@ -9,9 +9,9 @@ class CustomUserChangeForm(forms.ModelForm):
     class Meta:
 
         model = User
-        fields = ["email", "full_name", "nikname","mobile","profile_photo","language","is_active","is_admin","is_staff","is_superuser","email_verified","mobile_verified"]
+        fields = [ "name", "mobile","profile_photo","language","is_active","is_admin","is_staff","is_superuser","mobile_verified"]
         labels = {
-                    'email': 'Email Address',
+                    
                     'is_active': 'Active',
                   }
     def clean_password2(self):
@@ -35,13 +35,13 @@ class CustomUserChangeForm(forms.ModelForm):
 class RegistrationForm(forms.ModelForm):
         password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder':'password', 'class':'text-password'}))
         confirm_password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder':'Confirm password', 'class':'text-password'}))
-        email            = forms.EmailField(widget=forms.EmailInput(attrs={'class':'text-email'}))
-        full_name             = forms.CharField(widget=forms.TextInput(attrs={'class':'text-subject'}))
+      
+        name             = forms.CharField(widget=forms.TextInput(attrs={'class':'text-subject'}))
         mobile           = forms.CharField(widget=forms.TextInput(attrs={'class':'text-mobile','value':'966'}))
-        nikname          = forms.CharField(widget=forms.TextInput(attrs={'class':'text-subject'}))
+        
         class Meta:
             model = User
-            fields = ['full_name', 'mobile', 'email','nikname', 'password']
+            fields = ['name', 'mobile',  'password']
 
         
         def clean(self):
@@ -62,10 +62,10 @@ class UserCreationForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields =  ('full_name','email', 'mobile', 'is_active','is_admin','is_staff','is_superuser', 'groups', 'user_permissions',)
+        fields =  ('name', 'mobile', 'is_active','is_admin','is_staff','is_superuser', 'groups', 'user_permissions',)
         widgets = {
-            'email':forms.TextInput(attrs={'class':'form-control'}),
-            'full_name':forms.TextInput(attrs={'class':'form-control'}),
+            
+            'name':forms.TextInput(attrs={'class':'form-control'}),
           
                'groups':forms.SelectMultiple(attrs={'class':'form-select'}),
                 'user_permissions':forms.SelectMultiple(attrs={'class':'form-select'}),
@@ -100,17 +100,17 @@ class UserChangeForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields =  ('full_name','email','password', 'mobile','is_active','is_admin','is_staff','is_superuser',  'groups', 'user_permissions')
+        fields =  ('name','password', 'mobile','is_active','is_admin','is_staff','is_superuser',  'groups', 'user_permissions')
         widgets = {
-            'email':forms.TextInput(attrs={'class':'form-control'}),
-            'full_name':forms.TextInput(attrs={'class':'form-control'}),
+           
+            'name':forms.TextInput(attrs={'class':'form-control'}),
             
           
              'mobile':forms.TextInput(attrs={'class':'form-control'}),
          
           
               'groups':forms.SelectMultiple(attrs={'class':'form-select'}),
-                'user_permissions':forms.SelectMultiple(attrs={'class':'form-select'}),
+              'user_permissions':forms.SelectMultiple(attrs={'class':'form-select'}),
               
               
              
@@ -128,10 +128,10 @@ class PasswordChangeForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('full_name','password')
+        fields = ('name','password')
         widgets = {
             'password':forms.TextInput(attrs={'class':'form-control', 'readonly':'True'}),
-            'full_name':forms.TextInput(attrs={'class':'form-control', 'readonly':'True'}),
+            'name':forms.TextInput(attrs={'class':'form-control', 'readonly':'True'}),
          }
 
     def clean_password2(self):

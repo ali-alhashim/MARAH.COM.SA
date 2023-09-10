@@ -22,84 +22,48 @@ def register_new_user(request):
     if request.method == 'POST':
        form = RegistrationForm(request.POST)
        if form.is_valid():
-           full_name    = form.cleaned_data['full_name']  
-           mobile  = form.cleaned_data['mobile']
-           email   = form.cleaned_data['email']
-           nikname = form.cleaned_data['nikname']
+           name    = form.cleaned_data['name'].lower().replace(" ", "")  
+           mobile  = form.cleaned_data['mobile'].lower().replace(" ", "")
+         
+           
            password= form.cleaned_data['password']
            user = User.objects.create(
-                                       full_name     = full_name,
+                                       name     = name,
                                        mobile   = mobile,
-                                       email    = email,
-                                       nikname  = nikname, 
-                                      
+                                       
                                      )
            user.set_password(password)
-           user.save()
+           
 
-           # user Activation
-           current_site = get_current_site(request)
-           mail_subject = 'please activate your account'
-           message      = render_to_string('User/account_verification_email.html',{"user"  :user,
-                                                                                    "domain":current_site,
-                                                                                    "uid"   :urlsafe_base64_encode(force_bytes(user.pk)),
-                                                                                    "token" : default_token_generator.make_token(user),
-                                                                                    })
-           to_email = email
-           send_email = EmailMessage(mail_subject, message, to=[to_email])
-           send_email.send()
-           messages.success(request, 'تم التسجيل بنجاح سيصل لك رابط لــ توثيق البريد الإلكتروني')
-           return redirect('login')
+           client = vonage.Client(key="e48cf721", secret="0kzxY067YT5r33sn")
+           verify = vonage.Verify(client)
+           response = verify.start_verification(number=mobile, brand="Marah")
+
+           if response["status"] == "0":
+                print("Started verification request_id is %s" % (response["request_id"]))
+                request.session['request_id'] = response["request_id"]
+                request.session['mobile'] = mobile
+                messages.success(request, 'تم التسجيل بنجاح سيصل لك كود  التوثيق ')
+                ## user saved
+                user.save()
+                return render(request,'User/OTP_verification_page.html',{})
+           else:
+                print("Error: %s" % response["error_text"])
+                if response['error_text'] == "Invalid value for param: number":
+                    messages.error(request, 'حدث خطأ الرجاء التأكد من رقم الجوال مع الرمز الدولي') 
+                else:   
+                    messages.error(request, 'حدث خطأ في إرسال الكود')
+                return HttpResponseRedirect(reverse_lazy('register.new.user'))
+          
+           
     else:
         form = RegistrationForm()
     return render(request, 'User/register.html',{"form":form})
 
 
 
-def activate(request, uidb64, token):
-    try:
-        uid = urlsafe_base64_decode(uidb64).decode()
-        user = User._default_manager.get(pk=uid)
-    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
-        user = None
-        pass
-    if user is not None and default_token_generator.check_token(user, token):
-        user.is_active = True
-        user.email_verified = True
-        user.save()
-        messages.success(request, 'تم توثيق البريد الإلكتروني بنجاح')
-    else:
-        messages.error(request, 'invlied activation link!') 
-    return redirect('login')
-
-############################################## Auth by phone with Firebase api AIzaSyAHaM4itupXBqfaQQ-2wcRx581MMtwcvhY
-
-def loginWithMobileNumber(request):
-    # check if user already register if not let him first register for one time
-
-    # get user Entered mobile
-    ## send otp
-    ## let user enter 
-    mobile = request.POST.get('mobile')
-    user_exists = User.objects.filter(mobile=mobile).exists()
-    if user_exists:
-
-        client = vonage.Client(key="e48cf721", secret="0kzxY067YT5r33sn")
-        verify = vonage.Verify(client)
-        response = verify.start_verification(number=mobile, brand="Marah")
-
-        if response["status"] == "0":
-            print("Started verification request_id is %s" % (response["request_id"]))
-            request.session['request_id'] = response["request_id"]
-            request.session['mobile'] = mobile
-        else:
-            print("Error: %s" % response["error_text"])
 
 
-        return render(request,'User/OTP_verification_page.html',{})
-    else:
-        messages.error(request, 'أنت عضو جديد عليك التسجيل أولاً حتى تسجل الدخول برقم الجوال')
-        return HttpResponseRedirect(reverse_lazy('register.new.user'))
 
 
 
@@ -115,7 +79,7 @@ def verifyOTP(request):
         user = User.objects.filter(mobile=request.session['mobile']).first()
         user.mobile_verified = True
         user.save()
-        print('Welcome back', user.full_name)
+        print('Welcome back', user.name)
         login(request, user)
        
 
@@ -134,9 +98,9 @@ def verifyOTP(request):
 @login_required(login_url='login')
 def MyAccount_index(request):
     if request.method =="POST":
-        email     = request.POST.get('email')
-        full_name = request.POST.get('full_name')
-        nikname   = request.POST.get('nikname')
+        
+        name = request.POST.get('name')
+      
         mobile    = request.POST.get('mobile')
         user = User.objects.get(pk=request.user.id)
 
@@ -145,13 +109,11 @@ def MyAccount_index(request):
         if mobile != user.mobile:
             user.mobile_verified = False
             print('user update his mobile')
-        if email != user.email:
-            user.email_verified  = False
-            print('user update his email')
+        
         try:
-            user.email     = email
-            user.full_name = full_name
-            user.nikname   = nikname
+           
+            user.name = name
+            
             user.mobile    = mobile
             user.save()
             messages.success(request,'تم الحفظ')
