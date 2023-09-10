@@ -10,6 +10,9 @@
 @media only screen and (max-width: 600px){
     subnav{
         padding: 0 !important;
+        width: auto;
+        flex-direction: column !important;
+        justify-content: center;
     }
     .login-form{
         width: 100vw !important;
