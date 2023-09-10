@@ -78,16 +78,21 @@ def login_view(request):
     if request.method == 'POST':
         username = str(request.POST['username']).lower().replace(" ", "")
         password = request.POST['password']
+
         user = authenticate(request, username=username, password=password)
         print(f'the first result of authenticate {user}')
 
         if user is None:
             # Try to authenticate using name instead of mobile
+            print("Try to authenticate using name instead of mobile")
             try:
                 
-                user = User.objects.get(name=username)
-                print(f'the user name {user.name} wnat to login with name instead of mobile'  )
-                user = authenticate(request, name=user.mobile, password=password)
+                user = User.objects.filter(name=username).first()
+                print(f'the user name {user.name} want to login with name instead of mobile'  )
+                user = authenticate(request, username=user.mobile, password=password)
+                if user is not None:
+                    login(request, user)
+                    return redirect('home')  
             except User.DoesNotExist:
                 print('the user DoesNotExist')
                 user = None
