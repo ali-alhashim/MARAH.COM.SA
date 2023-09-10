@@ -22,7 +22,7 @@
    
              <div class="user">
                <i class="fa fa-user"></i>
-               {{thePost.created_by.nikname}}
+               {{thePost.created_by.name}}
              </div>
 
             
@@ -65,7 +65,7 @@
          <div class="{%if comment.created_by == comment.post.created_by%}reply-posted-comment{%else%}posted-comment{%endif%}">
            <div class="posted-comment-sender">
                <p>
-                   {{comment.created_by.nikname}}
+                   {{comment.created_by.name}}
                </p>
    
                <p>
@@ -151,7 +151,7 @@
 
   <form method="POST" class="login-box" action="{%url 'User.Message.create'%}">
       {% csrf_token %}
-      <h3>  إرسال رسالة إلى [ {{thePost.created_by.nikname}} ] </h3>
+      <h3>  إرسال رسالة إلى [ {{thePost.created_by.name}} ] </h3>
 
       <input type="text" name="subject" class=" w-100" value="مراسلة عن إعلان - {{thePost.subject}}">
       <input type="hidden" name="send_to" value="{{thePost.created_by.id}}">
