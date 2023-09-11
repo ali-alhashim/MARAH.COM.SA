@@ -11,10 +11,23 @@
     subnav{
         padding: 0 !important;
         width: auto;
+        display: flex !important;
         flex-direction: column !important;
         justify-content: center !important;
         align-content: center;
+        gap: 1rem;
     }
+    subnav form{
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        gap: 1rem;
+        padding: 0;
+        width: 100% !important;
+    }
+
+ 
+  
     .login-form{
         width: 100vw !important;
         padding: 5px;
@@ -463,7 +476,8 @@ input{
 .Categories-warp{
     margin-left: 10%;
     margin-right: 10%;
-   
+    display: flex;
+    justify-content: center;
     overflow-x: auto;
     
     border-radius: 0.5rem;
