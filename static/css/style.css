@@ -12,7 +12,8 @@
         padding: 0 !important;
         width: auto;
         flex-direction: column !important;
-        justify-content: center;
+        justify-content: center !important;
+        align-content: center;
     }
     .login-form{
         width: 100vw !important;
@@ -26,6 +27,16 @@
     .main-content{
         margin: 0 !important;
         padding: 5px !important;
+    }
+    .card-sub-text{
+        flex-direction: column !important;
+    }
+    .footer-links{
+        flex-direction: column !important;
+    }
+
+    nav{
+        flex-direction: column !important; 
     }
 }
 
@@ -367,7 +378,7 @@ nav{
 
 subnav{
     
-    width: 100vw;
+    width: 100%;
     display: flex;
     
     align-items: center;
@@ -459,7 +470,7 @@ input{
 }
 
 .Categories{
-    width: 100%;
+    width: fit-content;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -468,10 +479,11 @@ input{
     background: var(--dark-primary);
     border-radius: 0.5rem;
     gap: 1rem;
+    overflow-x: auto;
 }
 
 .sub-Categories{
-    width: 100%;
+    width: fit-content;
     display: flex;
     align-items: center;
     justify-content: space-between;
