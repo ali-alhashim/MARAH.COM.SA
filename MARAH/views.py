@@ -88,9 +88,10 @@ def login_view(request):
             try:
                 
                 user = User.objects.filter(name=username).first()
-                print(f'the user name {user.name} want to login with name instead of mobile'  )
-                user = authenticate(request, username=user.mobile, password=password)
+                
                 if user is not None:
+                    print(f'the user name {user.name} want to login with name instead of mobile'  )
+                    user = authenticate(request, username=user.mobile, password=password)
                     login(request, user)
                     return redirect('home')  
             except User.DoesNotExist:
@@ -102,7 +103,7 @@ def login_view(request):
             return redirect('home')  
         else:
             # Authentication failed
-            error_message = 'Invalid username or password'
+            error_message = 'أسم المستخدم أو كلمة المرور خطأ'
             return render(request, 'Marah/login.html', {'error_message': error_message})
 
     return render(request, 'Marah/login.html')
