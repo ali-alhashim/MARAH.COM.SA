@@ -62,7 +62,28 @@ def register_new_user(request):
 
 
 
+######### ForgetPassword
 
+def ForgetPassword(request):
+    ## check if request send GET mobile
+    if request.method =="GET":
+        if request.GET.get('mobile'):
+            ## check if there is user with this mobile 
+            user = User.objects.filter(mobile = request.GET.get('mobile')).first()
+            if user is not None:
+                ## user exist send sms 
+                client = vonage.Client(key="e48cf721", secret="0kzxY067YT5r33sn")
+                verify = vonage.Verify(client)
+                response = verify.start_verification(number=request.GET.get('mobile'), brand="Marah")
+
+                if response["status"] == "0":
+                        print("Started verification request_id is %s" % (response["request_id"]))
+                        request.session['request_id'] = response["request_id"]
+                        request.session['mobile'] = request.GET.get('mobile')
+                        messages.success(request, 'تم الارسال بنجاح سيصل لك كود  التوثيق ')
+                        return render(request,'User/OTP_verification_page.html',{})
+            else:
+                messages.error(request, ' لايوجد رقم جوال مسجل بالرقم المدخل')
 
 
 
@@ -80,6 +101,7 @@ def verifyOTP(request):
         user.mobile_verified = True
         user.save()
         print('Welcome back', user.name)
+        
         login(request, user)
        
 
