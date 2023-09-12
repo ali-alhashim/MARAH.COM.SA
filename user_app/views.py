@@ -20,19 +20,31 @@ from post_app.models import MyFavorite, Post
 
 def register_new_user(request):
     if request.method == 'POST':
+       print('register_new_user start .......')
        form = RegistrationForm(request.POST)
+       
+       if User.objects.filter(name = request.POST.get('name')).exists:
+               messages.error(request, 'الاسم موجود اختر اسم آخر')
+               redirect('register.new.user')
+       if User.objects.filter(mobile = request.POST.get('mobile')).exists:
+                messages.error(request, 'رقم الجوال مسجل ! ')
+                redirect('register.new.user')
+
        if form.is_valid():
            name    = form.cleaned_data['name'].lower().replace(" ", "")  
            mobile  = form.cleaned_data['mobile'].lower().replace(" ", "")
-         
+           print('form is valid')
            
+
+           
+
            password= form.cleaned_data['password']
-           user = User.objects.create(
-                                       name     = name,
-                                       mobile   = mobile,
-                                       
-                                     )
+           user = User(
+                        name     = name,
+                        mobile   = mobile,                             
+                      )
            user.set_password(password)
+           
            
 
            client = vonage.Client(key="e48cf721", secret="0kzxY067YT5r33sn")
@@ -44,6 +56,7 @@ def register_new_user(request):
                 request.session['request_id'] = response["request_id"]
                 request.session['mobile'] = mobile
                 messages.success(request, 'تم التسجيل بنجاح سيصل لك كود  التوثيق ')
+               
                 ## user saved
                 user.save()
                 return render(request,'User/OTP_verification_page.html',{})
@@ -54,6 +67,8 @@ def register_new_user(request):
                 else:   
                     messages.error(request, 'حدث خطأ في إرسال الكود')
                 return HttpResponseRedirect(reverse_lazy('register.new.user'))
+       else:
+           print('form is Not valid')
           
            
     else:
@@ -110,11 +125,13 @@ def verifyOTP(request):
         
         login(request, user)
        
+        try:
+            del request.session['request_id']
+            del request.session['mobile']
+        except Exception as e:
+            print(e)
 
-        del request.session['request_id']
-        del request.session['mobile']
-
-        if request.session['forget'] =="forget":
+        if "forget" in request.session:
             return redirect('MyAccount.ResetPassword')
         
         return HttpResponseRedirect(reverse_lazy('home'))
@@ -173,7 +190,7 @@ def ResetPassword(request):
                 user.save()
                 messages.success(request,'تم تغيير كلمة المرور الرجاء أستخدام كلمة المرور الجديدة لــ تسجيل الدخول')
                 return HttpResponseRedirect(reverse_lazy('login'))
-            elif request.session['forget'] =="forget":
+            elif "forget" in request.session and request.session['forget'] =="forget":
                 user.set_password(new_password)
                 user.save()
                 messages.success(request,'تم تغيير كلمة المرور الرجاء أستخدام كلمة المرور الجديدة لــ تسجيل الدخول')

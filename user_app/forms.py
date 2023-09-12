@@ -33,7 +33,7 @@ class CustomUserChangeForm(forms.ModelForm):
 
 
 class RegistrationForm(forms.ModelForm):
-        password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder':'password', 'class':'text-password'}))
+        password         = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder':'password', 'class':'text-password'}))
         confirm_password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder':'Confirm password', 'class':'text-password'}))
       
         name             = forms.CharField(widget=forms.TextInput(attrs={'class':'text-subject'}))
@@ -41,7 +41,7 @@ class RegistrationForm(forms.ModelForm):
         
         class Meta:
             model = User
-            fields = ['name', 'mobile',  'password']
+            fields = ['name', 'mobile', 'password']
 
         
         def clean(self):
