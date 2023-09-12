@@ -14,10 +14,44 @@
     <input type="submit" value="دخول" class="login-btn">
     </form>
     <br/>
-    <a href="" class="c-btn">
+    <button class="forget-btn" onclick="openBox()">
         نسيت كلمة المرور
-    </a>
+    </button>
+
+
+    
+</div>
+
+
+
+
+<div class="forget-box" id="forget-box-id">
+   
+    <i class="fa-solid fa-rectangle-xmark exit-btn" onclick="closeBox()"></i>
+
+<form action="{%url 'Forget.Password'%}" method="POST">
+    {% csrf_token %}
+    <input type="text" name="mobile" placeholder="إدخل رقم الجوال">
+    <br/>
+    <br/>
+    <input type="submit" value=" إستعادة كلمة المرور">
+</form>
 </div>
 
 
 {% endblock main_content %}
+
+
+
+
+{% block js %}
+<script>
+    function openBox(){
+        document.getElementById('forget-box-id').classList.add('active-login');
+    }
+    function closeBox(){
+        document.getElementById('forget-box-id').classList.remove('active-login');
+    }
+</script>
+{% endblock js %}
+

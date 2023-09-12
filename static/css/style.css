@@ -7,6 +7,36 @@
 
 }
 
+.forget-btn{
+    font-weight: 600;
+    padding: 5px 10px;
+    border-radius:0.5rem;
+    cursor: pointer;
+}
+.forget-btn:hover{
+    background: #b8b8b8;
+}
+
+.forget-box{
+    z-index: 999;
+    display: none;
+    flex-direction: column;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    background: var(--extra-dark-primary);
+    padding: 10px;
+    border-radius: 1rem;
+    box-shadow: #888888 5px 5px 10px 5px;
+}
+.forget-box input{
+    width: 100%;
+    font-size: 18px;
+    direction: ltr;
+    border-radius:0.5rem;
+    text-align: center;
+}
+
 @media only screen and (max-width: 600px){
     subnav{
         padding: 0 !important;
@@ -16,6 +46,11 @@
         justify-content: center !important;
         align-content: center;
         gap: 1rem;
+    }
+    .forget-box{
+        width: 100%;
+        left:0;
+        top:10%;
     }
     subnav form{
         display: flex !important;
@@ -219,20 +254,22 @@
   }
   .exit-btn{
     cursor: pointer;
-    margin: 15px;
+    color: rgb(230, 55, 55);
+    font-size: large;
+    margin: 5px;
   }
 
   .login-background{
-    background: #00000062;
-    width: 100vw;
-    
-    height: 100vh;
+    background: #b8b8b8;
+    width: fit-content;
+    padding: 10px;
+    height: fit-content;
     position: fixed;
     top: 50%;
     left: 50%;
     transition: all 0.3s ease-in-out;
     transform: translate(-50%, -50%);
-    
+    border-radius: 1rem;
     
     display: none;
     flex-direction: column;

@@ -65,25 +65,31 @@ def register_new_user(request):
 ######### ForgetPassword
 
 def ForgetPassword(request):
-    ## check if request send GET mobile
-    if request.method =="GET":
-        if request.GET.get('mobile'):
+    ## check if request send POST mobile
+    if request.method =="POST":
+        if request.POST.get('mobile'):
             ## check if there is user with this mobile 
-            user = User.objects.filter(mobile = request.GET.get('mobile')).first()
+            user = User.objects.filter(mobile = request.POST.get('mobile')).first()
             if user is not None:
                 ## user exist send sms 
                 client = vonage.Client(key="e48cf721", secret="0kzxY067YT5r33sn")
                 verify = vonage.Verify(client)
-                response = verify.start_verification(number=request.GET.get('mobile'), brand="Marah")
+                response = verify.start_verification(number=request.POST.get('mobile'), brand="Marah")
 
                 if response["status"] == "0":
                         print("Started verification request_id is %s" % (response["request_id"]))
                         request.session['request_id'] = response["request_id"]
-                        request.session['mobile'] = request.GET.get('mobile')
+                        request.session['mobile'] = request.POST.get('mobile')
+                        request.session['forget'] = "forget"
                         messages.success(request, 'تم الارسال بنجاح سيصل لك كود  التوثيق ')
                         return render(request,'User/OTP_verification_page.html',{})
             else:
                 messages.error(request, ' لايوجد رقم جوال مسجل بالرقم المدخل')
+                return redirect('login')
+        else:
+            messages.error(request, '  الرجاء إدخال رقم الجوال')
+            return redirect('login')
+    
 
 
 
@@ -107,6 +113,10 @@ def verifyOTP(request):
 
         del request.session['request_id']
         del request.session['mobile']
+
+        if request.session['forget'] =="forget":
+            return redirect('MyAccount.ResetPassword')
+        
         return HttpResponseRedirect(reverse_lazy('home'))
   else:
         print("Error: %s" % response["error_text"])
@@ -157,11 +167,19 @@ def ResetPassword(request):
     
         if new_password == confirm_password:
             user = User.objects.get(pk=request.user.id)
+
             if user.check_password(current_password):
                 user.set_password(new_password)
                 user.save()
                 messages.success(request,'تم تغيير كلمة المرور الرجاء أستخدام كلمة المرور الجديدة لــ تسجيل الدخول')
                 return HttpResponseRedirect(reverse_lazy('login'))
+            elif request.session['forget'] =="forget":
+                user.set_password(new_password)
+                user.save()
+                messages.success(request,'تم تغيير كلمة المرور الرجاء أستخدام كلمة المرور الجديدة لــ تسجيل الدخول')
+                del request.session['forget']
+                return HttpResponseRedirect(reverse_lazy('login'))
+            
             else:
                 messages.error(request, 'كلمة المرور الحاليه غير صحيحة')
                 return HttpResponseRedirect(reverse_lazy('MyAccount.ResetPassword'))
