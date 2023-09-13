@@ -98,6 +98,10 @@ def ForgetPassword(request):
                         request.session['forget'] = "forget"
                         messages.success(request, 'تم الارسال بنجاح سيصل لك كود  التوثيق ')
                         return render(request,'User/OTP_verification_page.html',{})
+                else:
+                    print("Error: %s" % response["error_text"])
+                    messages.error(request,'خدمة الرسائل خارج الخدمة')
+                    return redirect('login')
             else:
                 messages.error(request, ' لايوجد رقم جوال مسجل بالرقم المدخل')
                 return redirect('login')
