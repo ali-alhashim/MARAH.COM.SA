@@ -13,7 +13,7 @@ from django.db.models import Count
 from django.db.models.functions import Coalesce
 from user_app.models import User
 import math
-
+from django.contrib import messages
 
 def home(request):
 
@@ -77,34 +77,38 @@ def search(request):
 def login_view(request):
     if request.method == 'POST':
         username = str(request.POST['username']).lower().replace(" ", "")
+        print(f'the username value ===>{username}')
         password = request.POST['password']
 
-        user = authenticate(request, username=username, password=password)
-        print(f'the first result of authenticate {user}')
-
-        if user is None:
-            # Try to authenticate using name instead of mobile
-            print("Try to authenticate using name instead of mobile")
-            try:
-                
-                user = User.objects.filter(name=username).first()
-                
-                if user is not None:
-                    print(f'the user name {user.name} want to login with name instead of mobile'  )
-                    user = authenticate(request, username=user.mobile, password=password)
+        if username.isdigit():
+            print(f'user enter his mobile {username}')
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                    print('user is authenticate')
                     login(request, user)
-                    return redirect('home')  
-            except User.DoesNotExist:
-                print('the user DoesNotExist')
-                user = None
-            
-        if user is not None:
-            login(request, user)
-            return redirect('home')  
+                    return redirect('home')
+            else:
+                # Authentication failed
+                print('Authentication failed with mobile')
+                error_message = 'أسم المستخدم أو كلمة المرور خطأ'
+                return render(request, 'Marah/login.html', {'error_message': error_message})       
         else:
-            # Authentication failed
-            error_message = 'أسم المستخدم أو كلمة المرور خطأ'
-            return render(request, 'Marah/login.html', {'error_message': error_message})
+            print(f'the user name {username} want to login with name instead of mobile'  )
+            userMobile = User.objects.filter(name=username).first()
+            user = authenticate(request, username=userMobile.mobile, password=password)
+            if user is not None:
+                    login(request, user)
+                    return redirect('home')
+            else:
+                # Authentication failed
+                
+                print('Authentication failed with name')
+                error_message = 'أسم المستخدم أو كلمة المرور خطأ'
+                return render(request, 'Marah/login.html', {'error_message': error_message})       
+        
+       
+
+      
 
     return render(request, 'Marah/login.html')
 
