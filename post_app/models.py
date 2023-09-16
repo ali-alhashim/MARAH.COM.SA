@@ -1,6 +1,8 @@
 from django.db import models
 from user_app.models import User
 from django.urls import reverse
+from django_resized import ResizedImageField
+
 # Create your models here.
 
 class Location(models.Model):
@@ -51,9 +53,10 @@ class Post(models.Model):
 ## every post has many images
 class Post_Images(models.Model):
     post         = models.ForeignKey(Post, on_delete=models.CASCADE, blank=True, null=True, related_name='post_images')
+
     def upload_file(self, filename):
         return f'post_images/{self.post.id}/{filename}'
-    image        = models.ImageField(upload_to=upload_file, blank=True, null=True)
+    image        = ResizedImageField(upload_to=upload_file, force_format="WEBP", quality=75)
     created_date = models.DateTimeField(auto_now_add=True)
     last_update  = models.DateTimeField(auto_now=True)
 
