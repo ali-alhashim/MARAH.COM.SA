@@ -112,6 +112,10 @@ def login_view(request):
 
     return render(request, 'Marah/login.html')
 
+############### User Agreement
+def UserAgreement(request):
+    return render(request,'Marah/UserAgreement.html',{})
+
 
 
 
