@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
-from .models import User
+from .models import User, Login_Logs
 from .forms import UserChangeForm, UserCreationForm
 # Register your models here.
 from django.contrib.auth.forms import AdminPasswordChangeForm
@@ -35,6 +35,11 @@ class UserAdmin(BaseUserAdmin):
 
     ordering = ['-date_joined',]
 admin.site.register(User, UserAdmin)
+
+class LogsAdmin(admin.ModelAdmin):
+    list_display = ['ip','browser','user','location','created_date']
+
+admin.site.register(Login_Logs, LogsAdmin)
 
 
 
