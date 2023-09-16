@@ -146,3 +146,14 @@ class UserMessageReply(models.Model):
 
 
 
+
+
+class Login_Logs(models.Model):
+     created_date        = models.DateTimeField(auto_now_add=True)
+     ip                  = models.CharField(max_length=100, blank=True, null=True)
+     location            = models.CharField(max_length=100, blank=True, null=True)
+     browser             = models.CharField(max_length=100, blank=True, null=True)
+     user                = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+
+
+

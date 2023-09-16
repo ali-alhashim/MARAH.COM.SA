@@ -56,7 +56,7 @@ class Post_Images(models.Model):
 
     def upload_file(self, filename):
         return f'post_images/{self.post.id}/{filename}'
-    image        = ResizedImageField(upload_to=upload_file, force_format="WEBP", quality=75)
+    image        = ResizedImageField(upload_to=upload_file, force_format="WEBP", quality=75, null=True)
     created_date = models.DateTimeField(auto_now_add=True)
     last_update  = models.DateTimeField(auto_now=True)
 
