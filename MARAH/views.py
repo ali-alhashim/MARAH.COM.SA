@@ -66,7 +66,7 @@ def search(request):
 
     items_per_page = 10
 
-    posts     = Post.objects.filter(query).order_by('-created_date')
+    posts     = Post.objects.filter(query, Q(subject__icontains = searchKey) | Q(text__icontains = searchKey)).order_by('-created_date')
     paginator = Paginator(posts, items_per_page)
     page      = paginator.get_page(page_number)
     return render(request,'Marah/search.html',{"posts":page,"selectedLocation":selectedLocation,"selectedcategory":category,"selectedSubCategory":selectedSubCategory,"page_number":page_number})
