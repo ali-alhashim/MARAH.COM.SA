@@ -7,6 +7,28 @@
 
 }
 
+.user-agreement-list{
+    list-style: square;
+    padding: 5px;
+    background: var(--dark-primary);
+    padding: 5px;
+    border-radius: 1rem;
+}
+
+.user-agreement-list li{
+    margin: 5px;
+    background: #FEFBF3;
+    padding: 10px;
+    border-radius: 1rem;
+}
+
+.user-agreement-list ol{
+    background: #FEFBF3;
+    padding: 5px;
+    border-radius: 1rem;
+    padding: 15px;
+}
+
 .forget-btn{
     font-weight: 600;
     padding: 5px 10px;
