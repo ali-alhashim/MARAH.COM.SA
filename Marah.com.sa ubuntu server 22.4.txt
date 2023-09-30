@@ -1,0 +1,129 @@
+# 1- install mysql server
+# 2- install FTP server
+# 3- install pip
+# 4- update server
+
+### update server
+
+sudo apt update && sudo apt upgrade
+
+### enable firewall
+
+sudo ufw enafble
+
+### install vsftpd
+
+sudo apt install vsftpd
+
+### add ftp user
+
+sudo adduser aliftp
+
+### allow port 20 & 21 for using ftp
+
+sudo ufw allow 20/tcp
+sudo ufw allow 80
+sudo ufw allow 443
+sudo ufw allow 21/tcp
+sudo ufw allow 30000:31000/tcp
+sudo ufw allow ftp
+sudo ufw allow 'Nginx Full'
+
+### use root user 
+sudo -i
+### go home and go to ailftp and create folder for ftp root folder 
+mkdir MARAH.COM.SA
+
+## chown
+
+sudo chown aliftp:nogroup MARAH.COM.SA
+
+
+
+
+### edit vsftpd conf file
+
+sudo nano /etc/vsftpd.conf
+
+###go to last and add the following :
+
+local_enable=YES
+write_enable=YES
+pasv_enable=YES
+pasv_min_port=30000
+pasv_max_port=31000
+chroot_local_user=YES
+user_sub_token=$USER
+local_root=/home/aliftp/MARAH.COM.SA
+userlist_enable=YES
+userlist_file=/etc/vsftpd.allowed_users
+userlist_deny=NO
+allow_writeble_chroot=YES
+### save changes and restart vsftpd
+sudo service vsftpd restart
+
+### create file and add user 
+
+sudo nano /etc/vsftpd.allowed_users
+## write user name save
+
+### check vsftpd status
+sudo service vsftpd status
+
+### install pip
+
+sudo apt install python3-pip
+
+## install mysql
+apt install mysql-server
+
+mysql_secure_installation
+
+
+CREATE USER 'admin'@'%' IDENTIFIED WITH mysql_native_password BY 'Akte@12345678';
+
+GRANT ALL PRIVILEGES on *.* TO 'admin'@'%' WITH GRANT OPTION;
+
+FLUSH PRIVILEGES;
+
+CREATE DATABASE marah;
+mysql -u username -p database_name < file.sql
+
+
+### install venv
+
+sudo apt install python3.10-venv
+
+sudo apt install python3-dev default-libmysqlclient-dev
+
+sudo apt install pkg-config
+
+
+-------
+python manage.py load_categories
+python manage.py load_locations
+
+---------------------------------
+// using a web server like Nginx or Apache in conjunction with an application server like Gunicorn is the recommended approach for deploying Django applications in production.
+// Django webApp -> Gunicorn -> Nginx
+
+### install nginx
+sudo apt install nginx
+
+## install gunicorn
+pip install gunicorn
+
+## start gunicorn 
+
+gunicorn -c gunicorn_config.py MARAH.wsgi
+
+### start nginx 
+
+sudo service nginx start
+
+
+## 
+sudo systemctl restart nginx
+
+chmod -R 755 static
+
