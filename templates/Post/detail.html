@@ -151,6 +151,7 @@
 
   <form method="POST" class="login-box" action="{%url 'User.Message.create'%}">
       {% csrf_token %}
+      <hr>
       <h3>  إرسال رسالة إلى [ {{thePost.created_by.name}} ] </h3>
 
       <input type="text" name="subject" class=" w-100" value="مراسلة عن إعلان - {{thePost.subject}}">
@@ -186,6 +187,7 @@
 
   <form method="POST" class="login-box" action="{%url 'Post_Complaints.Message.create'%}">
       {% csrf_token %}
+      <hr>
       <h3>   إرسال بلاغ </h3>
 
       <input type="text" name="subject" class=" w-100" value="بلاغ عن إعلان - {{thePost.subject}}">

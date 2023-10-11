@@ -273,17 +273,21 @@
     top: 0;
     
     
+    
   }
   .exit-btn{
     cursor: pointer;
     color: rgb(230, 55, 55);
     font-size: large;
     margin: 5px;
+    position: absolute;
+    top:1px
   }
 
   .login-background{
     background: #b8b8b8;
-    width: fit-content;
+    width: 350px;
+    min-width: fit-content;
     padding: 10px;
     height: fit-content;
     position: fixed;
@@ -445,7 +449,9 @@ nav{
 }
 
 .card-img img{
-    max-width: 100px;
+    max-height: 250px;
+    border-bottom-left-radius: 0.3rem;
+    border-top-left-radius: 0.3rem;
 }
 
 subnav{
