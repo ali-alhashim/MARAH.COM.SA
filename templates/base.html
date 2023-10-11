@@ -153,7 +153,7 @@
                        {%endfor%}
             </select>
 
-            <a class="search-btn">
+            <a class="search-btn" onclick="getClientLocation()">
                 القريب
                 <i class="fa fa-map"></i>
             </a>
@@ -316,6 +316,69 @@
         document.getElementById('location-select-id').addEventListener('change', function(){
            this.form.submit();
         });  
+
+
+        //getClientLocation() ----------------------------------------------------------------------
+        function getClientLocation()
+        {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
+              } else {
+                console.log("Geolocation is not supported by this browser.");
+              }
+              
+              function successCallback(position) {
+                var latitude = position.coords.latitude;
+                var longitude = position.coords.longitude;
+                console.log(`latitude:${latitude} \n longitude:${longitude}`)
+              
+                // Send the location data to the Django backend
+                sendLocationToBackend(latitude, longitude);
+              }
+              
+              function errorCallback(error) {
+                console.log("Error occurred while retrieving location:", error);
+              }
+              
+              function sendLocationToBackend(latitude, longitude) {
+                const xhr = new XMLHttpRequest();
+                var url = '{% url "client.Location" %}'; // Replace with the correct Django URL
+              
+                // Set up the request
+                xhr.open('POST', url, true);
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.setRequestHeader('X-CSRFToken', "{{ csrf_token }}"); // Replace with the function to get the CSRF token
+              
+                // Handle the response
+                xhr.onload = function () {
+                  if (xhr.status >= 200 && xhr.status < 400) {
+                    // Request successful
+                        const data = JSON.parse(xhr.responseText)
+                       console.log(data.message);
+                    // Handle the response from the backend if needed
+                     window.location.href = data.message;
+                  } else {
+                    // Request failed
+                    console.error('Error occurred while sending location to backend:', xhr.statusText);
+                  }
+                };
+              
+                // Handle any network errors
+                xhr.onerror = function () {
+                  console.error('Network error occurred while sending location to backend.');
+                };
+              
+                // Create the payload
+                var data = {
+                            "latitude" : latitude,
+                            "longitude": longitude
+                           };
+              
+                // Send the request
+                xhr.send(JSON.stringify(data));
+              }
+        } //----------------------------------------------------------------------------------
+
     </script>
 
     {% block js %}

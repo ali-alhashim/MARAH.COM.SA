@@ -14,7 +14,9 @@ from django.db.models.functions import Coalesce
 from user_app.models import User
 import math
 from django.contrib import messages
-
+import json
+from geopy.geocoders import Nominatim
+from geopy.exc import GeocoderTimedOut
 def home(request):
 
    
@@ -72,6 +74,39 @@ def search(request):
     return render(request,'Marah/search.html',{"posts":page,"selectedLocation":selectedLocation,"selectedcategory":category,"selectedSubCategory":selectedSubCategory,"page_number":page_number})
 
 ## ---------------------------------------------------- search --------------------------------------------------------------------------
+
+def client_Location(request):
+    if request.method == 'POST':
+        request_data = json.loads(request.body.decode('utf-8'))
+
+        latitude = request_data["latitude"]
+        longitude = request_data["longitude"]
+
+        def get_city_name(latitude, longitude):
+            geolocator = Nominatim(user_agent="city_locator")  # Replace "city_locator" with your user agent.
+
+            try:
+                location = geolocator.reverse((latitude, longitude), exactly_one=True)
+                if location and location.raw.get("address"):
+                    city = location.raw["address"].get("city")
+                    if city:
+                        return city
+                    else:
+                        return "City name not found"
+                else:
+                    return "City name not found"
+            except GeocoderTimedOut:
+                return "Geocoding service timed out"
+
+        print(f"latitude:{latitude} \n longitude:{longitude} ")
+        city_name = get_city_name(latitude, longitude)
+        location = Location.objects.filter(name__icontains = city_name).first()
+        if location:
+            print(f"The city is: {city_name}")
+            return JsonResponse({'message': '/Filter/?category=all&searchKey=&location='+str(location.id)+'&Sub_Category=all'})
+       
+            
+        return JsonResponse({'message': 'Location received successfully.'})
 
 
 def login_view(request):

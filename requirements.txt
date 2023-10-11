@@ -12,4 +12,6 @@ vonage
 ResizedImageField
 user-agents
 geoip2
+pip install geopy
+
 

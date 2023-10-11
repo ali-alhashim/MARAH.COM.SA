@@ -30,6 +30,7 @@ urlpatterns = [
 
     path('post/', include('post_app.urls')),
     path('User/', include('user_app.urls')),
+    path('client_Location', views.client_Location, name="client.Location"),
     
 ]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
 
