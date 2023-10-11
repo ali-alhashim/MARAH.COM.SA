@@ -1,14 +1,12 @@
 from django.shortcuts import render, redirect
-from django.contrib.sites.shortcuts import get_current_site
-from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
-from django.utils.encoding import force_bytes
-from django.contrib.auth.tokens import default_token_generator
-from django.core.mail import EmailMessage
-from django.template.loader import render_to_string
+
 from.models import User, UserMessage, UserMessageReply
 from .forms import RegistrationForm
 from django.contrib import messages
+
+### otp sms 
 import vonage
+
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.contrib.auth import  login
