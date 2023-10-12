@@ -344,7 +344,7 @@
     font-size: large;
     border-radius: 0.5rem;
     border: #c2c2c2 solid 1px;
-    
+    background: #fff;
   }
 
   .login-user{
@@ -862,7 +862,7 @@ margin: 5px;
 .text-password{
     text-align: left;
     text-anchor: start;
-    width: 100%;
+    width: 300px;
     padding: 3px;
     font-size: large;
     border-radius: 0.5rem;
@@ -885,13 +885,14 @@ margin: 5px;
 .text-email{
     text-align: left;
     text-anchor: start;
-    width: 100%;
+    width: 300px;
     padding: 3px;
     font-size: large;
     border-radius: 0.5rem;
     border: var(--secondary ) solid 1px;
     margin: auto;
     direction: ltr;
+    background: #fff;
 }
 
 .new-user-btn{
@@ -999,6 +1000,7 @@ margin: 5px;
   {
    
     text-decoration: none;
+    color:#000
   }
   
   #user-menu.active #dropdown-menu {
