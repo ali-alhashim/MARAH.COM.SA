@@ -5,8 +5,8 @@ from .forms import RegistrationForm
 from django.contrib import messages
 
 ### otp sms 
-import vonage
-
+from TaqnyatSms import client
+import random
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.contrib.auth import  login
@@ -45,13 +45,25 @@ def register_new_user(request):
            
            
 
-           client = vonage.Client(key="e48cf721", secret="0kzxY067YT5r33sn")
-           verify = vonage.Verify(client)
-           response = verify.start_verification(number=mobile, brand="Marah")
+           
+
+           bearer = 'e30a86bec2979b8fded273b4c27a9355'
+
+           code_number = random.randint(1000, 9999)
+           request.session['code_number'] = code_number
+           body       = f'{code_number}: كود التحقق من منصة مراح'
+           recipients = [f'{mobile}']
+           sender     = 'taqnyat.sa'
+           scheduled  =''
+           taqnyt  = client(bearer)
+           response = taqnyt.sendMsg(body, recipients, sender,scheduled)
+
+           print(response)
+
+
 
            if response["status"] == "0":
-                print("Started verification request_id is %s" % (response["request_id"]))
-                request.session['request_id'] = response["request_id"]
+                print("Started verification")
                 request.session['mobile'] = mobile
                 messages.success(request, 'تم التسجيل بنجاح سيصل لك كود  التوثيق ')
                
@@ -84,10 +96,21 @@ def ForgetPassword(request):
             ## check if there is user with this mobile 
             user = User.objects.filter(mobile = request.POST.get('mobile')).first()
             if user is not None:
+
                 ## user exist send sms 
-                client = vonage.Client(key="e48cf721", secret="0kzxY067YT5r33sn")
-                verify = vonage.Verify(client)
-                response = verify.start_verification(number=request.POST.get('mobile'), brand="Marah")
+                bearer = 'e30a86bec2979b8fded273b4c27a9355'
+
+                code_number = random.randint(1000, 9999)
+                request.session['code_number'] = code_number
+
+                body       = f'{code_number}: كود التحقق من منصة مراح'
+                recipients = [f'{user.mobile}']
+                sender     = 'taqnyat.sa'
+                scheduled  =''
+                taqnyt  = client(bearer)
+                response = taqnyt.sendMsg(body, recipients, sender,scheduled)
+
+                print(response)
 
                 if response["status"] == "0":
                         print("Started verification request_id is %s" % (response["request_id"]))
@@ -112,13 +135,12 @@ def ForgetPassword(request):
 
 
 def verifyOTP(request):
-  client = vonage.Client(key="e48cf721", secret="0kzxY067YT5r33sn")
-  verify = vonage.Verify(client)
-  CODE = request.POST.get('otp')
-  response = verify.check(request.session['request_id'], code=CODE)
+ 
 
-  if response["status"] == "0":
-        print("Verification successful, event_id is %s" % (response["event_id"]))
+  CODE = request.POST.get('otp')
+  if request.session['code_number'] == CODE:
+    
+        print("Verification successful")
         ## let user login
         user = User.objects.filter(mobile=request.session['mobile']).first()
         user.mobile_verified = True
@@ -128,8 +150,9 @@ def verifyOTP(request):
         login(request, user)
        
         try:
-            del request.session['request_id']
+           
             del request.session['mobile']
+            del request.session['code_number'] 
         except Exception as e:
             print(e)
 
