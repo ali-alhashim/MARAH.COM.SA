@@ -97,6 +97,15 @@
                                 الرسائل الخاصه
                             </a>
                         </li>
+
+                        {%if request.user.is_superuser%}
+                        <li>
+                            <a href="{%url 'admin:index'%}">
+                               لوحة التحكم
+                            </a>
+                        </li>
+                        {%endif%}
+
                         <li>
                             <a href="{%url 'logout'%}">
                                  خروج
