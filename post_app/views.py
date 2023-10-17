@@ -7,6 +7,10 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Q
 from django.http import JsonResponse
+
+import os
+import shutil
+from django.conf import settings
 # Create your views here.
 
 def post_detail(request, pk):
@@ -175,6 +179,15 @@ def deletePost(request,postId):
     if thePost.created_by == request.user:
         thePost.delete()
         messages.success(request,'تم حذف الإعلان')
+        ## delete also the photo
+        folder_path = os.path.join(settings.MEDIA_ROOT, f"post_images/{postId}")
+        try:
+            shutil.rmtree(folder_path)
+            print(f"Folder '{folder_path}' and its contents have been deleted.")
+        except FileNotFoundError:
+            print(f"Folder '{folder_path}' does not exist.")
+        except PermissionError:
+            print(f"Permission denied: Unable to delete folder '{folder_path}'.")
     else:
         messages.error(request, ' لا تملك الصلاحية لحذف هذا الإعلان')
     return redirect('My.Posts')
