@@ -14,6 +14,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.utils import timezone
 from post_app.models import MyFavorite, Post
+import json
 # Create your views here.
 
 def register_new_user(request):
@@ -47,22 +48,22 @@ def register_new_user(request):
 
            
 
-           bearer = 'e30a86bec2979b8fded273b4c27a9355'
+           bearer = '5679a3ef8b5814d2b364eb0d11a88b6c'
 
            code_number = random.randint(1000, 9999)
            request.session['code_number'] = code_number
            body       = f'{code_number}: كود التحقق من منصة مراح'
            recipients = [f'{mobile}']
-           sender     = 'taqnyat.sa'
+           sender     = 'Marah'
            scheduled  =''
-           taqnyt  = client(bearer)
-           response = taqnyt.sendMsg(body, recipients, sender,scheduled)
+           taqnyt     = client(bearer)
+           response   = taqnyt.sendMsg(body, recipients, sender,scheduled)
+           response_data = json.loads(response)
+           print(response_data)
 
-           print(response)
 
 
-
-           if response["status"] == "0":
+           if response_data["statusCode"] == 201:
                 print("Started verification")
                 request.session['mobile'] = mobile
                 messages.success(request, 'تم التسجيل بنجاح سيصل لك كود  التوثيق ')
@@ -71,11 +72,10 @@ def register_new_user(request):
                 user.save()
                 return render(request,'User/OTP_verification_page.html',{})
            else:
-                print("Error: %s" % response["error_text"])
-                if response['error_text'] == "Invalid value for param: number":
-                    messages.error(request, 'حدث خطأ الرجاء التأكد من رقم الجوال مع الرمز الدولي') 
-                else:   
-                    messages.error(request, 'حدث خطأ في إرسال الكود')
+               
+                
+                messages.error(request, 'حدث خطأ الرجاء التأكد من رقم الجوال مع الرمز الدولي') 
+                
                 return HttpResponseRedirect(reverse_lazy('register.new.user'))
        else:
            print('form is Not valid')
@@ -98,7 +98,7 @@ def ForgetPassword(request):
             if user is not None:
 
                 ## user exist send sms 
-                bearer = 'e30a86bec2979b8fded273b4c27a9355'
+                bearer = '5679a3ef8b5814d2b364eb0d11a88b6c'
 
                 code_number = random.randint(1000, 9999)
                 request.session['code_number'] = code_number
@@ -109,18 +109,19 @@ def ForgetPassword(request):
                 scheduled  =''
                 taqnyt  = client(bearer)
                 response = taqnyt.sendMsg(body, recipients, sender,scheduled)
+                response_data = json.loads(response)
+                print(response_data)
 
-                print(response)
-
-                if response["status"] == "0":
-                        print("Started verification request_id is %s" % (response["request_id"]))
-                        request.session['request_id'] = response["request_id"]
+                if response_data["statusCode"] == 201:
+                        print("Started verification ")
+                       
                         request.session['mobile'] = request.POST.get('mobile')
                         request.session['forget'] = "forget"
+
                         messages.success(request, 'تم الارسال بنجاح سيصل لك كود  التوثيق ')
                         return render(request,'User/OTP_verification_page.html',{})
                 else:
-                    print("Error: %s" % response["error_text"])
+                    print("Error:")
                     messages.error(request,'خدمة الرسائل خارج الخدمة')
                     return redirect('login')
             else:
@@ -138,7 +139,7 @@ def verifyOTP(request):
  
 
   CODE = request.POST.get('otp')
-  if request.session['code_number'] == CODE:
+  if int(request.session['code_number']) == int(CODE):
     
         print("Verification successful")
         ## let user login
@@ -158,11 +159,12 @@ def verifyOTP(request):
 
         if "forget" in request.session:
             return redirect('MyAccount.ResetPassword')
-        
+        messages.success(request,"تم التفعيل بنجاح")
         return HttpResponseRedirect(reverse_lazy('home'))
   else:
-        print("Error: %s" % response["error_text"])
-        del request.session['request_id']
+        print("Error: the code not match!")
+        messages.error(request,'كود التفعيل غير صحيح')
+      
         return HttpResponseRedirect(reverse_lazy('login'))
   
 
