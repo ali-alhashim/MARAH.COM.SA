@@ -103,10 +103,11 @@ def client_Location(request):
         location = Location.objects.filter(name__icontains = city_name).first()
         if location:
             print(f"The city is: {city_name}")
+            
             return JsonResponse({'message': '/Filter/?category=all&searchKey=&location='+str(location.id)+'&Sub_Category=all'})
        
-            
-        return JsonResponse({'message': 'Location received successfully.'})
+        
+        return JsonResponse({'message': '/'})
 
 
 def login_view(request):
