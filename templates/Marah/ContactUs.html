@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 
 {% block main_content %}
 
@@ -8,11 +8,17 @@
     أتصل بنا
 </h1>
 <hr class="slim-line">
-<ul>
+<ul style="list-style:none">
     <li>
-        <i class="fa fa-phone-alt"></i>
+        <img src="{%static 'img/Phone.png'%}">
         966547078933
     </li>
+    <br/>
+    <li>
+        <img src="{%static 'img/Email.png'%}">
+        Support@Marah.com.sa
+    </li>
+
 </ul>
   
 </div>
