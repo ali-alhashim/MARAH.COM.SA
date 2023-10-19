@@ -24,6 +24,8 @@ urlpatterns = [
     path('logout/', views.LogoutInterfaceView.as_view(), name='logout'),
     path('User/Agreement/', views.UserAgreement, name="User.Agreement"),
     path('ContactUs/', views.ContactUs, name='ContactUs'),
+    path('Payment/', views.Payment, name="Payment"),
+     path('FAQ/', views.FAQ, name="FAQ"),
     path('', views.home, name='home'),
 
     path('Filter/', views.search, name='post.search'),

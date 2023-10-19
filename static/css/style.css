@@ -356,6 +356,7 @@
     margin: 5px;
     font-weight: 600;
     text-align: left;
+    border-radius: 1rem;
   }
 
   .login-btn
@@ -364,6 +365,7 @@
     padding: 10px;
     margin: 5px;
     font-weight: 600;
+    border-radius: 1rem;
   }
 
 *{
@@ -1029,3 +1031,4 @@ a{
     padding: 5px;
     border-radius: 1rem;
   }
+

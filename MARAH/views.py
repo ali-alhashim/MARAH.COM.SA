@@ -220,3 +220,14 @@ def load_more_posts(request):
 
 def ContactUs(request):
     return render(request,'Marah/ContactUs.html')
+
+
+############# payment #####################
+
+def Payment(request):
+    return render(request,'Marah/Payment.html')
+
+############# FAQ #####################
+
+def FAQ(request):
+    return render(request,'Marah/FAQ.html')

@@ -130,7 +130,7 @@
                 </li>
                 -->
 
-                <li>
+                <li onclick="toggleDarkMode()">
                  <img src="{%static 'img/moon.png'%}">
                 </li>
             </ul>
@@ -241,7 +241,7 @@
                 </li>
                 <li>
                     <img src="{%static 'img/QuestionMark.png'%}">
-                    <a href="#">الأسئلة الشائعة</a>
+                    <a href="{%url 'FAQ'%}">الأسئلة الشائعة</a>
                 </li>
             
             </ul>
@@ -254,7 +254,7 @@
                 </li>
                 <li>
                     <img src="{%static 'img/Banknotes.png'%}">
-                    <a href="#">حساب و سداد عمولة الموقع</a>
+                    <a href="{%url 'Payment'%}">حساب و سداد عمولة الموقع</a>
                 </li>
             </ul>
         </div>
@@ -395,6 +395,25 @@
                 xhr.send(JSON.stringify(data));
               }
         } //----------------------------------------------------------------------------------
+
+
+        function toggleDarkMode()
+        {
+            var darkModeLink = document.getElementById("dark-mode-link");
+
+            // If dark mode stylesheet exists, remove it
+            if (darkModeLink) {
+              darkModeLink.parentNode.removeChild(darkModeLink);
+            } else {
+              // Create and append dark mode stylesheet
+              darkModeLink = document.createElement("link");
+              darkModeLink.rel = "stylesheet";
+              darkModeLink.href = "{%static 'css/dark-mode.css'%}";
+              darkModeLink.type = "text/css";
+              darkModeLink.id = "dark-mode-link";
+              document.head.appendChild(darkModeLink);
+            }
+        }
 
     </script>
 

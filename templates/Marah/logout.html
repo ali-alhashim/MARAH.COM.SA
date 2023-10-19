@@ -5,10 +5,12 @@
 
 <div class="main-content">
 <h1>المكان مكانك أي وقت أرحب</h1>
-    <form method="POST" class="" id="login_form_id" action="{%url 'login'%}">
+    <form method="POST" class="login-form" id="login_form_id" action="{%url 'login'%}">
         {% csrf_token %}
-    <input type="text"     name="username" placeholder="أدخل اسم المستخدم او رقم الجوال" size="50" class="login-user">
+    <input type="text"     name="username" placeholder="أدخل اسم المستخدم او رقم الجوال"  class="login-user">
+   
     <input type="password" name="password" placeholder="أدخل كلمة المرور" class="login-user">
+   
     <input type="submit" value="دخول" class="login-btn">
     </form>
 </div>
