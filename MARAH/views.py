@@ -210,3 +210,12 @@ def load_more_posts(request):
      
    
     return JsonResponse(list(page), safe=False)
+
+
+
+
+############## ContactUs.html ###########
+
+
+def ContactUs(request):
+    return render(request,'Marah/ContactUs.html')

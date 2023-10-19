@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
-    <link rel="stylesheet" href="{% static 'fontawesome_6/css/all.min.css' %}"/>
+  
 
       <!--sweet Alert -->
       <script src="{% static 'lib/sweetalert2/sweetalert2.all.min.js' %}"></script>
@@ -68,13 +68,13 @@
             <ul>
                  {%if not request.user.id %}
                 <li onclick="login()">
-                    <i class="fa fa-sign-in" aria-hidden="true"></i>
+                    <img src="{%static 'img/Enter.png'%}">
                      دخـــول
                    
                 </li>
                 {%else%}
                 <li id="user-menu">
-                    يالله حيهم : {{request.user.name}} <i class="fa-solid fa-caret-down"></i>
+                    يالله حيهم : {{request.user.name}} <img src="{%static 'img/Down Button.png'%}">
 
                     <ul id="dropdown-menu">
                         <li>
@@ -129,7 +129,7 @@
                 -->
 
                 <li>
-                 <i class="fa fa-moon"></i>
+                 <img src="{%static 'img/moon.png'%}">
                 </li>
             </ul>
         </div>
@@ -151,7 +151,7 @@
              {%endfor%}
             </select>
         <input type="text" id="Search_input" placeholder="إبحث عن سلعة ..." name="searchKey"/>
-        <button class="search-btn"><i class="fa fa-search"></i></button>
+        <button class="search-btn"><img src="{%static 'img/Search.png'%}"></button>
              
             
             <select class="search-select" name="location" id="location-select-id">
@@ -167,7 +167,7 @@
 
             <a class="search-btn" onclick="getClientLocation()">
                 القريب
-                <i class="fa fa-map"></i>
+                <img src="{%static 'img/Location.png'%}">
             </a>
             <input type="hidden" value="all" name="Sub_Category">  
         </form>
@@ -221,24 +221,24 @@
         <div class="footer-links">
             <ul>
                 <li>
-                    <i class="fa fa-list"></i>
+                    <img src="{%static 'img/Rules.png'%}">
                     <a href="https://www.ncw.gov.sa/ar/Pages/default.aspx" target="_blank">
                         للأطلاع على قائمة الحيوانات الممنوع بيعها أو أصطيادها الرجاء زيارة موقع المركز الوطني لـ تنمية الحياة الفطرية
                     </a>
                 </li>
                 <li>
-                    <i class="fa fa-phone-alt"></i>
-                    <a href="#">  أتصل بنا </a>
+                    <img src="{%static 'img/Phone.png'%}">
+                    <a href="{%url 'ContactUs'%}">  أتصل بنا </a>
                 </li>
             </ul>
 
             <ul>
                 <li>
-                    <i class="fa fa-signature"></i>
+                    <img src="{%static 'img/Contract.png'%}">
                     <a href="{%url 'User.Agreement'%}">اتفاقية الاستخدام</a>
                 </li>
                 <li>
-                    <i class="fa fa-question"></i>
+                    <img src="{%static 'img/QuestionMark.png'%}">
                     <a href="#">الأسئلة الشائعة</a>
                 </li>
             
@@ -247,11 +247,11 @@
 
             <ul>
                 <li>
-                    <i class="fa fa-user"></i>
+                    <img src="{%static 'img/User.png'%}">
                     <a href="{%url 'register.new.user'%}"> التسجيل  </a>
                 </li>
                 <li>
-                    <i class="fa fa-money-bill-transfer"></i>
+                    <img src="{%static 'img/Banknotes.png'%}">
                     <a href="#">حساب و سداد عمولة الموقع</a>
                 </li>
             </ul>
@@ -301,6 +301,9 @@
         <a href="{%url 'register.new.user'%}" class="new-user-btn">
             تسجيل عضو جديد
         </a>
+      
+
+      
     </div>
         </div>
 

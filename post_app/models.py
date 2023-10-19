@@ -63,7 +63,7 @@ class Post_Images(models.Model):
 ## every post has many comments
 class Post_Comment(models.Model):
     post         = models.ForeignKey(Post, on_delete=models.CASCADE, blank=True, null=True, related_name='post_comments')
-    created_by   = models.ForeignKey(User, on_delete=models.DO_NOTHING, blank=True, null=True)
+    created_by   = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     comment      = models.CharField(max_length=255, blank=True, null=True)
     created_date = models.DateTimeField(auto_now_add=True)
     last_update  = models.DateTimeField(auto_now=True)

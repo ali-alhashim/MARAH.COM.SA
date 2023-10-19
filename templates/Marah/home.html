@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{%load static%}
 
 
 {% block main_content %}
@@ -16,25 +16,25 @@
                 
                 <ul class="card-sub-text {%if post.created_by == request.user%} bg-light-green {%endif%}">
 
-                   <li>
-                    <i class="fa fa-location"></i>
-                    {{post.location}}
-                   </li>
-
-                   <li>
-                    <i class="fa fa-clock"></i>
-                    {{post.created_date}}
-                   </li>
-                
-                   <li>
-                    <i class="fa fa-user"></i>
-                    {{post.created_by.name}}
-                   </li>
-
-                   <li>
-                    <i class="fa-regular fa-comments"></i>
-                    {{post.post_comments.all.count}}
-                   </li>
+                    <li>
+                        <img src="{%static 'img/Location.png'%}">
+                        {{post.location}}
+                       </li>
+    
+                       <li>
+                        <img src="{%static 'img/Time.png'%}">
+                        {{post.created_date}}
+                       </li>
+                    
+                       <li>
+                        <img src="{%static 'img/User.png'%}">
+                        {{post.created_by.name}}
+                       </li>
+    
+                       <li>
+                        <img src="{%static 'img/Comments.png'%}">
+                        {{post.post_comments.all.count}}
+                       </li>
                 </ul>
                
             </div>

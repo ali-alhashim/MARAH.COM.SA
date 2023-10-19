@@ -74,7 +74,7 @@ def register_new_user(request):
            else:
                
                 
-                messages.error(request, 'حدث خطأ الرجاء التأكد من رقم الجوال مع الرمز الدولي') 
+                messages.error(request, f' {response_data} حدث خطأ الرجاء التأكد من رقم الجوال مع الرمز الدولي') 
                 
                 return HttpResponseRedirect(reverse_lazy('register.new.user'))
        else:
@@ -122,7 +122,7 @@ def ForgetPassword(request):
                         return render(request,'User/OTP_verification_page.html',{})
                 else:
                     print("Error:")
-                    messages.error(request,'خدمة الرسائل خارج الخدمة')
+                    messages.error(request,f'خدمة الرسائل خارج الخدمة {response_data}' )
                     return redirect('login')
             else:
                 messages.error(request, ' لايوجد رقم جوال مسجل بالرقم المدخل')
