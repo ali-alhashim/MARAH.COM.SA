@@ -116,11 +116,9 @@
                       </ul>
                 </li>
 
-                <script>
-                    document.getElementById('user-menu').addEventListener('click', function() {
-                        this.classList.toggle('active');
-                      });
-                </script>
+              
+
+
                 {%endif%}
 
                 <!--
@@ -334,15 +332,18 @@
     <!--/login module-->
 
     <script>
+        //-----------------
         function login()
         {
             document.getElementById('login_div_id').classList.add('active-login');
            
         }
+
         function login_close()
         {
             document.getElementById('login_div_id').classList.remove('active-login');
         }
+        //-----------------
 
 
 
@@ -415,31 +416,33 @@
                 // Send the request
                 xhr.send(JSON.stringify(data));
               }
-        } //----------------------------------------------------------------------------------
+        } //----------------------------------- /getClientLocation()-----------------------------------------------
 
+
+        //----------- DarkMode -----------------------
 
         function toggleDarkMode()
         {
             var darkModeLink = document.getElementById("dark-mode-link");
-  var isDarkModeEnabled = false;
+            var isDarkModeEnabled = false;
 
-  // Check if dark mode stylesheet exists
-  if (darkModeLink) {
-    darkModeLink.parentNode.removeChild(darkModeLink);
-    isDarkModeEnabled = false;
-  } else {
-    // Create and append dark mode stylesheet
-    darkModeLink = document.createElement("link");
-    darkModeLink.rel = "stylesheet";
-    darkModeLink.href = "{%static 'css/dark-mode.css'%}";
-    darkModeLink.type = "text/css";
-    darkModeLink.id = "dark-mode-link";
-    document.head.appendChild(darkModeLink);
-    isDarkModeEnabled = true;
-  }
+            // Check if dark mode stylesheet exists
+            if (darkModeLink) {
+                darkModeLink.parentNode.removeChild(darkModeLink);
+                isDarkModeEnabled = false;
+            } else {
+                // Create and append dark mode stylesheet
+                darkModeLink = document.createElement("link");
+                darkModeLink.rel = "stylesheet";
+                darkModeLink.href = "{%static 'css/dark-mode.css'%}";
+                darkModeLink.type = "text/css";
+                darkModeLink.id = "dark-mode-link";
+                document.head.appendChild(darkModeLink);
+                isDarkModeEnabled = true;
+            }
 
-  // Store the current preference in local storage
-  localStorage.setItem('darkModeEnabled', isDarkModeEnabled);
+                // Store the current preference in local storage
+                localStorage.setItem('darkModeEnabled', isDarkModeEnabled);
         }
 
 
@@ -462,6 +465,31 @@
               document.head.appendChild(darkModeLink);
             }
           });
+
+    //---------------------------/ DarkMode-------------------------
+
+
+
+    //-----------------user-menu
+    document.getElementById('user-menu').addEventListener('click', function() {
+        this.classList.toggle('active');
+      });
+
+
+      document.addEventListener('click', function(event) {
+        var userMenu = document.getElementById('user-menu');
+        var userMenuTrigger = document.getElementById('user-menu-trigger');
+        var targetElement = event.target;
+      
+        // Check if the clicked element is outside the user menu and its trigger
+        if (targetElement !== userMenu && targetElement !== userMenuTrigger) {
+          // Remove the 'active' class from the user menu
+          userMenu.classList.remove('active');
+        }
+      });
+    //------------------
+
+   
 
     </script>
 
