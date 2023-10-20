@@ -1036,3 +1036,19 @@ a{
     border-radius: 1rem;
   }
 
+  .social-media{
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    margin: 1rem;
+  }
+
+  .social-media a{
+    background: #acacac;
+    padding: 4px;
+    border-radius: 0.5rem;
+    display: flex;
+  }
+
