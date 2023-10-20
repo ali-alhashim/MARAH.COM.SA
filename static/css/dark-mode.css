@@ -7,6 +7,13 @@
    
    }
 
+   .swal2-popup{
+    background: var(--secondary);
+   }
+   .swal2-styled.swal2-confirm {
+     background: var(--extra-dark-primary);
+   }
+
    *{
     color:#fff !important;
    }
@@ -25,13 +32,13 @@
    
    .user-agreement-list li{
        margin: 5px;
-       background: #FEFBF3;
+       background: var(--secondary);
        padding: 10px;
        border-radius: 1rem;
    }
    
    .user-agreement-list ol{
-       background: #FEFBF3;
+       background:var(--secondary);
        padding: 5px;
        border-radius: 1rem;
        padding: 15px;

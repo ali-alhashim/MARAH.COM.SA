@@ -7,6 +7,10 @@
 
 }
 
+ .swal2-styled.swal2-confirm {
+     background: var(--extra-dark-primary);
+   }
+
 .user-agreement-list{
     list-style: square;
     padding: 5px;
