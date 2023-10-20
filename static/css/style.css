@@ -89,6 +89,11 @@
         flex-direction: column !important;
     }
 
+    .search-select{
+        width: 100% !important;
+        margin: 0;
+    }
+
  
   
     .login-form{
