@@ -79,33 +79,46 @@
                     يالله حيهم : {{request.user.name}} <img src="{%static 'img/Down Button.png'%}">
 
                     <ul id="dropdown-menu">
+
+                        <a href="{%url 'MyAccount.index'%}">
                         <li>
-                            <a href="{%url 'MyAccount.index'%}">
+                            
                                 حسابي
-                            </a>
+                            
                         </li>
+                        </a>
+
+                        <a href="{%url 'My.Posts'%}">
                         <li>
-                            <a href="{%url 'My.Posts'%}">
+                           
                                 إعلاناتي
-                            </a>
+                           
                         </li>
+                        </a>
+                        <a href="{%url 'MyFavorite.List'%}">
                         <li>
-                            <a href="{%url 'MyFavorite.List'%}">
+                          
                                 المفضلة
-                            </a>
+                           
                         </li>
+                        </a>
+
+                        <a href="{%url 'User.Message.list'%}">
                         <li>
-                            <a href="{%url 'User.Message.list'%}">
+                           
                                 الرسائل الخاصه
-                            </a>
+                            
                         </li>
+                         </a>
 
                         {%if request.user.is_superuser%}
+                        <a href="{%url 'admin:index'%}" target="_blank">
                         <li>
-                            <a href="{%url 'admin:index'%}">
+                           
                                لوحة التحكم
-                            </a>
+                          
                         </li>
+                         </a>
                         {%endif%}
 
                         <li>
