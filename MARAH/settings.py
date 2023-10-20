@@ -168,8 +168,7 @@ LOGOUT_REDIRECT_URL = 'logout.html'
 
 
 
-GEOIP_PATH = BASE_DIR / 'geoip'
-GEOIP_PATH_CITY = GEOIP_PATH / 'GeoLite2-City.mmdb'
+
 
 
 

@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 from post_app.models import Post
 from django.contrib.auth import logout
-from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.views import  LogoutView
 from django.db.models import Q
 from post_app.models import Location, Post_Category, Sub_Category, Post_Comment, Post_Images
 from django.core.paginator import Paginator
@@ -15,8 +15,7 @@ from user_app.models import User
 import math
 from django.contrib import messages
 import json
-from geopy.geocoders import Nominatim
-from geopy.exc import GeocoderTimedOut
+
 def home(request):
 
    
@@ -82,29 +81,21 @@ def client_Location(request):
         latitude = request_data["latitude"]
         longitude = request_data["longitude"]
 
-        def get_city_name(latitude, longitude):
-            geolocator = Nominatim(user_agent="city_locator")  # Replace "city_locator" with your user agent.
-
-            try:
-                location = geolocator.reverse((latitude, longitude), exactly_one=True)
-                if location and location.raw.get("address"):
-                    city = location.raw["address"].get("city")
-                    if city:
-                        return city
-                    else:
-                        return "City name not found"
-                else:
-                    return "City name not found"
-            except GeocoderTimedOut:
-                return "Geocoding service timed out"
+        
 
         print(f"latitude:{latitude} \n longitude:{longitude} ")
-        city_name = get_city_name(latitude, longitude)
-        location = Location.objects.filter(name__icontains = city_name).first()
+        
+        location = Location.objects.filter( latitude_start__lte =latitude,
+                                            latitude_end__gte   =latitude,
+                                            longitude_start__lte=longitude,
+                                            longitude_end__gte  =longitude).first()
+
         if location:
-            print(f"The city is: {city_name}")
+            print(f"The city is: {location.name}")
             
             return JsonResponse({'message': '/Filter/?category=all&searchKey=&location='+str(location.id)+'&Sub_Category=all'})
+        else:
+            print('the city is out of the range not registred !')
        
         
         return JsonResponse({'message': '/'})
