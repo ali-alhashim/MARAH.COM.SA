@@ -82,6 +82,12 @@
         padding: 0;
         width: 100% !important;
     }
+    .mobile-apps{
+        flex-direction: column !important;
+    }
+    nav div ul{
+        flex-direction: column !important;
+    }
 
  
   
