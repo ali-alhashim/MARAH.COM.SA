@@ -484,9 +484,14 @@
 
 
     //-----------------user-menu
-    document.getElementById('user-menu').addEventListener('click', function() {
-        this.classList.toggle('active');
-      });
+    
+    var userMenu = document.getElementById('user-menu');
+                if (userMenu) {
+                userMenu.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                });
+                }
+    
 
 
       document.addEventListener('click', function(event) {
