@@ -689,6 +689,10 @@ input{
     margin-bottom: -50px;
 }
 
+.desart svg{
+    fill:var(--dark-primary)
+}
+
 footer
 {
     width: 100%;
