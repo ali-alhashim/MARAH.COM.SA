@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Q
 from django.http import JsonResponse
-
+from django.core.paginator import Paginator
 import os
 import shutil
 from django.conf import settings
@@ -119,7 +119,9 @@ def MyPosts(request):
 
     print('your query = ', query)
     posts = Post.objects.filter(query & Q(created_by = request.user)).order_by('-created_date')
-    return render(request,'Post/MyPosts/list.html',{"posts":posts,"selectedLocation":selectedLocation,"selectedcategory":category})
+    totalMyPost = posts.count()
+    ### Paginator ----
+    return render(request,'Post/MyPosts/list.html',{"posts":posts,"selectedLocation":selectedLocation,"selectedcategory":category,"totalMyPost":totalMyPost})
 
 
 
