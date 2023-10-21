@@ -8,6 +8,10 @@ from django.contrib import messages
 from django.db.models import Q
 from django.http import JsonResponse
 from django.core.paginator import Paginator
+from django.db.models import Subquery, OuterRef
+from django.db.models import Count
+from django.db.models.functions import Coalesce
+import math
 import os
 import shutil
 from django.conf import settings
@@ -121,8 +125,49 @@ def MyPosts(request):
     posts = Post.objects.filter(query & Q(created_by = request.user)).order_by('-created_date')
     totalMyPost = posts.count()
     ### Paginator ----
-    return render(request,'Post/MyPosts/list.html',{"posts":posts,"selectedLocation":selectedLocation,"selectedcategory":category,"totalMyPost":totalMyPost})
+    items_per_page = 10
+    paginator = Paginator(posts, items_per_page)
+    page = paginator.get_page(1)
+    return render(request,'Post/MyPosts/list.html',{"posts":page,"selectedLocation":selectedLocation,"selectedcategory":category,"totalMyPost":totalMyPost})
 
+
+################# load More MyPosts
+
+def MyPosts_loadMore(request):
+    page_number = request.GET.get('page_number')
+    print('load more page #', page_number)
+    items_per_page = 10
+
+    comment_count_subquery = Post_Comment.objects.filter(post=OuterRef('id')).values('post').annotate(comment_count=Coalesce(Count('id'), 0)).values('comment_count')
+    
+    image_subquery = Post_Images.objects.filter(post=OuterRef('id')).order_by('id').values('image')[:1]
+    
+
+    posts = Post.objects.filter(created_by=request.user).order_by('-created_date').annotate(comment_count=Subquery(comment_count_subquery), first_image=Subquery(image_subquery)).values('id', 'subject', 'category__name', 'sub_category__name', 'location__name', 'created_date', 'created_by__name', 'comment_count', 'first_image')
+    paginator = Paginator(posts, items_per_page)
+
+    print("get page #", page_number)
+    page = paginator.get_page(page_number)
+
+    Totalposts = Post.objects.filter(created_by=request.user).count()
+   
+    totalPages = math.ceil(Totalposts / 10)
+    print(totalPages)
+
+
+    if int(page_number) > totalPages:
+        page = {"End"}
+    else:
+            # Convert QuerySet to list and replace 'null' with 0 for comment_count
+        page_list = list(page)
+        for item in page_list:
+            item['comment_count'] = item['comment_count'] or 0
+
+     
+   
+    return JsonResponse(list(page), safe=False)
+
+################
 
 
 def MyFavorite_List(request):
