@@ -120,7 +120,7 @@ class Command(BaseCommand):
                 'longitude_end':41.71333,
                
             },
-
+               ## part 1
             
              {
                 'name': 'الخرج',
@@ -148,6 +148,15 @@ class Command(BaseCommand):
             },
              {
                 'name': 'عرعر',
+                'latitude_start':26.3927,
+                'latitude_end':26.4467,
+                'longitude_start':49.9825 ,
+                'longitude_end':50.1500,
+               
+            },
+
+            {
+                'name': 'سكاكا',
                 'latitude_start':26.3927,
                 'latitude_end':26.4467,
                 'longitude_start':49.9825 ,

@@ -179,7 +179,7 @@ def load_more_posts(request):
     image_subquery = Post_Images.objects.filter(post=OuterRef('id')).order_by('id').values('image')[:1]
     
 
-    posts = Post.objects.all().order_by('-created_date').annotate(comment_count=Subquery(comment_count_subquery), first_image=Subquery(image_subquery)).values('id', 'subject', 'category__name', 'sub_category__name', 'location__name', 'created_date', 'created_by__nikname', 'comment_count', 'first_image')
+    posts = Post.objects.all().order_by('-created_date').annotate(comment_count=Subquery(comment_count_subquery), first_image=Subquery(image_subquery)).values('id', 'subject', 'category__name', 'sub_category__name', 'location__name', 'created_date', 'created_by__name', 'comment_count', 'first_image')
     paginator = Paginator(posts, items_per_page)
 
     print("get page #", page_number)

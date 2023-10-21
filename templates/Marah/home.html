@@ -114,24 +114,25 @@
                         ul.className = 'card-sub-text';
                     
                         var liLocation = document.createElement('li');
-                        liLocation.innerHTML = '<i class="fa fa-location"></i> ' + data[key].location__name;
+                        liLocation.innerHTML = ` <img src="{%static 'img/Location.png'%}">` + data[key].location__name;
                         ul.appendChild(liLocation);
                     
                         var liClock = document.createElement('li');
-                        liClock.innerHTML = '<i class="fa fa-clock"></i> ' + data[key].created_date;
+                        liClock.innerHTML = ` <img src="{%static 'img/Time.png'%}">` + data[key].created_date;
                         ul.appendChild(liClock);
                     
                         var liUser = document.createElement('li');
-                        liUser.innerHTML = '<i class="fa fa-user"></i> ' + data[key].created_by__name;
+                        liUser.innerHTML = ` <img src="{%static 'img/User.png'%}">` + data[key].created_by__name;
                         ul.appendChild(liUser);
                     
                         var liComments = document.createElement('li');
-                        liComments.innerHTML = '<i class="fa-regular fa-comments"></i> ' + data[key].comment_count;
+                        liComments.innerHTML = `<img src="{%static 'img/Comments.png'%}"> ` + data[key].comment_count;
                         ul.appendChild(liComments);
 
                         var cardImage = document.createElement('div');
                         cardImage.classList.add('card-img');
                         var postImage = document.createElement('img');
+                        postImage.style="width:200px;height:200px";
                         if(data[key].first_image !=null)
                         {
                             postImage.src = 'media/'+data[key].first_image
