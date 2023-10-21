@@ -82,24 +82,117 @@
 
 
 
-    <div class="show-more-container">
-
-    {%if posts.has_next%}    
-    <a href="?page_number={{posts.next_page_number}}&category={{selectedcategory.id}}&searchKey=&location={{selectedLocation}}&SubCategory={{selectedSubCategory}}" class="view-more-btn">
-        <i class="fa-solid fa-square-caret-right"></i>
-        التالي
-    </a>
+<div class="show-more-container">
+  
+    {%if posts.has_next%}
+  <button class="view-more-btn" id="load-more-btn" data-url="{% url 'post.search' %}?loadmore=200&page_number=2&category={{selectedcategory.id}}&searchKey=&location={{selectedLocation}}&SubCategory={{selectedSubCategory.id}}">
+    مشاهدة المزيد
+  </button>
     {%endif%}
 
-    <h3>صفحة رقم : [ {{page_number}} ] </h3>
-
-    {%if posts.has_previous%}
-    <a href="?page_number={{posts.previous_page_number}}&category={{selectedcategory.id}}&searchKey=&location={{selectedLocation}}&SubCategory={{selectedSubCategory}}" class="view-more-btn">
-        السابق
-        <i class="fa-solid fa-square-caret-left"></i>
-    </a>
-    {%endif%}
 </div>
 
 
   {% endblock main_content %}
+
+  {% block js %}
+  <script>
+    var loadMoreBtn = document.getElementById('load-more-btn');
+    if (loadMoreBtn) {
+        loadMoreBtn.addEventListener('click', function () {
+            var url = loadMoreBtn.dataset.url;
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) 
+                {
+                    console.log(xhr.responseText);
+                    var data = JSON.parse(xhr.responseText);
+                    console.log('\n after JSON.parse');
+                    console.log(data);
+                    const container = document.querySelector('.main-content');
+
+                    for (let key in data) {
+
+                        if (data[0]=="End") 
+                        {
+                            break;
+                        }
+                        
+                        var newCard = document.createElement('a');
+                        newCard.className = 'card-content';
+                        newCard.href = '/post/detail/' + data[key].id;
+                    
+                        var cardText = document.createElement('div');
+                        cardText.className = 'card-text';
+                    
+                        var h2 = document.createElement('h2');
+                        h2.textContent = data[key].subject;
+                        cardText.appendChild(h2);
+                    
+                        var sub = document.createElement('sub');
+                        sub.textContent = data[key].id + " / " + data[key].category__name + " / " + data[key].sub_category__name;
+                        cardText.appendChild(sub);
+                    
+                        var ul = document.createElement('ul');
+                        ul.className = 'card-sub-text';
+                    
+                        var liLocation = document.createElement('li');
+                        liLocation.innerHTML = ` <img src="{%static 'img/Location.png'%}">` + data[key].location__name;
+                        ul.appendChild(liLocation);
+                    
+                        var liClock = document.createElement('li');
+                        liClock.innerHTML = ` <img src="{%static 'img/Time.png'%}">` + data[key].created_date;
+                        ul.appendChild(liClock);
+                    
+                        var liUser = document.createElement('li');
+                        liUser.innerHTML = ` <img src="{%static 'img/User.png'%}">` + data[key].created_by__name;
+                        ul.appendChild(liUser);
+                    
+                        var liComments = document.createElement('li');
+                        liComments.innerHTML = `<img src="{%static 'img/Comments.png'%}"> ` + data[key].comment_count;
+                        ul.appendChild(liComments);
+
+                        var cardImage = document.createElement('div');
+                        cardImage.classList.add('card-img');
+                        var postImage = document.createElement('img');
+                        postImage.style="width:200px;height:200px";
+                        if(data[key].first_image !=null)
+                        {
+                            postImage.src = '../media/'+data[key].first_image
+                            cardImage.appendChild(postImage);
+                        }
+                       
+
+                        
+                    
+                        cardText.appendChild(ul);
+                        newCard.appendChild(cardText);
+                        newCard.appendChild(cardImage);
+                        container.appendChild(newCard);
+                    } // end for
+
+
+                        // Check if there are more pages
+                    if (data[0]=="End") 
+                    {
+                        loadMoreBtn.style.display = 'none';
+                    
+                    } else 
+                    {
+                        
+                        var nextPageNumber = parseInt(url.split('=')[1]) + 1;
+                        var newUrl = url.split('=')[0] + '=' + nextPageNumber;
+                        loadMoreBtn.setAttribute('data-url', newUrl);
+                    }
+
+
+                   
+                }
+              
+            };
+            xhr.open('GET', url, true);
+            xhr.send();
+        });
+    }
+  </script>
+  {% endblock js %}
