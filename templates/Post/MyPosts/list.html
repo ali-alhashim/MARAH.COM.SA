@@ -31,18 +31,7 @@
 {%for post in posts%}
         <!--Card-->
 
-        <div class="row w-100">
-
-        <div class="edit-delete-box">
-            <a class="view-more-btn" href="{%url 'post.update' postId=post.id %}">
-                <i class="fa-regular fa-pen-to-square"></i>  تعديل
-            </a>
-
-            <a class="view-more-btn" href="#" onclick="deletePost({{post.id}})">
-                
-                <i class="fa-regular fa-trash-can"></i>  حذف 
-            </a>
-        </div>
+        
 
 
         <a class="card-content" href="{%url 'post.detail' pk=post.id%}">
@@ -94,8 +83,7 @@
 
            
         </a><!--/Card-->
-    </div>
-
+    
        
         {%endfor%}<!--end loop-->
 
@@ -125,19 +113,7 @@
 
   {% block js %}
   <script>
-    function deletePost(postId){
-        var result = confirm(`هل أنت متأكد من رغبتك في حذف رقم الإعلان ${postId}`);
-        if (result === true) {
-            // User clicked "Yes"
-            console.log("User clicked 'Yes'");
-            // Perform your desired action here
-            window.location.href = `post/delete/${postId}`;
-        } else {
-            // User clicked "No" or closed the dialog
-            console.log("User clicked 'No' or closed the dialog");
-            // Handle the cancellation or perform an alternative action
-        }
-    }
+    
 
 //------------------------***************************************
 var loadMoreBtn = document.getElementById('load-more-btn');
