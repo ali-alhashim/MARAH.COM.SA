@@ -245,6 +245,10 @@ def UserMessage_list(request):
 #### Create User Message
 
 def UserMessage_create(request):
+    if  not request.user.id:
+         messages.error(request,'عليك تسجيل الدخول أولا')
+         return redirect('login')
+     
     if request.method =="POST":
         send_to = request.POST.get('send_to')
         message = request.POST.get('message')
@@ -296,6 +300,9 @@ def UserMessage_detail(request, message_id):
 
 def AddRemoveMyFavorite(request, pk):
     
+    if  not request.user.id:
+         messages.error(request,'عليك تسجيل الدخول أولا')
+         return redirect('login')
     post = Post.objects.get(pk=pk)
     theFavorite = MyFavorite.objects.filter(user = request.user, post = post).exists()
     if theFavorite:

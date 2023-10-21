@@ -200,6 +200,9 @@ def MyFavorite_List(request):
 
 
 def Post_Complaints_Create(request):
+    if  not request.user.id:
+         messages.error(request,'عليك تسجيل الدخول أولا')
+         return redirect('login')
     if request.method=="POST":
         subject = request.POST.get('subject')
         post_id = request.POST.get('post_id')

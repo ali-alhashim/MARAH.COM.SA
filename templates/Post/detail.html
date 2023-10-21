@@ -237,7 +237,7 @@
         // User clicked "Yes"
         console.log("User clicked 'Yes'");
         // Perform your desired action here
-        window.location.href = `post/delete/${postId}`;
+        window.location.href = `{%url 'post.delete' postId=thePost.id%}`;
     } else {
         // User clicked "No" or closed the dialog
         console.log("User clicked 'No' or closed the dialog");
