@@ -1068,3 +1068,40 @@ a{
     display: flex;
   }
 
+  .bank-table{
+    width: 100%;
+    text-align: center;
+    padding: 3rem;
+    border: 1px solid lightgray;
+    border-radius: 1rem;
+    margin: 1rem;
+  }
+
+  .bank-table thead{
+    background: lightgray;
+    font-weight: 600;
+   
+  }
+  .bank-table thead td, tbody td{
+    padding: 1rem;
+    border-radius: 1rem;
+  }
+
+  .bank-table tbody{
+    background: #ececec;
+  }
+  .IBAN{
+    letter-spacing: .25rem;
+    font-size: large;
+    
+  }
+
+  .cal-input{
+    width: 100%;
+    padding: 1rem;
+    border-radius: 1rem;
+    font-weight: 600;
+    text-align: center;
+    font-size: large;
+  }
+

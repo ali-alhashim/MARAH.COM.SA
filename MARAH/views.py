@@ -151,7 +151,11 @@ def login_view(request):
                 return render(request, 'Marah/login.html', {'error_message': error_message})       
         else:
             print(f'the user name {username} want to login with name instead of mobile'  )
+          
             userMobile = User.objects.filter(name=username).first()
+            if userMobile is None:
+                messages.error(request, 'معلومات الدخول خطأ')
+                return redirect('login')
             user = authenticate(request, username=userMobile.mobile, password=password)
             if user is not None:
                     login(request, user)
