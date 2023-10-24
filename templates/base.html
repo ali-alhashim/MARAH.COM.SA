@@ -243,10 +243,12 @@
                     <a href="{%url 'register.new.user'%}"> التسجيل  </a>
                 </li>
                
+                <!--
                 <li>
                     <img src="{%static 'img/Phone.png'%}">
                     <a href="{%url 'ContactUs'%}">  أتصل بنا </a>
                 </li>
+                -->
 
                 <li>
                     <img src="{%static 'img/Contract.png'%}">
@@ -497,18 +499,26 @@
                 }
     
 
+   
+            document.addEventListener('click', function(event) {
 
-      document.addEventListener('click', function(event) {
-        var userMenu = document.getElementById('user-menu');
-        var userMenuTrigger = document.getElementById('user-menu-trigger');
-        var targetElement = event.target;
+                const userMenu = document.getElementById('user-menu');
+                if(userMenu)
+                {
+                    const userMenuTrigger = document.getElementById('user-menu-trigger');
+                    const targetElement = event.target;
+                
+                    // Check if the clicked element is outside the user menu and its trigger
+                    if (targetElement !== userMenu && targetElement !== userMenuTrigger) {
+                    // Remove the 'active' class from the user menu
+                    userMenu.classList.remove('active');
+                }
+             
+                }
+            });
+        
       
-        // Check if the clicked element is outside the user menu and its trigger
-        if (targetElement !== userMenu && targetElement !== userMenuTrigger) {
-          // Remove the 'active' class from the user menu
-          userMenu.classList.remove('active');
-        }
-      });
+     
     //------------------
 
    

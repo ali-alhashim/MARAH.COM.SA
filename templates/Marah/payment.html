@@ -56,6 +56,19 @@
     </tbody>
 </table>
 
+
+<script>
+    const salePrice = document.getElementById('sale_price');
+    salePrice.addEventListener("change", function(){
+        document.getElementById('fee_amount').value = this.value * 0.01;
+    });
+
+    
+    salePrice.addEventListener("keyup", function(){
+        document.getElementById('fee_amount').value = this.value * 0.01;
+    });
+</script>
+
   
 </div>
 {% endblock main_content %}
