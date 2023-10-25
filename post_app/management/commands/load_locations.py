@@ -124,72 +124,140 @@ class Command(BaseCommand):
             
              {
                 'name': 'الخرج',
-                'latitude_start':26.3927,
-                'latitude_end':26.4467,
-                'longitude_start':49.9825 ,
-                'longitude_end':50.1500,
+                'latitude_start':24.6667,
+                'latitude_end':24.6667,
+                'longitude_start':47.2 ,
+                'longitude_end':47.2 ,
                
             },
              {
                 'name': 'ابها',
-                'latitude_start':26.3927,
-                'latitude_end':26.4467,
-                'longitude_start':49.9825 ,
-                'longitude_end':50.1500,
+                'latitude_start':18.2134,
+                'latitude_end':18.2134,
+                'longitude_start':42.5000 ,
+                'longitude_end':42.5000,
                
             },
              {
                 'name': 'نجران',
-                'latitude_start':26.3927,
-                'latitude_end':26.4467,
-                'longitude_start':49.9825 ,
-                'longitude_end':50.1500,
+                'latitude_start':17.5475,
+                'latitude_end':17.5837,
+                'longitude_start':44.2108 ,
+                'longitude_end':44.2469,
                
             },
              {
-                'name': 'عرعر',
-                'latitude_start':26.3927,
-                'latitude_end':26.4467,
-                'longitude_start':49.9825 ,
-                'longitude_end':50.1500,
-               
+                "name": "عرعر",
+                "latitude_start": 26.39270,
+                "latitude_end": 26.44670,
+                "longitude_start": 49.98250,
+                "longitude_end": 50.15000
             },
-
             {
-                'name': 'سكاكا',
-                'latitude_start':26.3927,
-                'latitude_end':26.4467,
-                'longitude_start':49.9825 ,
-                'longitude_end':50.1500,
-               
+                "name": "سكاكا",
+                "latitude_start": 29.95389,
+                "latitude_end": 29.99667,
+                "longitude_start": 39.11472,
+                "longitude_end": 39.19939
             },
 
               {
-                'name': 'جدة',
-                'latitude_start':26.3927,
-                'latitude_end':26.4467,
-                'longitude_start':49.9825 ,
-                'longitude_end':50.1500,
+               "name": "جدة",
+                "latitude_start": 21.34942,
+                "latitude_end": 21.59442,
+                "longitude_start": 39.08121,
+                "longitude_end": 39.24314
                
             },
 
                {
-                'name': 'مكة',
-                'latitude_start':26.3927,
-                'latitude_end':26.4467,
-                'longitude_start':49.9825 ,
-                'longitude_end':50.1500,
+                 "name": "مكة",
+                "latitude_start": 21.28917,
+                "latitude_end": 21.44412,
+                "longitude_start": 39.81387,
+                "longitude_end": 39.90189
                
             },
 
               {
-                'name': 'المدينة',
-                'latitude_start':26.3927,
-                'latitude_end':26.4467,
-                'longitude_start':49.9825 ,
-                'longitude_end':50.1500,
+               "name": "المدينة المنورة",
+                "latitude_start": 24.46391,
+                "latitude_end": 24.57616,
+                "longitude_start": 39.53448,
+                "longitude_end": 39.65704
                
             },
+             {
+    "name": "سيهات",
+    "latitude_start": 26.22758,
+    "latitude_end": 26.24108,
+    "longitude_start": 50.25444,
+    "longitude_end": 50.27556
+  },
+  {
+    "name": "الدوادمي",
+    "latitude_start": 25.54528,
+    "latitude_end": 25.55778,
+    "longitude_start": 44.17778,
+    "longitude_end": 44.19111
+  },
+  {
+    "name": "الخفجي",
+    "latitude_start": 28.68333,
+    "latitude_end": 28.73333,
+    "longitude_start": 48.20000,
+    "longitude_end": 48.25000
+  },
+  {
+    "name": "طبرجل",
+    "latitude_start": 29.72778,
+    "latitude_end": 29.73889,
+    "longitude_start": 43.25278,
+    "longitude_end": 43.26528
+  },
+  {
+    "name": "وادي الدواسر",
+    "latitude_start": 23.06667,
+    "latitude_end": 23.11667,
+    "longitude_start": 44.00000,
+    "longitude_end": 44.05000
+  },
+  {
+    "name": "ينبع",
+    "latitude_start": 23.78333,
+    "latitude_end": 23.81667,
+    "longitude_start": 38.70000,
+    "longitude_end": 38.75000
+  },
+  {
+    "name": "بقيق",
+    "latitude_start": 26.25000,
+    "latitude_end": 26.27500,
+    "longitude_start": 49.80000,
+    "longitude_end": 49.82500
+  },
+
+            {
+    "name": "الطائف",
+    "latitude_start": 21.24833,
+    "latitude_end": 21.34833,
+    "longitude_start": 40.29248,
+    "longitude_end": 40.44383
+  },
+   {
+    "name": "الهفوف",
+    "latitude_start": 25.34772,
+    "latitude_end": 25.55522,
+    "longitude_start": 49.52555,
+    "longitude_end": 49.79028
+  },
+  {
+    "name": "خميس مشيط",
+    "latitude_start": 18.28737,
+    "latitude_end": 18.38362,
+    "longitude_start": 42.66894,
+    "longitude_end": 42.79191
+  },
            
         ]
 
