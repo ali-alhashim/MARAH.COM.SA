@@ -24,6 +24,7 @@ class Command(BaseCommand):
                 'subcategories': [
                     {'name': 'الضأن'},
                     {'name': 'الماعز'},
+                     {'name': 'نعيمي'},
                     {'name': 'حري'},
                     {'name': 'سواكني'},
                     {'name': 'بربري'},
