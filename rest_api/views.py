@@ -5,4 +5,5 @@ import json
 
 ### http://127.0.0.1:8000/api/home
 def api_home(request):
-    return JsonResponse()
+    data ={}
+    return JsonResponse(data)
