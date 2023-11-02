@@ -28,15 +28,15 @@ sudo ufw allow 21/tcp
 sudo ufw allow 30000:31000/tcp
 sudo ufw allow ftp
 sudo ufw allow 'Nginx Full'
-
+sudo ufw allow 22
 ### use root user 
 sudo -i
 ### go home and go to ailftp and create folder for ftp root folder 
-mkdir MARAH.COM.SA
+mkdir MARAH
 
 ## chown
 
-sudo chown aliftp:nogroup MARAH.COM.SA
+sudo chown aliftp:nogroup MARAH
 
 
 
@@ -54,11 +54,11 @@ pasv_min_port=30000
 pasv_max_port=31000
 chroot_local_user=YES
 user_sub_token=$USER
-local_root=/home/aliftp/MARAH.COM.SA
+local_root=/home/aliftp/MARAH
 userlist_enable=YES
 userlist_file=/etc/vsftpd.allowed_users
 userlist_deny=NO
-allow_writeble_chroot=YES
+allow_writeable_chroot=YES
 ### save changes and restart vsftpd
 sudo service vsftpd restart
 
@@ -116,8 +116,8 @@ pip install gunicorn
 ## start gunicorn 
 
 ##### gunicorn_config.py
-command    = '/home/aliftp/MARAH.COM.SA/MARAH.COM.SA/.venv/bin/gunicorn'
-pythonpath = '/home/aliftp/MARAH.COM.SA/MARAH.COM.SA'
+command    = '/home/aliftp/MARAH/MARAH/.venv/bin/gunicorn'
+pythonpath = '/home/aliftp/MARAH/MARAH'
 bind       = '192.168.8.156:8000'
 workers    = 3
 #####

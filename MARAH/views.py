@@ -250,7 +250,7 @@ def ContactUs(request):
 ############# payment #####################
 
 def Payment(request):
-    return render(request,'Marah/Payment.html')
+    return render(request,'Marah/payment.html')
 
 ############# FAQ #####################
 

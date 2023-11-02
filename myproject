@@ -1,14 +1,14 @@
 server {
 	listen 80;
-        server_name 192.168.8.156;
-	root /home/aliftp/MARAH.COM.SA/MARAH.COM.SA;
+        server_name 191.96.53.147;
+	root /home/aliftp/MARAH/MARAH;
 location / {
-	proxy_pass http://192.168.8.156:8000;
+	proxy_pass http://191.96.53.147:8000;
 
 
 
 }
 location /static/ {
-	alias /home/aliftp/MARAH.COM.SA/MARAH.COM.SA/static/;
+	alias /home/aliftp/MARAH/MARAH/static/;
 }
 }
