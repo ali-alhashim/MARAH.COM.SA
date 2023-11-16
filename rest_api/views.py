@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.db.models import  OuterRef, Subquery
-from post_app.models import Post, Location, Post_Images
+from post_app.models import Post, Location, Post_Images, Post_Category
 
 # Create your views here.
 
@@ -21,4 +21,11 @@ def api_posts_list(request):
 
 def api_locations(request):
     data = list(Location.objects.all().values("id","name"))
+    return JsonResponse(data, safe=False)
+
+
+### http://127.0.0.1:8000/api/categories
+
+def api_categories(request):
+    data = list(Post_Category.objects.all().values("id","name"))
     return JsonResponse(data, safe=False)
