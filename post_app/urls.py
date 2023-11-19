@@ -11,6 +11,7 @@ urlpatterns = [
     path('MyPosts/post/delete/<int:postId>', views.deletePost, name='post.delete'),
     path('MyPosts/post/update/<int:postId>', views.updatePost, name="post.update"),
     path('MyPosts_loadMore/', views.MyPosts_loadMore, name='MyPosts_loadMore'),
+    
 
      
 ]
