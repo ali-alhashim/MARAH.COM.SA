@@ -48,7 +48,7 @@ class MyAccountManager(BaseUserManager):
 class User(AbstractBaseUser, PermissionsMixin):
     mobile              = models.CharField(max_length=255, unique=True)
     name                = models.CharField(max_length=100, blank=True, null=True, unique=True)
-   
+    token               = models.CharField(max_length=64, blank=True)
     
     mobile_verified     = models.BooleanField(default=False)
     created_date        = models.DateTimeField(auto_now_add=True)
