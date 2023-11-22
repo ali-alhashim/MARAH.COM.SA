@@ -69,7 +69,10 @@ def api_login(request):
                     token = get_random_string(length=64)
                     user.token = token
                     user.save()
-                    return JsonResponse({'status': 'success', 'message': 'user is authenticate by mobile','token':token})
+                    return JsonResponse({'status': 'success', 
+                                         'username':user.name,
+                                         'message': 'user is authenticate by mobile',
+                                         'token':token})
             else:
                 # Authentication failed
                 print('Authentication failed with mobile')
@@ -88,7 +91,10 @@ def api_login(request):
                     token = get_random_string(length=64)
                     user.token = token
                     user.save()
-                    return JsonResponse({'status': 'success', 'message': 'user is authenticate by username as name','token':token})
+                    return JsonResponse({'status': 'success', 
+                                         'username':user.name,
+                                         'message': 'user is authenticate by username as name',
+                                         'token':token})
             else:
                 # Authentication failed
                 
