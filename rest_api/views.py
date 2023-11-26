@@ -6,6 +6,7 @@ from django.contrib.auth import authenticate, login
 from user_app.models import User
 from django.utils.crypto import get_random_string
 from django.views.decorators.csrf import csrf_exempt
+from django.core.exceptions import ObjectDoesNotExist
 # Create your views here.
 
 ### http://127.0.0.1:8000/api/posts/list
@@ -43,8 +44,59 @@ def api_subCategoryByCategory(request):
 
 
 ### http//127.0.0.1:8000/api/addpost
+@csrf_exempt
 def api_add_post(request):
-    return JsonResponse({'status': 'success', 'message': 'post added'})
+    if request.method == 'POST':
+        post_subject = request.POST.get("post_subject")
+        post_text    = request.POST.get("post_text")
+        post_category = request.POST.get("post_category")
+        post_subcategory = request.POST.get("post_subcategory")
+        post_city     = request.POST.get("post_city")
+        images = request.FILES.getlist("images")
+        username = request.POST.get("username")
+        token = request.POST.get("token")
+
+        
+        print(f"Server Received request to add new post with the following data:\n"
+               f"{username},\n"
+               f"{token},\n"
+        f"{post_subject},\n"
+        f"{post_text},\n"
+        f"{post_category},\n"
+        f"{post_subcategory},\n"
+        f"{post_city}")
+
+        try:
+            theUser = User.objects.get(name=username, token=token)
+        except ObjectDoesNotExist:
+            print("User not found or token not correct")
+            return JsonResponse({'status': 'error', 'message': 'User auth error'})
+        
+        print("the user with token are correct save the post")
+        theLocation = Location.objects.filter(name=post_city).first()
+        theCategory = Post_Category.objects.filter(name=post_category).first()
+        theSub_category = Sub_Category.objects.filter(name=post_subcategory, category=theCategory).first()
+        newPost = Post(
+                        created_by   = theUser,
+                        subject      = post_subject,
+                        text         = post_text,
+                        location     = theLocation,
+                        category     = theCategory,
+                        sub_category = theSub_category,
+                        
+                    )
+        newPost.save()
+        for image in images:
+            postImage = Post_Images(
+                                    post  = newPost,
+                                    image = image
+                                    )
+            # Save the image to a file
+            postImage.image.save(image.name, image) 
+        return JsonResponse({'status': 'success', 'message': 'post added'})
+      
+
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
 
 
 
