@@ -7,17 +7,21 @@ from user_app.models import User
 from django.utils.crypto import get_random_string
 from django.views.decorators.csrf import csrf_exempt
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.paginator import Paginator
 # Create your views here.
 
 ### http://127.0.0.1:8000/api/posts/list
 def api_posts_list(request):
+    items_per_page = 10
     subquery = Post_Images.objects.filter(post=OuterRef('id')).order_by('created_date')
-    data = (Post.objects.annotate(first_image=Subquery(subquery.values('image')[:1]))
+    posts = (Post.objects.annotate(first_image=Subquery(subquery.values('image')[:1]))
             .values("id", "subject", "created_by", "location", "category", "created_date", "first_image")
             )
-        
+    paginator = Paginator(posts, items_per_page)
+    page = paginator.get_page(1)   
+    print('home page_number =>', 1) 
     
-    return JsonResponse(list(data), safe=False)
+    return JsonResponse(list(page), safe=False)
 
 
 
