@@ -15,8 +15,9 @@ def api_posts_list(request):
     items_per_page = 10
     subquery = Post_Images.objects.filter(post=OuterRef('id')).order_by('created_date')
     posts = (Post.objects.annotate(first_image=Subquery(subquery.values('image')[:1]))
-            .values("id", "subject", "created_by", "location", "category", "created_date", "first_image")
-            )
+            .values("id", "subject", "created_by__name", "location__name", "category__name", "sub_category__name", "created_date", "first_image")
+            ).order_by("-last_update")
+    print(posts)
     paginator = Paginator(posts, items_per_page)
     page = paginator.get_page(1)   
     print('home page_number =>', 1) 
