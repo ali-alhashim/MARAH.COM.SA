@@ -17,12 +17,22 @@ def api_posts_list(request):
     posts = (Post.objects.annotate(first_image=Subquery(subquery.values('image')[:1]))
             .values("id", "subject", "created_by__name", "location__name", "category__name", "sub_category__name", "created_date", "first_image")
             ).order_by("-last_update")
+     # Convert created_date to a readable format
+    for post in posts:
+        post['created_date'] = post['created_date'].strftime("%B %d, %Y at %I:%M %p")
+
     print(posts)
     paginator = Paginator(posts, items_per_page)
     page = paginator.get_page(1)   
     print('home page_number =>', 1) 
     
     return JsonResponse(list(page), safe=False)
+
+### http://127.0.0.1:8000/api/post/detail/<int:pk>
+@csrf_exempt
+def api_post_detail(request, pk):
+    thePost = Post.objects.get(pk=pk)
+    return JsonResponse(list(thePost), safe=False)
 
 
 
