@@ -28,11 +28,29 @@ def api_posts_list(request):
     
     return JsonResponse(list(page), safe=False)
 
-### http://127.0.0.1:8000/api/post/detail/<int:pk>
+### http://127.0.0.1:8000/api/post/detail?postId=1
 @csrf_exempt
-def api_post_detail(request, pk):
-    thePost = Post.objects.get(pk=pk)
-    return JsonResponse(list(thePost), safe=False)
+def api_post_detail(request):
+    if request.method =="GET":
+        postId = request.GET.get("postId")
+        thePost = Post.objects.get(pk=postId)
+        postImages = Post_Images.objects.filter(post = thePost)
+
+        images = [image.image.url for image in postImages]
+       
+        print(f"the images urls = {images}")
+       
+        post_data = {
+                'id': thePost.id,
+                'post_subject': thePost.subject,
+                'post_text': thePost.text,
+                'username':thePost.created_by.name,
+                'post_images': images
+                # Add other fields as needed
+            }
+        
+      
+        return JsonResponse(post_data, safe=False)
 
 
 
