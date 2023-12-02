@@ -45,6 +45,8 @@ def api_post_detail(request):
                 'post_subject': thePost.subject,
                 'post_text': thePost.text,
                 'username':thePost.created_by.name,
+                'post_category':thePost.category.name,
+                'post_subcategory':thePost.sub_category.name,
                 'post_images': images
                 # Add other fields as needed
             }
