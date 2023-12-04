@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.db.models import  OuterRef, Subquery
-from post_app.models import Post, Location, Post_Images, Post_Category, Sub_Category
+from post_app.models import Post, Location, Post_Images, Post_Category, Sub_Category, Post_Comment
 from django.contrib.auth import authenticate, login
 from user_app.models import User
 from django.utils.crypto import get_random_string
@@ -37,8 +37,19 @@ def api_post_detail(request):
         postImages = Post_Images.objects.filter(post = thePost)
 
         images = [image.image.url for image in postImages]
+
+        postComments = Post_Comment.objects.filter(post = thePost)
+        comments = []
+        for comment in postComments:
+            
+            comment_data = {
+                'comment_text': comment.comment,
+                'comment_user': comment.get_created_by_name(),
+                'created_date': comment.created_date.strftime("%B %d, %Y at %I:%M %p")
+            }
+            comments.append(comment_data)
        
-        print(f"the images urls = {images}")
+      
        
         post_data = {
                 'id': thePost.id,
@@ -47,11 +58,12 @@ def api_post_detail(request):
                 'username':thePost.created_by.name,
                 'post_category':thePost.category.name,
                 'post_subcategory':thePost.sub_category.name,
-                'post_images': images
+                'post_images': images,
+                'comments':comments
                 # Add other fields as needed
             }
         
-      
+        print(post_data)
         return JsonResponse(post_data, safe=False)
 
 
