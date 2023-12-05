@@ -38,8 +38,31 @@ def api_add_post_comment(request):
          theComment = request.POST.get("theComment")
          postId     = request.POST.get("postId")
 
-         response = {"status":"post comment has been added successfully "}
-         return JsonResponse(response, safe=False)
+         thePost = Post.objects.get(pk=postId)
+         theUser = User.objects.filter(name=byUser).first()
+         if theUser:
+             print("user exists check the token")
+             if theUser.token == token:
+                print("the token match so add the comment")
+                newComment = Post_Comment(
+                                            post = thePost,
+                                            created_by = theUser,
+                                            comment = theComment
+                                         )
+                newComment.save()
+                response = {"status":"post comment has been added successfully "}
+                return JsonResponse(response, safe=False) 
+
+             else:
+                 response = {"status":"token not match"}
+                 return JsonResponse(response, safe=False) 
+         else:
+             response = {"status":"the user not exist !"}
+             return JsonResponse(response, safe=False)
+             
+
+
+        
      response = {"status":"only http post request !"}
      return JsonResponse(response, safe=False)
 
