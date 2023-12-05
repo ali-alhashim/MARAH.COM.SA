@@ -28,6 +28,21 @@ def api_posts_list(request):
     
     return JsonResponse(list(page), safe=False)
 
+## http://127.0.0.1:8000/api/add/comment
+@csrf_exempt
+def api_add_post_comment(request):
+     response = ""
+     if request.method =="POST":
+         byUser     = request.POST.get("byUser")
+         token      = request.POST.get("token")
+         theComment = request.POST.get("theComment")
+         postId     = request.POST.get("postId")
+
+         response = {"status":"post comment has been added successfully "}
+         return JsonResponse(response, safe=False)
+     response = {"status":"only http post request !"}
+     return JsonResponse(response, safe=False)
+
 ### http://127.0.0.1:8000/api/post/detail?postId=1
 @csrf_exempt
 def api_post_detail(request):

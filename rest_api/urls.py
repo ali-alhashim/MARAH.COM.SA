@@ -9,4 +9,5 @@ urlpatterns = [
     path("subCategory", views.api_subCategoryByCategory, name="api_subCategoryByCategory"),
     path('login', views.api_login, name="api_login"),
     path('addpost', views.api_add_post, name="api_add_post"),
+    path('add/comment', views.api_add_post_comment,name="api_add_post_comment"),
 ]
