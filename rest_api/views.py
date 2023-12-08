@@ -8,20 +8,29 @@ from django.utils.crypto import get_random_string
 from django.views.decorators.csrf import csrf_exempt
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.paginator import Paginator
+from django.db.models import Q
 # Create your views here.
 
 ### http://127.0.0.1:8000/api/posts/list
 def api_posts_list(request):
     items_per_page = 10
-    subquery = Post_Images.objects.filter(post=OuterRef('id')).order_by('created_date')
-    posts = (Post.objects.annotate(first_image=Subquery(subquery.values('image')[:1]))
+    subquery    = Post_Images.objects.filter(post=OuterRef('id')).order_by('created_date')
+    
+    getPage     = request.GET.get("page") # you want page number
+    category    = request.GET.get("category") # you want to filter post with this category
+    subcategory = request.GET.get("subcategory") # you want to filter with this subcategory
+    location    = request.GET.get("location") # you want to filter with this location
+
+    print(f"server received GET request with: \n getPage:{getPage}\n category:{category}\n subcategory:{subcategory}\n location:{location}")
+    posts = (Post.objects.filter().annotate(first_image=Subquery(subquery.values('image')[:1]))
             .values("id", "subject", "created_by__name", "location__name", "category__name", "sub_category__name", "created_date", "first_image")
             ).order_by("-last_update")
+    
      # Convert created_date to a readable format
     for post in posts:
         post['created_date'] = post['created_date'].strftime("%B %d, %Y at %I:%M %p")
 
-    print(posts)
+    #print(posts)
     paginator = Paginator(posts, items_per_page)
     page = paginator.get_page(1)   
     print('home page_number =>', 1) 
@@ -55,6 +64,7 @@ def api_add_post_comment(request):
 
              else:
                  response = {"status":"token not match"}
+                 print("token not match")
                  return JsonResponse(response, safe=False) 
          else:
              response = {"status":"the user not exist !"}
