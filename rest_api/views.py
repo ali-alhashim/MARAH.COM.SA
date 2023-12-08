@@ -21,8 +21,15 @@ def api_posts_list(request):
     subcategory = request.GET.get("subcategory") # you want to filter with this subcategory
     location    = request.GET.get("location") # you want to filter with this location
 
+    query = Q()
+    if int(category) !=0:
+        print("category != 0")
+        query |=Q(category__id=category)
+    if int(location) !=0:
+        query |=Q(location__id=location)
+
     print(f"server received GET request with: \n getPage:{getPage}\n category:{category}\n subcategory:{subcategory}\n location:{location}")
-    posts = (Post.objects.filter().annotate(first_image=Subquery(subquery.values('image')[:1]))
+    posts = (Post.objects.filter(query).annotate(first_image=Subquery(subquery.values('image')[:1]))
             .values("id", "subject", "created_by__name", "location__name", "category__name", "sub_category__name", "created_date", "first_image")
             ).order_by("-last_update")
     
