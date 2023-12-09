@@ -202,6 +202,16 @@ def api_add_post(request):
 
 
 
+### http//127.0.0.1:8000/api/add/favorite
+@csrf_exempt
+def api_add_to_my_favorite(request):
+    if request.method =="POST":
+        username = request.POST.get("username")
+        token    = request.POST.get("token")
+        postId   = request.POST.get("postId")
+        print(f"add postId {postId} to favorite for user {username} verify token {token}")
+
+        return JsonResponse({'status': 'post added to your favorite successfully'})
 
 
 

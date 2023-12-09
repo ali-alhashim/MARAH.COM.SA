@@ -10,4 +10,5 @@ urlpatterns = [
     path('login', views.api_login, name="api_login"),
     path('addpost', views.api_add_post, name="api_add_post"),
     path('add/comment', views.api_add_post_comment,name="api_add_post_comment"),
+    path('add/favorite', views.api_add_to_my_favorite, name="api_add_to_my_favorite"),
 ]
