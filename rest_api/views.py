@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.db.models import  OuterRef, Subquery
-from post_app.models import Post, Location, Post_Images, Post_Category, Sub_Category, Post_Comment
+from post_app.models import Post, Location, Post_Images, Post_Category, Sub_Category, Post_Comment,MyFavorite
 from django.contrib.auth import authenticate, login
 from user_app.models import User
 from django.utils.crypto import get_random_string
@@ -88,8 +88,12 @@ def api_add_post_comment(request):
 def api_post_detail(request):
     if request.method =="GET":
         postId = request.GET.get("postId")
+        username = request.GET.get("username")
+        theUser = User.objects.get(name=username)
         thePost = Post.objects.get(pk=postId)
         postImages = Post_Images.objects.filter(post = thePost)
+
+        isInMyFavorite = MyFavorite.objects.filter(post = thePost, user = theUser).exists()
 
         images = [image.image.url for image in postImages]
 
@@ -114,7 +118,8 @@ def api_post_detail(request):
                 'post_category':thePost.category.name,
                 'post_subcategory':thePost.sub_category.name,
                 'post_images': images,
-                'comments':comments
+                'comments':comments,
+                'isInMyFavorite':isInMyFavorite
                 # Add other fields as needed
             }
         
@@ -210,8 +215,28 @@ def api_add_to_my_favorite(request):
         token    = request.POST.get("token")
         postId   = request.POST.get("postId")
         print(f"add postId {postId} to favorite for user {username} verify token {token}")
+        thePost = Post.objects.get(pk=int(postId))
+        theUser = User.objects.get(name=username)
+        if theUser.token == token:
+            print("user token correct so add this post to his favorite")
+            ## if post already in my favorite deleted if not add
+            isInMyFavorite = MyFavorite.objects.filter(post = thePost, user = theUser).exists()
+            if isInMyFavorite:
+                myFavoritePost = MyFavorite.objects.filter(post=thePost,user=theUser).first()
+                myFavoritePost.delete()
+                return JsonResponse({'status': 'post removed from your favorite successfully'})
+            else:
+                myFavorite = MyFavorite(
+                                        user = theUser,
+                                        post = thePost
+                                    )
+                myFavorite.save()
+                return JsonResponse({'status': 'post added to your favorite successfully'})
+        else:
+            return JsonResponse({'status': 'Token problem try to relogin'})
+    return JsonResponse({'status': 'only http post request !'})
 
-        return JsonResponse({'status': 'post added to your favorite successfully'})
+        
 
 
 
