@@ -78,7 +78,7 @@ class Post_Comment(models.Model):
 
 class MyFavorite(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, related_name='user_favorite_list')
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, blank=True, null=True)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, blank=True, null=True, related_name="post_favorite_list")
     created_date = models.DateTimeField(auto_now_add=True)
 
 

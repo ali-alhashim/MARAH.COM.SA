@@ -20,6 +20,9 @@ def api_posts_list(request):
     category    = request.GET.get("category") # you want to filter post with this category
     subcategory = request.GET.get("subcategory") # you want to filter with this subcategory
     location    = request.GET.get("location") # you want to filter with this location
+    isInMyFavorite = request.GET.get("isInMyFavorite")
+    username    = request.GET.get("username")
+    token       = request.GET.get("token")
 
     query = Q()
     if int(category) !=0:
@@ -28,7 +31,7 @@ def api_posts_list(request):
     if int(location) !=0:
         query |=Q(location__id=location)
 
-    print(f"server received GET request with: \n getPage:{getPage}\n category:{category}\n subcategory:{subcategory}\n location:{location}")
+    
     posts = (Post.objects.filter(query).annotate(first_image=Subquery(subquery.values('image')[:1]))
             .values("id", "subject", "created_by__name", "location__name", "category__name", "sub_category__name", "created_date", "first_image")
             ).order_by("-last_update")
