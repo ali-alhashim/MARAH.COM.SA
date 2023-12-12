@@ -89,7 +89,11 @@ def api_post_detail(request):
     if request.method =="GET":
         postId = request.GET.get("postId")
         username = request.GET.get("username")
-        theUser = User.objects.get(name=username)
+        try:
+            theUser = User.objects.get(name=username)
+        except ObjectDoesNotExist:
+            theUser = None
+        
         thePost = Post.objects.get(pk=postId)
         postImages = Post_Images.objects.filter(post = thePost)
 
