@@ -20,9 +20,22 @@ def api_posts_list(request):
     category    = request.GET.get("category") # you want to filter post with this category
     subcategory = request.GET.get("subcategory") # you want to filter with this subcategory
     location    = request.GET.get("location") # you want to filter with this location
-    isInMyFavorite = request.GET.get("isInMyFavorite")
+    isInMyFavorite = bool(request.GET.get("isInMyFavorite"))
     username    = request.GET.get("username")
     token       = request.GET.get("token")
+
+    if isInMyFavorite:
+        print(f"isInMyFavorite -> {isInMyFavorite}")
+        try:
+            theUser = User.objects.get(name=username)
+            if theUser.token == token:
+                print(f"the user already login get his favorite list")
+                MyFavoritePosts =  MyFavorite.objects.filter(user = theUser)
+                # Get the list of favorite post IDs
+                favorite_post_ids = MyFavoritePosts.values_list('post_id', flat=True)
+        except Exception as e:
+            print(e)
+            favorite_post_ids = 0
 
     query = Q()
     if int(category) !=0:
@@ -30,6 +43,9 @@ def api_posts_list(request):
         query |=Q(category__id=category)
     if int(location) !=0:
         query |=Q(location__id=location)
+    if isInMyFavorite and favorite_post_ids:
+        # Filter posts that are members of MyFavoritePosts
+        query |= Q(id__in=favorite_post_ids)
 
     
     posts = (Post.objects.filter(query).annotate(first_image=Subquery(subquery.values('image')[:1]))
