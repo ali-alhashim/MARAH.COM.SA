@@ -23,6 +23,8 @@ def api_posts_list(request):
     isInMyFavorite = bool(request.GET.get("isInMyFavorite"))
     username    = request.GET.get("username")
     token       = request.GET.get("token")
+    searchKeyWord = request.GET.get("searchKeyWord")
+    print(f"you want to search for {searchKeyWord}")
 
     if isInMyFavorite:
         print(f"isInMyFavorite -> {isInMyFavorite}")
@@ -33,6 +35,9 @@ def api_posts_list(request):
                 MyFavoritePosts =  MyFavorite.objects.filter(user = theUser)
                 # Get the list of favorite post IDs
                 favorite_post_ids = MyFavoritePosts.values_list('post_id', flat=True)
+            else:
+                print("you have to relogin")
+                return
         except Exception as e:
             print(e)
             favorite_post_ids = 0
@@ -46,7 +51,9 @@ def api_posts_list(request):
     if isInMyFavorite and favorite_post_ids:
         # Filter posts that are members of MyFavoritePosts
         query |= Q(id__in=favorite_post_ids)
-
+    if len(searchKeyWord) > 0:
+        print("there are a keyword to search for")
+        query |= Q(subject__icontains = searchKeyWord) | Q(text__icontains = searchKeyWord)
     
     posts = (Post.objects.filter(query).annotate(first_image=Subquery(subquery.values('image')[:1]))
             .values("id", "subject", "created_by__name", "location__name", "category__name", "sub_category__name", "created_date", "first_image")
