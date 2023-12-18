@@ -11,4 +11,5 @@ urlpatterns = [
     path('addpost', views.api_add_post, name="api_add_post"),
     path('add/comment', views.api_add_post_comment,name="api_add_post_comment"),
     path('add/favorite', views.api_add_to_my_favorite, name="api_add_to_my_favorite"),
+    path('send/complaint', views.send_complaint, name="send_complaint"),
 ]

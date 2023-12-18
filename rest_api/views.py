@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.db.models import  OuterRef, Subquery
-from post_app.models import Post, Location, Post_Images, Post_Category, Sub_Category, Post_Comment,MyFavorite
+from post_app.models import Post, Location, Post_Images, Post_Category, Sub_Category, Post_Comment,MyFavorite,Post_Complaints
 from django.contrib.auth import authenticate, login
 from user_app.models import User
 from django.utils.crypto import get_random_string
@@ -326,4 +326,22 @@ def api_login(request):
 
 
         
-       
+ ### http://127.0.0.1:8000/api/send/complaint
+@csrf_exempt
+def send_complaint(request):
+    print("user want to send complaint")  
+    username = request.POST.get("username")
+    subject  = request.POST.get("subject")
+    text     = request.POST.get("text")
+    postId   = request.POST.get("postId")
+    post = Post.objects.get(pk=postId)
+    user = User.objects.get(name=username)
+    newPost_Complaints = Post_Complaints(
+                                          post=post,
+                                          subject = subject,
+                                          message = text,
+                                          user = user
+                                        )
+    newPost_Complaints.save()
+
+    return JsonResponse({'status': 'success'})   
