@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from django.db.models import  OuterRef, Subquery
 from post_app.models import Post, Location, Post_Images, Post_Category, Sub_Category, Post_Comment,MyFavorite,Post_Complaints
 from django.contrib.auth import authenticate, login
-from user_app.models import User
+from user_app.models import User,UserMessage
 from django.utils.crypto import get_random_string
 from django.views.decorators.csrf import csrf_exempt
 from django.core.exceptions import ObjectDoesNotExist
@@ -330,6 +330,7 @@ def api_login(request):
 @csrf_exempt
 def send_complaint(request):
     print("user want to send complaint")  
+    token = request.POST.get("token")
     username = request.POST.get("username")
     subject  = request.POST.get("subject")
     text     = request.POST.get("text")
@@ -345,3 +346,30 @@ def send_complaint(request):
     newPost_Complaints.save()
 
     return JsonResponse({'status': 'success'})   
+
+
+### http://127.0.0.1:8000/api/send/message
+
+@csrf_exempt
+def send_message(request):
+    token = request.POST.get("token")
+    from_user = request.POST.get('from_user')
+    send_to = request.POST.get('send_to')
+    message = request.POST.get('message')
+    subject = request.POST.get('subject')
+
+    print(f"user want to send message from {from_user} to {send_to}") 
+
+    from_user = User.objects.get(name=from_user)
+    to_user   = User.objects.get(name=send_to) 
+
+    newMessage = UserMessage(
+                                from_user  =from_user,
+                                to_user    =to_user,
+                                subject    =subject,
+                                message    =message, 
+                            )
+    newMessage.save()
+     
+    
+    return JsonResponse({'status': 'success'}) 
