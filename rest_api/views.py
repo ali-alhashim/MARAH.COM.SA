@@ -359,17 +359,23 @@ def send_message(request):
     subject = request.POST.get('subject')
 
     print(f"user want to send message from {from_user} to {send_to}") 
+    
+    try:
+        from_userx = User.objects.get(name=from_user)
+        to_userx   = User.objects.get(name=send_to) 
+    except ObjectDoesNotExist:
+        return JsonResponse({'status': 'يجب عليك تسجيل الدخول أولاً'}) 
 
-    from_user = User.objects.get(name=from_user)
-    to_user   = User.objects.get(name=send_to) 
+    if token != from_userx.token:
+        return JsonResponse({'status': 'الرجاء إعادة تسجيل الدخول و المحاولة مره اخرى'}) 
 
     newMessage = UserMessage(
-                                from_user  =from_user,
-                                to_user    =to_user,
+                                from_user  =from_userx,
+                                to_user    =to_userx,
                                 subject    =subject,
                                 message    =message, 
                             )
     newMessage.save()
      
     
-    return JsonResponse({'status': 'success'}) 
+    return JsonResponse({'status': 'تم إرسال الرسالة'}) 
