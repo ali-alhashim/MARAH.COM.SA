@@ -80,7 +80,7 @@ apt install mysql-server
 mysql_secure_installation
 
 
-CREATE USER 'admin'@'%' IDENTIFIED WITH mysql_native_password BY 'Akte@12345678';
+CREATE USER 'admin'@'%' IDENTIFIED WITH mysql_native_password BY 'mysqlpassword';
 
 GRANT ALL PRIVILEGES on *.* TO 'admin'@'%' WITH GRANT OPTION;
 
